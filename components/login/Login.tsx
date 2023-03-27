@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 
 import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {IStackScreenProps} from '../../navigation/StackScreen';
@@ -8,7 +8,7 @@ import DeviceInfo from 'react-native-device-info';
 // @ts-ignore
 import styled from 'styled-components/native';
 // IMPORT CSS LIBRARY
-import * as variables from '../../constants';
+import * as variables from './../../constants';
 import {loginRegister} from '../../api/api';
 
 // * Async Storage for user session
@@ -22,7 +22,6 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
   const [error, setError] = React.useState<string | boolean>();
   const [loadError, setLoadError] = React.useState<boolean>();
   const [load, setLoad] = React.useState<boolean>(false);
-  const [register, setRegister] = React.useState<boolean>(false);
 
   const [modelId, setModelId] = React.useState<string>();
 
@@ -42,29 +41,31 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
     setModelId(model);
   };
 
-  const loginUser = async () => {
-    setLoad(true);
+  const loginCheck = async () => {
+    setLoad(true)
     const register = await loginRegister(text, password, Platform.OS, modelId);
-    await AsyncStorage.setItem('token', text);
-    setRegister(register);
 
     if (!loadError && !register) {
       setError('Ошибка авторизации');
     } else {
-      console.log(register);
-    }
-  };
-
-  const tokenLogin = async () => {
-    const value = await AsyncStorage.getItem('token');
-    if (value !== null) {
-      navigation.navigate('Market');
-    } else {
+      await AsyncStorage.setItem('TOKEN_KEY', text)
+      navigation.navigate('Market')
     }
     setLoad(false);
-  };
+  }
 
-  tokenLogin();
+  const readData = async () => {
+    const value = await AsyncStorage.getItem('TOKEN_KEY')
+    if (value !== null) {
+      navigation.navigate('Market')
+    } else {
+      console.log('error')
+    }
+  }
+
+  useEffect(() => {
+    readData();
+  }, [])
 
   return (
     <View>
@@ -104,7 +105,7 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
         ) : (
           <TouchableOpacity
             onPress={() => {
-              loginUser();
+              loginCheck();
             }}
             style={{marginTop: 10}}>
             <LoginSignIn>
