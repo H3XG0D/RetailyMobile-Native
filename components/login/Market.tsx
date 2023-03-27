@@ -10,7 +10,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
 
   const logout = async () => {
-    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('KEY');
     navigation.navigate('Login');
   };
 

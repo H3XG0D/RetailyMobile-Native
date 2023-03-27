@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from 'react';
 
 import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {IStackScreenProps} from '../../navigation/StackScreen';
@@ -22,6 +22,7 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
   const [error, setError] = React.useState<string | boolean>();
   const [loadError, setLoadError] = React.useState<boolean>();
   const [load, setLoad] = React.useState<boolean>(false);
+  const [data, setData] = React.useState<boolean>(false);
 
   const [modelId, setModelId] = React.useState<string>();
 
@@ -42,37 +43,41 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
   };
 
   const loginCheck = async () => {
-    setLoad(true)
+    setLoad(true);
     const register = await loginRegister(text, password, Platform.OS, modelId);
 
     if (!loadError && !register) {
       setError('Ошибка авторизации');
     } else {
-      await AsyncStorage.setItem('TOKEN_KEY', text)
-      navigation.navigate('Market')
+      await AsyncStorage.setItem('KEY', text);
+      navigation.navigate('Market');
     }
     setLoad(false);
-  }
+  };
 
   const readData = async () => {
-    const value = await AsyncStorage.getItem('TOKEN_KEY')
+    const value = await AsyncStorage.getItem('KEY');
     if (value !== null) {
-      navigation.navigate('Market')
+      navigation.navigate('Market');
     } else {
-      console.log('error')
+      console.log(value);
     }
-  }
+  };
 
-  useEffect(() => {
-    readData();
-  }, [])
+  readData();
 
   return (
     <View>
+      {/*<LoginLoadingContent>*/}
+      {/*  <LoginLoadingLogo>*/}
+      {/*    <LogoImage source={require('./images/logo.png')} />*/}
+      {/*  </LoginLoadingLogo>*/}
+      {/*  <LoginLoadingScreen>*/}
+      {/*  </LoginLoadingScreen>*/}
+      {/*</LoginLoadingContent>*/}
       <Logo>
         <LogoImage source={require('./images/logo.png')} />
       </Logo>
-
       <LoginHeader>
         <LoginTitle>Вход</LoginTitle>
         <LoginSubtitle>Введите логин или номер телефона</LoginSubtitle>
@@ -106,6 +111,7 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
           <TouchableOpacity
             onPress={() => {
               loginCheck();
+              readData();
             }}
             style={{marginTop: 10}}>
             <LoginSignIn>
@@ -220,6 +226,25 @@ const LoginErrorText = styled.Text`
   color: ${variables.COLORS.red};
   margin-left: auto;
   margin-right: auto;
+`;
+
+const LoginLoadingScreen = styled.View`
+  display: none;
+`;
+
+const LoginLoadingContent = styled.View`
+  width: 100%;
+  height: 100%;
+  background-color: ${variables.COLORS.primary};
+`;
+
+const LoginLoadingLogo = styled.View`
+  justify-content: center;
+  align-items: center;
+  background-color: ${variables.COLORS.primary};
+  margin-top: 200px;
+  height: 210px;
+  width: 100%;
 `;
 
 export default LoginPage;
