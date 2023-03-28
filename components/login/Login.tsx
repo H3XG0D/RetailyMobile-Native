@@ -41,7 +41,8 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
     if (!loadError && !register) {
       setError('Ошибка авторизации');
     } else {
-      await AsyncStorage.setItem('KEY', text);
+      await AsyncStorage.setItem('LOGIN', text);
+      await AsyncStorage.setItem('PASSWORD', password);
       navigation.navigate('Market');
     }
     setLoad(false);
