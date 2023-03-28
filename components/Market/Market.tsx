@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 // @ts-ignore
 import styled from 'styled-components/native';
@@ -24,15 +24,29 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
     });
   }, [navigation]);
 
+  const [active, setActive] = React.useState<boolean>(false);
+
+  const handleClick = () => {
+    setActive(!active);
+  };
+
   return (
     <View style={{height: '100%'}}>
       <MarketPaginationContainer>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
-            <MarketPaginationBox></MarketPaginationBox>
-            <MarketPaginationBox></MarketPaginationBox>
-            <MarketPaginationBox></MarketPaginationBox>
-            <MarketPaginationBox></MarketPaginationBox>
+            <TouchableOpacity>
+              <MarketPaginationBox></MarketPaginationBox>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <MarketPaginationBox></MarketPaginationBox>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <MarketPaginationBox></MarketPaginationBox>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <MarketPaginationBox></MarketPaginationBox>
+            </TouchableOpacity>
           </MarketPaginationSpace>
         </ScrollView>
 
@@ -41,31 +55,45 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           showsHorizontalScrollIndicator={false}
           style={{marginTop: 25}}>
           <MarketPaginationSpace>
-            <MarketPaginationFilterAll>
-              <MarketPaginationFilterTextActive>
-                Все
-              </MarketPaginationFilterTextActive>
-            </MarketPaginationFilterAll>
-            <MarketPaginationFilterBread>
-              <MarketPaginationFilterTextNoActive>
-                Хлеб
-              </MarketPaginationFilterTextNoActive>
-            </MarketPaginationFilterBread>
-            <MarketPaginationFilterMilk>
-              <MarketPaginationFilterTextNoActive>
-                Молоко
-              </MarketPaginationFilterTextNoActive>
-            </MarketPaginationFilterMilk>
-            <MarketPaginationFilterDrinks>
-              <MarketPaginationFilterTextNoActive>
-                Напитки
-              </MarketPaginationFilterTextNoActive>
-            </MarketPaginationFilterDrinks>
-            <MarketPaginationFilterMeat>
-              <MarketPaginationFilterTextNoActive>
-                Мясные продукты
-              </MarketPaginationFilterTextNoActive>
-            </MarketPaginationFilterMeat>
+            <TouchableOpacity>
+              <MarketPaginationFilterAll>
+                <MarketPaginationFilterTextActive>
+                  Все
+                </MarketPaginationFilterTextActive>
+              </MarketPaginationFilterAll>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <MarketPaginationFilterBread>
+                <MarketPaginationFilterTextNoActive>
+                  Хлеб
+                </MarketPaginationFilterTextNoActive>
+              </MarketPaginationFilterBread>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <MarketPaginationFilterMilk>
+                <MarketPaginationFilterTextNoActive>
+                  Молоко
+                </MarketPaginationFilterTextNoActive>
+              </MarketPaginationFilterMilk>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <MarketPaginationFilterDrinks>
+                <MarketPaginationFilterTextNoActive>
+                  Напитки
+                </MarketPaginationFilterTextNoActive>
+              </MarketPaginationFilterDrinks>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <MarketPaginationFilterMeat>
+                <MarketPaginationFilterTextNoActive>
+                  Мясные продукты
+                </MarketPaginationFilterTextNoActive>
+              </MarketPaginationFilterMeat>
+            </TouchableOpacity>
           </MarketPaginationSpace>
         </ScrollView>
       </MarketPaginationContainer>
