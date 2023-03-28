@@ -8,11 +8,16 @@ import Market from '../../components/login/Market';
 import Forget from '../../components/login/forget-password/Forget';
 import ResetPassword from '../../components/login/forget-password/ResetPassword';
 import ForgetCode from '../../components/login/forget-password/ForgetCode';
+import LoadingScreen from '../../components/login/LoadingScreen';
 
 const routes: IRouteProps[] = [
   {
     name: 'Login',
     component: Login,
+  },
+  {
+    name: 'LoadingScreen',
+    component: LoadingScreen,
   },
   {
     name: 'Forget',

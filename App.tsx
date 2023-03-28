@@ -12,7 +12,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={'Login'}
+        initialRouteName={'LoadingScreen'}
         screenOptions={{
           headerTitleAlign: 'center',
           headerTitleStyle: {fontSize: 24},

@@ -13,18 +13,17 @@ import {loginRegister} from '../../api/api';
 
 // * Async Storage for user session
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from './LoadingScreen';
 
 const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
-  const [text, onChangeText] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
-  const [token, setToken] = React.useState<any>(null);
+  const [text, onChangeText] = React.useState<string>('');
+  const [password, onChangePassword] = React.useState<string>('');
+  const [modelId, setModelId] = React.useState<string>('');
 
   const [error, setError] = React.useState<string | boolean>();
   const [loadError, setLoadError] = React.useState<boolean>();
   const [load, setLoad] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<boolean>(false);
-
-  const [modelId, setModelId] = React.useState<string>();
+  const [loadingScreen, setLoadingScreen] = React.useState<boolean>(true);
 
   const {navigation} = props;
 
@@ -33,11 +32,6 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
   }, [navigation]);
 
   const detectModel = () => {
-    // let brand = DeviceInfo.getBrand();
-    // let buildNumber = DeviceInfo.getBuildNumber();
-    // let bundleId = DeviceInfo.getBuildId();
-    // let deviceId = DeviceInfo.getDeviceId();
-
     let model = DeviceInfo.getModel();
     setModelId(model);
   };
@@ -55,26 +49,15 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
     setLoad(false);
   };
 
-  const readData = async () => {
-    const value = await AsyncStorage.getItem('KEY');
-    if (value !== null) {
-      navigation.navigate('Market');
-    } else {
-      console.log(value);
-    }
-  };
-
-  readData();
-
   return (
     <View>
-      {/*<LoginLoadingContent>*/}
-      {/*  <LoginLoadingLogo>*/}
-      {/*    <LogoImage source={require('./images/logo.png')} />*/}
-      {/*  </LoginLoadingLogo>*/}
-      {/*  <LoginLoadingScreen>*/}
-      {/*  </LoginLoadingScreen>*/}
-      {/*</LoginLoadingContent>*/}
+      {/* <LoginLoadingContent>
+        <LoginLoadingLogo>
+          <LogoImage source={require('./images/logo.png')} />
+        </LoginLoadingLogo>
+        <LoginLoadingScreen></LoginLoadingScreen>
+      </LoginLoadingContent> */}
+
       <Logo>
         <LogoImage source={require('./images/logo.png')} />
       </Logo>
@@ -111,7 +94,6 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
           <TouchableOpacity
             onPress={() => {
               loginCheck();
-              readData();
             }}
             style={{marginTop: 10}}>
             <LoginSignIn>
@@ -228,23 +210,23 @@ const LoginErrorText = styled.Text`
   margin-right: auto;
 `;
 
-const LoginLoadingScreen = styled.View`
-  display: none;
-`;
+// const LoginLoadingScreen = styled.View`
+//   display: none;
+// `;
 
-const LoginLoadingContent = styled.View`
-  width: 100%;
-  height: 100%;
-  background-color: ${variables.COLORS.primary};
-`;
+// const LoginLoadingContent = styled.View`
+//   width: 100%;
+//   height: 100%;
+//   background-color: ${variables.COLORS.primary};
+// `;
 
-const LoginLoadingLogo = styled.View`
-  justify-content: center;
-  align-items: center;
-  background-color: ${variables.COLORS.primary};
-  margin-top: 200px;
-  height: 210px;
-  width: 100%;
-`;
+// const LoginLoadingLogo = styled.View`
+//   justify-content: center;
+//   align-items: center;
+//   background-color: ${variables.COLORS.primary};
+//   margin-top: 250px;
+//   height: 210px;
+//   width: 100%;
+// `;
 
 export default LoginPage;
