@@ -10,6 +10,8 @@ import ResetPassword from '../../components/login/forget-password/ResetPassword'
 import ForgetCode from '../../components/login/forget-password/ForgetCode';
 import LoadingScreen from '../../components/login/LoadingScreen';
 import Request from '../../components/Market/Request';
+import MyRequest from '../../components/Market/MyRequest';
+import UserProfile from '../../components/Market/UserProfile';
 
 const routes: IRouteProps[] = [
   {
@@ -55,6 +57,14 @@ const routes: IRouteProps[] = [
   {
     name: 'Request',
     component: Request,
+  },
+  {
+    name: 'MyRequest',
+    component: MyRequest,
+  },
+  {
+    name: 'UserProfile',
+    component: UserProfile,
   },
 ];
 

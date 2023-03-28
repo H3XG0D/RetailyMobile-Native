@@ -19,28 +19,13 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitle: 'Главная',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
+      headerTitleStyle: {fontSize: 27},
     });
   }, [navigation]);
 
-  const logout = async () => {
-    await AsyncStorage.removeItem('LOGIN');
-    await AsyncStorage.removeItem('PASSWORD');
-    navigation.navigate('Login');
-  };
-
   return (
     <View style={{height: '100%'}}>
-      <MarketLogoutText>Добро пожаловать, в маркет!</MarketLogoutText>
-      <TouchableOpacity
-        onPress={() => {
-          logout();
-        }}
-        style={{marginTop: 10}}>
-        <MarketSignIn>
-          <MarketSignInText>Выйти</MarketSignInText>
-        </MarketSignIn>
-      </TouchableOpacity>
-
+      <MarketPaginationContainer></MarketPaginationContainer>
       <MarketMenuContainer>
         <MarketMenuTab onPress={() => navigation.navigate('Market')}>
           <MarketMenuItems>
@@ -60,15 +45,19 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           </MarketMenuItems>
         </MarketMenuTab>
 
-        <MarketMenuItems>
-          <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
-          <MarketMenuWideText>Мои заявки</MarketMenuWideText>
-        </MarketMenuItems>
+        <MarketMenuTab onPress={() => navigation.navigate('MyRequest')}>
+          <MarketMenuItems>
+            <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
+            <MarketMenuWideText>Мои заявки</MarketMenuWideText>
+          </MarketMenuItems>
+        </MarketMenuTab>
 
-        <MarketMenuItems>
-          <FontAwesomeIcon icon={faCog} color={'gray'} size={30} />
-          <MarketMenuText>Профиль</MarketMenuText>
-        </MarketMenuItems>
+        <MarketMenuTab onPress={() => navigation.navigate('UserProfile')}>
+          <MarketMenuItems>
+            <FontAwesomeIcon icon={faCog} color={'gray'} size={30} />
+            <MarketMenuText>Профиль</MarketMenuText>
+          </MarketMenuItems>
+        </MarketMenuTab>
       </MarketMenuContainer>
     </View>
   );
@@ -76,39 +65,20 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 
 export default Market;
 
-const MarketSignIn = styled.View`
-  background-color: ${variables.COLORS.tertiary};
-  border-radius: ${variables.SIZES.radius};
-  margin-top: ${variables.SIZES.top};
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
-  justify-content: center;
-  width: 260px;
-  height: 45px;
-`;
-
-const MarketSignInText = styled.Text`
-  color: ${variables.COLORS.white};
-  font-weight: ${variables.SIZES.bold};
-`;
-
-const MarketLogoutText = styled.Text`
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 250px;
-  font-size: 20px;
-  color: ${variables.COLORS.black};
+const MarketPaginationContainer = styled.View`
+  width: 100%;
+  height: 250px;
+  background-color: ${variables.COLORS.white};
 `;
 
 const MarketMenuContainer = styled.View`
   position: absolute;
+  justify-content: center;
   flex-direction: row;
-  gap: 40px;
+  background-color: ${variables.COLORS.white};
   width: 100%;
   height: 65px;
-  justify-content: center;
-  background-color: ${variables.COLORS.white};
+  gap: 40px;
   bottom: 0;
   right: 0;
 `;
@@ -120,14 +90,14 @@ const MarketMenuItems = styled.View`
 `;
 
 const MarketMenuText = styled.Text`
-  font-size: ${variables.SIZES.h8};
   color: ${variables.COLORS.gray};
+  font-size: ${variables.SIZES.h8};
   margin-top: 5px;
 `;
 
 const MarketMenuWideText = styled.Text`
-  font-size: ${variables.SIZES.h8};
   color: ${variables.COLORS.gray};
+  font-size: ${variables.SIZES.h8};
   margin-top: 5px;
   width: 67px;
 `;

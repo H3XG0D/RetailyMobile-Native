@@ -7,12 +7,12 @@ import styled from 'styled-components/native';
 import * as variables from '../../constants';
 import Market from './Market';
 
-const Request: React.FunctionComponent<IStackScreenProps> = props => {
+const MyRequest: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Заявки',
+      headerTitle: 'Мои заявки',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
       headerTitleStyle: {fontSize: 27},
@@ -20,14 +20,14 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
   }, [navigation]);
 
   return (
-    <RequestMain>
+    <MyRequestMain>
       <Text>Request</Text>
-    </RequestMain>
+    </MyRequestMain>
   );
 };
 
-export default Request;
+export default MyRequest;
 
-const RequestMain = styled.View`
+const MyRequestMain = styled.View`
   background-color: ${variables.COLORS.white};
 `;
