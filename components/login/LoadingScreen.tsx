@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from './../../constants';
-import Login from './Login';
 
 const LoadingScreen: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -15,19 +14,16 @@ const LoadingScreen: React.FunctionComponent<IStackScreenProps> = props => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
-  React.useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
   const readData = async () => {
     const value = await AsyncStorage.getItem('KEY');
     if (value !== null) {
       navigation.navigate('Market');
-    } else {
     }
   };
 
-  readData();
+  React.useEffect(() => {
+    setTimeout(() => setLoading(false), 1000);
+  }, [readData()]);
 
   return (
     <>

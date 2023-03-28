@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {IStackScreenProps} from '../../navigation/StackScreen';
@@ -13,9 +13,10 @@ import {loginRegister} from '../../api/api';
 
 // * Async Storage for user session
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoadingScreen from './LoadingScreen';
 
 const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
+  const {navigation} = props;
+
   const [text, onChangeText] = React.useState<string>('');
   const [password, onChangePassword] = React.useState<string>('');
   const [modelId, setModelId] = React.useState<string>('');
@@ -23,9 +24,6 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
   const [error, setError] = React.useState<string | boolean>();
   const [loadError, setLoadError] = React.useState<boolean>();
   const [load, setLoad] = React.useState<boolean>(false);
-  const [loadingScreen, setLoadingScreen] = React.useState<boolean>(true);
-
-  const {navigation} = props;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
@@ -51,13 +49,6 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
 
   return (
     <View>
-      {/* <LoginLoadingContent>
-        <LoginLoadingLogo>
-          <LogoImage source={require('./images/logo.png')} />
-        </LoginLoadingLogo>
-        <LoginLoadingScreen></LoginLoadingScreen>
-      </LoginLoadingContent> */}
-
       <Logo>
         <LogoImage source={require('./images/logo.png')} />
       </Logo>
@@ -209,24 +200,5 @@ const LoginErrorText = styled.Text`
   margin-left: auto;
   margin-right: auto;
 `;
-
-// const LoginLoadingScreen = styled.View`
-//   display: none;
-// `;
-
-// const LoginLoadingContent = styled.View`
-//   width: 100%;
-//   height: 100%;
-//   background-color: ${variables.COLORS.primary};
-// `;
-
-// const LoginLoadingLogo = styled.View`
-//   justify-content: center;
-//   align-items: center;
-//   background-color: ${variables.COLORS.primary};
-//   margin-top: 250px;
-//   height: 210px;
-//   width: 100%;
-// `;
 
 export default LoginPage;
