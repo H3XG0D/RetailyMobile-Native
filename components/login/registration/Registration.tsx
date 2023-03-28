@@ -8,7 +8,7 @@ import {
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../../retaily/navigation/StackScreen';
+import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {getSMS, loginCheck} from '../../../api/api';
 
 const Registration: React.FunctionComponent<IStackScreenProps> = props => {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../../retaily/navigation/StackScreen';
+import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {
   TouchableOpacity,
   ScrollView,
