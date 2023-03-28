@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 // @ts-ignore
 import styled from 'styled-components/native';
@@ -11,6 +11,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 import {IStackScreenProps} from '../../navigation/StackScreen';
 import * as variables from '../../constants';
+import {getBanners} from '../../api/api';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -30,12 +31,20 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
     setActive(!active);
   };
 
+  const getImages = async () => {
+    const result = await getBanners('getbanners');
+    console.log(result);
+  };
+
   return (
     <View style={{height: '100%'}}>
       <MarketPaginationContainer>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                getImages;
+              }}>
               <MarketPaginationBox></MarketPaginationBox>
             </TouchableOpacity>
             <TouchableOpacity>

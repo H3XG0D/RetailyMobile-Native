@@ -92,3 +92,12 @@ export const forgotPassword = (login: string, psw: string, code: string) => {
     .then(res => res.data)
     .catch(err => console.log(err));
 };
+
+export const getBanners = (cmd: string) => {
+  return instance
+    .post('clientv7', {
+      cmd: cmd,
+    })
+    .then(res => res.data)
+    .catch(err => console.log(err));
+};
