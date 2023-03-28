@@ -16,7 +16,7 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitle: 'Профиль',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
-      headerTitleStyle: {fontSize: 27},
+      headerTitleStyle: {fontSize: 27, fontWeight: '700'},
     });
   }, [navigation]);
 
@@ -43,6 +43,8 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
 export default UserProfile;
 
 const MainUserProfile = styled.View`
+  width: 100%;
+  height: 100%;
   background-color: ${variables.COLORS.white};
 `;
 

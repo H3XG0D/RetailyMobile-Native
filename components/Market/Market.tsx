@@ -1,15 +1,16 @@
-import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {Component} from 'react';
-import {IStackScreenProps} from '../../navigation/StackScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Text, View} from 'react-native';
+import React from 'react';
 // @ts-ignore
 import styled from 'styled-components/native';
-import * as variables from '../../constants';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
-import {faPencilSquare} from '@fortawesome/free-solid-svg-icons/faPencilSquare';
+import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
+import {ScrollView} from 'react-native-gesture-handler';
+
+import {IStackScreenProps} from '../../navigation/StackScreen';
+import * as variables from '../../constants';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -19,46 +20,89 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitle: 'Главная',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
-      headerTitleStyle: {fontSize: 27},
+      headerTitleStyle: {fontSize: 27, fontWeight: '700'},
     });
   }, [navigation]);
 
   return (
     <View style={{height: '100%'}}>
-      <MarketPaginationContainer></MarketPaginationContainer>
-      <MarketMenuContainer>
-        <MarketMenuTab onPress={() => navigation.navigate('Market')}>
-          <MarketMenuItems>
+      <MarketPaginationContainer>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <MarketPaginationSpace>
+            <MarketPaginationBox></MarketPaginationBox>
+            <MarketPaginationBox></MarketPaginationBox>
+            <MarketPaginationBox></MarketPaginationBox>
+            <MarketPaginationBox></MarketPaginationBox>
+          </MarketPaginationSpace>
+        </ScrollView>
+
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{marginTop: 25}}>
+          <MarketPaginationSpace>
+            <MarketPaginationFilterAll>
+              <MarketPaginationFilterTextActive>
+                Все
+              </MarketPaginationFilterTextActive>
+            </MarketPaginationFilterAll>
+            <MarketPaginationFilterBread>
+              <MarketPaginationFilterTextNoActive>
+                Хлеб
+              </MarketPaginationFilterTextNoActive>
+            </MarketPaginationFilterBread>
+            <MarketPaginationFilterMilk>
+              <MarketPaginationFilterTextNoActive>
+                Молоко
+              </MarketPaginationFilterTextNoActive>
+            </MarketPaginationFilterMilk>
+            <MarketPaginationFilterDrinks>
+              <MarketPaginationFilterTextNoActive>
+                Напитки
+              </MarketPaginationFilterTextNoActive>
+            </MarketPaginationFilterDrinks>
+            <MarketPaginationFilterMeat>
+              <MarketPaginationFilterTextNoActive>
+                Мясные продукты
+              </MarketPaginationFilterTextNoActive>
+            </MarketPaginationFilterMeat>
+          </MarketPaginationSpace>
+        </ScrollView>
+      </MarketPaginationContainer>
+
+      <MarketBottomMenuContainer>
+        <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
+          <MarketBottomMenuItems>
             <FontAwesomeIcon
               icon={faHome}
               color={variables.COLORS.primary}
               size={28}
             />
-            <MarketMenuText>Главная</MarketMenuText>
-          </MarketMenuItems>
-        </MarketMenuTab>
+            <MarketBottomMenuText>Главная</MarketBottomMenuText>
+          </MarketBottomMenuItems>
+        </MarketBottomMenuTab>
 
-        <MarketMenuTab onPress={() => navigation.navigate('Request')}>
-          <MarketMenuItems>
-            <FontAwesomeIcon icon={faPencilSquare} color={'gray'} size={30} />
-            <MarketMenuText>Заявки</MarketMenuText>
-          </MarketMenuItems>
-        </MarketMenuTab>
+        <MarketBottomMenuTab onPress={() => navigation.navigate('Request')}>
+          <MarketBottomMenuItems>
+            <FontAwesomeIcon icon={faShoppingBasket} color={'gray'} size={30} />
+            <MarketBottomMenuText>Корзина</MarketBottomMenuText>
+          </MarketBottomMenuItems>
+        </MarketBottomMenuTab>
 
-        <MarketMenuTab onPress={() => navigation.navigate('MyRequest')}>
-          <MarketMenuItems>
+        <MarketBottomMenuTab onPress={() => navigation.navigate('MyRequest')}>
+          <MarketBottomMenuItems>
             <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
-            <MarketMenuWideText>Мои заявки</MarketMenuWideText>
-          </MarketMenuItems>
-        </MarketMenuTab>
+            <MarketBottomMenuWideText>Мои заявки</MarketBottomMenuWideText>
+          </MarketBottomMenuItems>
+        </MarketBottomMenuTab>
 
-        <MarketMenuTab onPress={() => navigation.navigate('UserProfile')}>
-          <MarketMenuItems>
+        <MarketBottomMenuTab onPress={() => navigation.navigate('UserProfile')}>
+          <MarketBottomMenuItems>
             <FontAwesomeIcon icon={faCog} color={'gray'} size={30} />
-            <MarketMenuText>Профиль</MarketMenuText>
-          </MarketMenuItems>
-        </MarketMenuTab>
-      </MarketMenuContainer>
+            <MarketBottomMenuText>Профиль</MarketBottomMenuText>
+          </MarketBottomMenuItems>
+        </MarketBottomMenuTab>
+      </MarketBottomMenuContainer>
     </View>
   );
 };
@@ -66,12 +110,94 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 export default Market;
 
 const MarketPaginationContainer = styled.View`
-  width: 100%;
-  height: 250px;
   background-color: ${variables.COLORS.white};
+  height: 205px;
 `;
 
-const MarketMenuContainer = styled.View`
+const MarketPaginationBox = styled.View`
+  background-color: gray;
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 20px;
+  width: 150px;
+  height: 100px;
+`;
+
+const MarketPaginationFilterAll = styled.View`
+  background-color: ${variables.COLORS.sixth};
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 55px;
+  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+const MarketPaginationFilterBread = styled.View`
+  background-color: ${variables.COLORS.brightgray};
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 60px;
+  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+const MarketPaginationFilterMilk = styled.View`
+  background-color: ${variables.COLORS.brightgray};
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 75px;
+  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+const MarketPaginationFilterDrinks = styled.View`
+  background-color: ${variables.COLORS.brightgray};
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 85px;
+  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+const MarketPaginationFilterMeat = styled.View`
+  background-color: ${variables.COLORS.brightgray};
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 155px;
+  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+const MarketPaginationSpace = styled.View`
+  flex-direction: row;
+  margin-left: 15px;
+  margin-right: 15px;
+`;
+
+const MarketPaginationFilterTextActive = styled.Text`
+  color: ${variables.COLORS.white};
+  font-size: ${variables.SIZES.h6};
+`;
+
+const MarketPaginationFilterTextNoActive = styled.Text`
+  color: ${variables.COLORS.black};
+  font-size: ${variables.SIZES.h6};
+`;
+
+// * Bottom Menu
+
+const MarketBottomMenuContainer = styled.View`
   position: absolute;
   justify-content: center;
   flex-direction: row;
@@ -83,26 +209,26 @@ const MarketMenuContainer = styled.View`
   right: 0;
 `;
 
-const MarketMenuItems = styled.View`
+const MarketBottomMenuItems = styled.View`
   align-items: center;
   justify-content: center;
   width: 55px;
 `;
 
-const MarketMenuText = styled.Text`
+const MarketBottomMenuText = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h8};
   margin-top: 5px;
 `;
 
-const MarketMenuWideText = styled.Text`
+const MarketBottomMenuWideText = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h8};
   margin-top: 5px;
   width: 67px;
 `;
 
-const MarketMenuTab = styled.TouchableOpacity`
+const MarketBottomMenuTab = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;

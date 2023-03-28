@@ -4,6 +4,7 @@ export const COLORS = {
   tertiary: '#288AF5', // Third Color,
   forth: '#439AF7',
   fifth: '#347AB6',
+  sixth: '#288AF4',
 
   // Global Colors
   white: '#FFF',
@@ -13,6 +14,7 @@ export const COLORS = {
   gray: '#6A6A6A',
   milky: '#F4F4F4',
   gold: '#FAFAD2',
+  brightgray: '#E4E4E6',
 };
 
 export const SIZES = {

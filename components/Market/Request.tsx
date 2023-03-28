@@ -15,7 +15,7 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitle: 'Заявки',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
-      headerTitleStyle: {fontSize: 27},
+      headerTitleStyle: {fontSize: 27, fontWeight: '700'},
     });
   }, [navigation]);
 
@@ -29,5 +29,7 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
 export default Request;
 
 const RequestMain = styled.View`
+  width: 100%;
+  height: 100%;
   background-color: ${variables.COLORS.white};
 `;
