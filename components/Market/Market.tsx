@@ -59,29 +59,31 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
       <MarketPaginationContainer>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
-            <TouchableOpacity>
-              <MarketPaginationBox>
-                <Image
-                  source={{
-                    uri:
-                      variables.siteUrl +
-                      '/api/repo/' +
-                      (image?.standart && image.standart.length > 0
-                        ? image?.standart[0].images[0] + '_medium'
-                        : undefined),
-                  }}
-                  style={{width: '100%', height: '100%'}}></Image>
-              </MarketPaginationBox>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <MarketPaginationBox></MarketPaginationBox>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <MarketPaginationBox></MarketPaginationBox>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <MarketPaginationBox></MarketPaginationBox>
-            </TouchableOpacity>
+            {image?.standart && image.standart.length > 0
+              ? image.standart.map((banner: any) => {
+                  return (
+                    <TouchableOpacity>
+                      <MarketPaginationBox>
+                        <Image
+                          source={{
+                            uri:
+                              banner &&
+                              banner.images &&
+                              banner.images.length > 0
+                                ? variables.siteUrl +
+                                  '/api/repo/' +
+                                  banner.images[0]
+                                : undefined,
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                          }}></Image>
+                      </MarketPaginationBox>
+                    </TouchableOpacity>
+                  );
+                })
+              : undefined}
           </MarketPaginationSpace>
         </ScrollView>
 
