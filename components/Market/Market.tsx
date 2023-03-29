@@ -33,16 +33,23 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
     });
   }, [navigation]);
 
-  const [active, setActive] = React.useState<any>([
-    {key: 0, value: 'All_Food'},
-    {key: 1, value: 'Bread'},
-    {key: 2, value: 'Milk'},
-    {key: 3, value: 'Drinks'},
-    {key: 4, value: 'Meat'},
+  const [tabs, setTabs] = React.useState<any>([
+    {key: 0, value: 'Все', active: true},
+    {key: 1, value: 'Хлеб', active: false},
+    {key: 2, value: 'Молоко', active: false},
+    {key: 3, value: 'Напитки', active: false},
+    {key: 4, value: 'Мясные продукции', active: false},
   ]);
 
-  const handleClick = () => {
-    setActive(!active);
+  const handleClick = (key: number) => {
+    let newTabs = [...tabs];
+
+    newTabs.forEach((item: any) => {
+      item.active = false;
+    });
+
+    newTabs.find((item: any) => item.key === key).active = true;
+    setTabs(newTabs);
   };
 
   const getBanners = async () => {
@@ -98,51 +105,21 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           showsHorizontalScrollIndicator={false}
           style={{marginTop: 25}}>
           <MarketPaginationSpace>
-            <TouchableOpacity onPress={() => handleClick()}>
-              <MarketPaginationFilterAll
-                style={{
-                  backgroundColor: active ? '#288AF4' : '#E4E4E6',
-                }}>
-                <MarketPaginationFilterTextActive
-                  style={{color: active ? 'white' : 'black'}}>
-                  Все
-                </MarketPaginationFilterTextActive>
-              </MarketPaginationFilterAll>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => handleClick()}>
-              <MarketPaginationFilterBread
-                style={{backgroundColor: active ? '#E4E4E6' : '#288AF4'}}>
-                <MarketPaginationFilterTextNoActive
-                  style={{color: active ? 'black' : 'white'}}>
-                  Хлеб
-                </MarketPaginationFilterTextNoActive>
-              </MarketPaginationFilterBread>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <MarketPaginationFilterMilk>
-                <MarketPaginationFilterTextNoActive>
-                  Молоко
-                </MarketPaginationFilterTextNoActive>
-              </MarketPaginationFilterMilk>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <MarketPaginationFilterDrinks>
-                <MarketPaginationFilterTextNoActive>
-                  Напитки
-                </MarketPaginationFilterTextNoActive>
-              </MarketPaginationFilterDrinks>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <MarketPaginationFilterMeat>
-                <MarketPaginationFilterTextNoActive>
-                  Мясные продукты
-                </MarketPaginationFilterTextNoActive>
-              </MarketPaginationFilterMeat>
-            </TouchableOpacity>
+            {tabs.map((item: any) => {
+              return (
+                <TouchableOpacity onPress={() => handleClick(item.key)}>
+                  <MarketPaginationFilterAll
+                    style={{
+                      backgroundColor: item.active ? '#288AF4' : '#E4E4E6',
+                    }}>
+                    <MarketPaginationFilterTexttabs
+                      style={{color: item.active ? 'white' : 'black'}}>
+                      {item.value}
+                    </MarketPaginationFilterTexttabs>
+                  </MarketPaginationFilterAll>
+                </TouchableOpacity>
+              );
+            })}
           </MarketPaginationSpace>
         </ScrollView>
       </MarketPaginationContainer>
@@ -238,10 +215,10 @@ const MarketPaginationFilterAll = styled.View`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  width: 55px;
-  height: 35px;
   margin-left: 5px;
   margin-right: 5px;
+
+  padding: 10px 15px;
 `;
 
 const MarketPaginationFilterBread = styled.View`
@@ -294,12 +271,12 @@ const MarketPaginationSpace = styled.View`
   margin-right: 15px;
 `;
 
-const MarketPaginationFilterTextActive = styled.Text`
+const MarketPaginationFilterTexttabs = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h6};
 `;
 
-const MarketPaginationFilterTextNoActive = styled.Text`
+const MarketPaginationFilterTextNotabs = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h6};
 `;
@@ -310,9 +287,9 @@ const MarketContentContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 1450px;
   gap: 25px;
   padding: 30px 20px 20px 25px;
+  margin-bottom: 80px;
 `;
 
 const MarketContentBox = styled.View`
@@ -343,24 +320,23 @@ const MarketContentBoxContainer = styled.View`
 
 const MarketBottomMenuContainer = styled.View`
   position: absolute;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: row;
   background-color: ${variables.COLORS.white};
   width: 100%;
-  height: 65px;
-  gap: 40px;
   bottom: 0;
   right: 0;
+  padding: 10px 15px;
 `;
 
 const MarketBottomMenuItems = styled.View`
   align-items: center;
   justify-content: center;
-  width: 55px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 const MarketBottomMenuText = styled.Text`
-  color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h8};
   margin-top: 5px;
 `;
@@ -369,7 +345,6 @@ const MarketBottomMenuWideText = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h8};
   margin-top: 5px;
-  width: 67px;
 `;
 
 const MarketBottomMenuTab = styled.TouchableOpacity`
