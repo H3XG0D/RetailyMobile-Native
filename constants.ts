@@ -43,5 +43,5 @@ export const SIZES = {
 
 export const siteUrl = 'https://retaily.online';
 export const registerUrl = 'https://retaily.online/api/users/signup';
-export const apiVersion = 'v7';
-export const version = '7.0.0';
+export const apiVersion = 'v8';
+export const version = '8.0.0';

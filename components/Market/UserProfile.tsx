@@ -21,8 +21,10 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
   }, [navigation]);
 
   const logout = async () => {
-    await AsyncStorage.removeItem('LOGIN');
-    await AsyncStorage.removeItem('PASSWORD');
+    await AsyncStorage.removeItem('login');
+    await AsyncStorage.removeItem('password');
+    await AsyncStorage.removeItem('token');
+
     navigation.navigate('Login');
   };
 

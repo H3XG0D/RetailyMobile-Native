@@ -2,16 +2,21 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 // @ts-ignore
 import styled from 'styled-components/native';
+
+// Icons
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
+
+// ScrollView
 import {ScrollView} from 'react-native-gesture-handler';
 
+// Imports all exports from local project
 import {IStackScreenProps} from '../../navigation/StackScreen';
 import * as variables from '../../constants';
-import {getBanners} from '../../api/api';
+import {getClient} from '../../api/api';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -25,26 +30,33 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
     });
   }, [navigation]);
 
-  const [active, setActive] = React.useState<boolean>(false);
+  const [active, setActive] = React.useState<any>([
+    {key: 0, value: 'All_Food'},
+    {key: 1, value: 'Bread'},
+    {key: 2, value: 'Milk'},
+    {key: 3, value: 'Drinks'},
+    {key: 4, value: 'Meat'},
+  ]);
 
   const handleClick = () => {
     setActive(!active);
   };
 
-  const getImages = async () => {
-    const result = await getBanners('getbanners');
+  const getBanners = async () => {
+    const result = await getClient({cmd: 'getbanners'});
     console.log(result);
   };
+
+  React.useEffect(() => {
+    getBanners();
+  }, []);
 
   return (
     <View style={{height: '100%'}}>
       <MarketPaginationContainer>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
-            <TouchableOpacity
-              onPress={() => {
-                getImages;
-              }}>
+            <TouchableOpacity>
               <MarketPaginationBox></MarketPaginationBox>
             </TouchableOpacity>
             <TouchableOpacity>
@@ -64,17 +76,23 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           showsHorizontalScrollIndicator={false}
           style={{marginTop: 25}}>
           <MarketPaginationSpace>
-            <TouchableOpacity>
-              <MarketPaginationFilterAll>
-                <MarketPaginationFilterTextActive>
+            <TouchableOpacity onPress={() => handleClick()}>
+              <MarketPaginationFilterAll
+                style={{
+                  backgroundColor: active ? '#288AF4' : '#E4E4E6',
+                }}>
+                <MarketPaginationFilterTextActive
+                  style={{color: active ? 'white' : 'black'}}>
                   Все
                 </MarketPaginationFilterTextActive>
               </MarketPaginationFilterAll>
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <MarketPaginationFilterBread>
-                <MarketPaginationFilterTextNoActive>
+            <TouchableOpacity onPress={() => handleClick()}>
+              <MarketPaginationFilterBread
+                style={{backgroundColor: active ? '#E4E4E6' : '#288AF4'}}>
+                <MarketPaginationFilterTextNoActive
+                  style={{color: active ? 'black' : 'white'}}>
                   Хлеб
                 </MarketPaginationFilterTextNoActive>
               </MarketPaginationFilterBread>
@@ -162,7 +180,7 @@ const MarketPaginationBox = styled.View`
 `;
 
 const MarketPaginationFilterAll = styled.View`
-  background-color: ${variables.COLORS.sixth};
+  background-color: ${variables.COLORS.brightgray};
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -223,7 +241,7 @@ const MarketPaginationSpace = styled.View`
 `;
 
 const MarketPaginationFilterTextActive = styled.Text`
-  color: ${variables.COLORS.white};
+  color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h6};
 `;
 

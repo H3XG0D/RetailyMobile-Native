@@ -7,18 +7,20 @@ import * as variables from './../../constants';
 
 const LoadingScreen: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
-  const [loading, setLoading] = React.useState<boolean>();
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
   const readData = async () => {
-    const login = await AsyncStorage.getItem('LOGIN');
-    const password = await AsyncStorage.getItem('PASSWORD');
+    const login = await AsyncStorage.getItem('login');
+    const password = await AsyncStorage.getItem('password');
 
     if (login !== null && password !== null) {
       navigation.navigate('Market');
+    } else {
+      setLoading(false);
     }
   };
 

@@ -9,7 +9,7 @@ import DeviceInfo from 'react-native-device-info';
 import styled from 'styled-components/native';
 // IMPORT CSS LIBRARY
 import * as variables from './../../constants';
-import {loginRegister} from '../../api/api';
+import {auth} from '../../api/api';
 
 // * Async Storage for user session
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,13 +36,11 @@ const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
 
   const loginCheck = async () => {
     setLoad(true);
-    const register = await loginRegister(text, password, Platform.OS, modelId);
+    const register: any = await auth.login(text, password);
 
     if (!loadError && !register) {
       setError('Ошибка авторизации');
     } else {
-      await AsyncStorage.setItem('LOGIN', text);
-      await AsyncStorage.setItem('PASSWORD', password);
       navigation.navigate('Market');
     }
     setLoad(false);
