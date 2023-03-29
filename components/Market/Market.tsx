@@ -22,6 +22,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
 
   const [image, setImage] = React.useState<any>([]);
+  const [suppliers, setSuppliers] = React.useState<any>([]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -47,11 +48,16 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const getBanners = async () => {
     const result = await getClient({cmd: 'getbanners'});
     setImage(result);
-    console.log(result);
+  };
+
+  const getSuppliers = async () => {
+    const result = await getClient({cmd: 'getsuppliers'});
+    setSuppliers(result);
   };
 
   React.useEffect(() => {
     getBanners();
+    getSuppliers();
   }, []);
 
   return (
@@ -141,6 +147,38 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
         </ScrollView>
       </MarketPaginationContainer>
 
+      <ScrollView>
+        <MarketContentContainer>
+          {suppliers?.suppliers && suppliers.suppliers.length > 0
+            ? suppliers.suppliers.map((supplier: any) => {
+                return (
+                  <TouchableOpacity>
+                    <MarketContentBoxContainer>
+                      <MarketContentBox>
+                        <Image
+                          source={{
+                            uri:
+                              supplier &&
+                              supplier.images &&
+                              supplier.images.length > 0
+                                ? variables.siteUrl +
+                                  '/api/repo/' +
+                                  supplier.images[0]
+                                : undefined,
+                          }}
+                          style={{width: 130, height: 130}}></Image>
+                        <MarketContentBoxText>
+                          {supplier.name}
+                        </MarketContentBoxText>
+                      </MarketContentBox>
+                    </MarketContentBoxContainer>
+                  </TouchableOpacity>
+                );
+              })
+            : undefined}
+        </MarketContentContainer>
+      </ScrollView>
+
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
           <MarketBottomMenuItems>
@@ -180,6 +218,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 
 export default Market;
 
+// * Navbar Menu
 const MarketPaginationContainer = styled.View`
   background-color: ${variables.COLORS.white};
   height: 205px;
@@ -263,6 +302,41 @@ const MarketPaginationFilterTextActive = styled.Text`
 const MarketPaginationFilterTextNoActive = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h6};
+`;
+
+// * Content
+
+const MarketContentContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 1450px;
+  gap: 25px;
+  padding: 30px 20px 20px 25px;
+`;
+
+const MarketContentBox = styled.View`
+  width: 160px;
+  height: 190px;
+
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+
+  border-radius: 10px;
+`;
+
+const MarketContentBoxText = styled.Text`
+  color: ${variables.COLORS.black};
+  font-size: ${variables.SIZES.h5};
+  text-align: center;
+`;
+
+const MarketContentBoxContainer = styled.View`
+  background-color: white;
+  width: 160px;
+  height: 200px;
+  border-radius: 10px;
 `;
 
 // * Bottom Menu
