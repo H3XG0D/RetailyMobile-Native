@@ -16,10 +16,12 @@ import {ScrollView} from 'react-native-gesture-handler';
 // Imports all exports from local project
 import {IStackScreenProps} from '../../navigation/StackScreen';
 import * as variables from '../../constants';
-import {getClient} from '../../api/api';
+import {auth, getClient} from '../../api/api';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
+
+  const [image, setImage] = React.useState<any>([]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +46,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 
   const getBanners = async () => {
     const result = await getClient({cmd: 'getbanners'});
+    setImage(result);
     console.log(result);
   };
 
@@ -57,7 +60,18 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
             <TouchableOpacity>
-              <MarketPaginationBox></MarketPaginationBox>
+              <MarketPaginationBox>
+                <Image
+                  source={{
+                    uri:
+                      variables.siteUrl +
+                      '/api/repo/' +
+                      (image?.standart && image.standart.length > 0
+                        ? image?.standart[0].images[0] + '_medium'
+                        : undefined),
+                  }}
+                  style={{width: '100%', height: '100%'}}></Image>
+              </MarketPaginationBox>
             </TouchableOpacity>
             <TouchableOpacity>
               <MarketPaginationBox></MarketPaginationBox>
@@ -170,7 +184,6 @@ const MarketPaginationContainer = styled.View`
 `;
 
 const MarketPaginationBox = styled.View`
-  background-color: gray;
   border-radius: 10px;
   margin-left: 5px;
   margin-right: 5px;

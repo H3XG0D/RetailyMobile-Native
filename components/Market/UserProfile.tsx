@@ -1,11 +1,9 @@
 import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {Component} from 'react';
 import {IStackScreenProps} from '../../navigation/StackScreen';
-import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../constants';
-import Market from './Market';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
