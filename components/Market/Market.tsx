@@ -1,5 +1,6 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Button, Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import Modal from 'react-native-modal';
 // @ts-ignore
 import styled from 'styled-components/native';
 
@@ -9,6 +10,7 @@ import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
+import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 
 // ScrollView
 import {ScrollView} from 'react-native-gesture-handler';
@@ -23,6 +25,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 
   const [image, setImage] = React.useState<any>([]);
   const [suppliers, setSuppliers] = React.useState<any>([]);
+  const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -62,6 +65,10 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
     setSuppliers(result);
   };
 
+  const showModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   React.useEffect(() => {
     getBanners();
     getSuppliers();
@@ -75,7 +82,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
             {image?.standart && image.standart.length > 0
               ? image.standart.map((banner: any) => {
                   return (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => showModal()}>
                       <MarketPaginationBox>
                         <Image
                           source={{
@@ -155,6 +162,91 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
             : undefined}
         </MarketContentContainer>
       </ScrollView>
+
+      {/* <View style={{flex: 1}}>
+        {image?.standart && image.standart.length > 0
+          ? image.standart.map((banner: any) => {
+              return (
+                <Modal isVisible={isModalVisible} backdropOpacity={0.4}>
+                  <View
+                    style={{
+                      height: 300,
+                      width: '100%',
+                      backgroundColor: 'white',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={{
+                        uri:
+                          banner && banner.images && banner.images.length > 0
+                            ? variables.siteUrl + 'api/repo' + banner.images[0]
+                            : undefined,
+                      }}
+                      style={{width: '100%', height: '100%'}}></Image>
+                    <Button title="Hide modal" onPress={showModal} />
+                  </View>
+                </Modal>
+              );
+            })
+          : undefined}
+      </View> */}
+
+      <View style={{flex: 1}}>
+        <Modal isVisible={isModalVisible} backdropOpacity={0.4}>
+          <View
+            style={{
+              height: 400,
+              width: '100%',
+              backgroundColor: 'white',
+              alignItems: 'center',
+              borderRadius: 15,
+            }}>
+            <TouchableOpacity onPress={() => showModal()}>
+              <FontAwesomeIcon
+                icon={faClose}
+                size={28}
+                style={{
+                  position: 'relative',
+                  top: 15,
+                  left: '40%',
+                }}></FontAwesomeIcon>
+            </TouchableOpacity>
+            <Image
+              source={{
+                uri:
+                  variables.siteUrl +
+                  '/api/repo/' +
+                  (image?.standart && image.standart.length > 0
+                    ? image?.standart[0].images[0]
+                    : undefined),
+              }}
+              style={{
+                width: 250,
+                height: 160,
+                borderRadius: 15,
+                marginTop: 30,
+              }}></Image>
+            <MarketBannerView>
+              <MarketBannerTitle>
+                {image?.standart && image.standart.length > 0
+                  ? image.standart[0].title
+                  : undefined}
+              </MarketBannerTitle>
+              <MarketBannerSubtitle>
+                {image?.standart && image.standart.length > 0
+                  ? image.standart[0].content
+                  : undefined}
+              </MarketBannerSubtitle>
+              <TouchableOpacity>
+                <MarketBannerButton>
+                  <MarketBannerButtonText>Перейти</MarketBannerButtonText>
+                </MarketBannerButton>
+              </TouchableOpacity>
+            </MarketBannerView>
+          </View>
+        </Modal>
+      </View>
 
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
@@ -242,7 +334,7 @@ const MarketContentContainer = styled.View`
 
   padding: 10px 10px 10px 15px;
   margin-top: 20px;
-  margin-bottom: 80px;
+  margin-bottom: 90px;
 
   /* padding: 30px 20px 20px 25px; */
 `;
@@ -262,6 +354,39 @@ const MarketContentBoxText = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h5};
   text-align: center;
+`;
+
+const MarketBannerView = styled.View`
+  margin-top: 23px;
+  margin-left: 20px;
+  gap: 5px;
+`;
+
+const MarketBannerTitle = styled.Text`
+  color: ${variables.COLORS.black};
+  font-size: ${variables.SIZES.h6};
+  font-weight: ${variables.SIZES.bold};
+`;
+
+const MarketBannerSubtitle = styled.Text`
+  color: ${variables.COLORS.black};
+  font-size: ${variables.SIZES.h8};
+`;
+
+const MarketBannerButton = styled.View`
+  background-color: ${variables.COLORS.tertiary};
+  border-radius: ${variables.SIZES.radius};
+  margin-top: 15px;
+  align-items: center;
+  justify-content: center;
+  width: 290px;
+  height: 45px;
+`;
+
+const MarketBannerButtonText = styled.Text`
+  color: ${variables.COLORS.white};
+  font-size: ${variables.SIZES.h6};
+  font-weight: ${variables.SIZES.bold};
 `;
 
 const MarketContentBoxContainer = styled.View`
