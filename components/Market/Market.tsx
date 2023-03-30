@@ -38,6 +38,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
   }, [navigation]);
 
   const [active, setActive] = React.useState<string | undefined>(undefined);
+  const [content, setContent] = React.useState<any>(undefined);
 
   const getBanners = async () => {
     const result = await getClient({cmd: 'getbanners'});
@@ -66,7 +67,9 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
             {image?.standart && image.standart.length > 0
               ? image.standart.map((banner: any) => {
                   return (
-                    <TouchableOpacity onPress={() => showModal()}>
+                    <TouchableOpacity
+                      onPress={() => showModal()}
+                      onPressIn={() => setContent(banner)}>
                       <MarketPaginationBox>
                         <Image
                           source={{
@@ -165,35 +168,6 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
         </MarketContentContainer>
       </ScrollView>
 
-      {/* <View style={{flex: 1}}>
-        {image?.standart && image.standart.length > 0
-          ? image.standart.map((banner: any) => {
-              return (
-                <Modal isVisible={isModalVisible} backdropOpacity={0.4}>
-                  <View
-                    style={{
-                      height: 300,
-                      width: '100%',
-                      backgroundColor: 'white',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Image
-                      source={{
-                        uri:
-                          banner && banner.images && banner.images.length > 0
-                            ? variables.siteUrl + 'api/repo' + banner.images[0]
-                            : undefined,
-                      }}
-                      style={{width: '100%', height: '100%'}}></Image>
-                    <Button title="Hide modal" onPress={showModal} />
-                  </View>
-                </Modal>
-              );
-            })
-          : undefined}
-      </View> */}
-
       <View style={{flex: 1}}>
         <Modal isVisible={isModalVisible} backdropOpacity={0.4}>
           <View
@@ -219,8 +193,8 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
                 uri:
                   variables.siteUrl +
                   '/api/repo/' +
-                  (image?.standart && image.standart.length > 0
-                    ? image?.standart[0].images[0]
+                  (content && content.images?.length > 0
+                    ? content.images[0]
                     : undefined),
               }}
               style={{
@@ -231,14 +205,10 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
               }}></Image>
             <MarketBannerView>
               <MarketBannerTitle>
-                {image?.standart && image.standart.length > 0
-                  ? image.standart[0].title
-                  : undefined}
+                {content ? content.title : undefined}
               </MarketBannerTitle>
               <MarketBannerSubtitle>
-                {image?.standart && image.standart.length > 0
-                  ? image.standart[0].content
-                  : undefined}
+                {content ? content.content : undefined}
               </MarketBannerSubtitle>
               <TouchableOpacity>
                 <MarketBannerButton>
