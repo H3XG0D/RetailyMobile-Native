@@ -20,6 +20,7 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
       headerTitleStyle: {fontSize: 27, fontWeight: '700'},
+      animationEnabled: false,
     });
   }, [navigation]);
 

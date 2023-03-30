@@ -17,10 +17,7 @@ function App() {
           headerTitleStyle: {fontSize: 24},
         }}>
         {routes.map((r, i) => (
-          <Stack.Screen
-            name={r.name}
-            key={i}
-            options={{animationEnabled: false}}>
+          <Stack.Screen name={r.name} key={i}>
             {props => <r.component nameProp={r.name} {...props} />}
           </Stack.Screen>
         ))}
