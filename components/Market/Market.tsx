@@ -16,7 +16,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 // Imports all exports from local project
 import {IStackScreenProps} from '../../navigation/StackScreen';
 import * as variables from '../../constants';
-import {auth, getClient} from '../../api/api';
+import {getClient} from '../../api/api';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -221,50 +221,6 @@ const MarketPaginationFilterAll = styled.View`
   padding: 10px 15px;
 `;
 
-const MarketPaginationFilterBread = styled.View`
-  background-color: ${variables.COLORS.brightgray};
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  width: 60px;
-  height: 35px;
-  margin-left: 5px;
-  margin-right: 5px;
-`;
-
-const MarketPaginationFilterMilk = styled.View`
-  background-color: ${variables.COLORS.brightgray};
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  width: 75px;
-  height: 35px;
-  margin-left: 5px;
-  margin-right: 5px;
-`;
-
-const MarketPaginationFilterDrinks = styled.View`
-  background-color: ${variables.COLORS.brightgray};
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  width: 85px;
-  height: 35px;
-  margin-left: 5px;
-  margin-right: 5px;
-`;
-
-const MarketPaginationFilterMeat = styled.View`
-  background-color: ${variables.COLORS.brightgray};
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  width: 155px;
-  height: 35px;
-  margin-left: 5px;
-  margin-right: 5px;
-`;
-
 const MarketPaginationSpace = styled.View`
   flex-direction: row;
   margin-left: 15px;
@@ -276,11 +232,6 @@ const MarketPaginationFilterTexttabs = styled.Text`
   font-size: ${variables.SIZES.h6};
 `;
 
-const MarketPaginationFilterTextNotabs = styled.Text`
-  color: ${variables.COLORS.black};
-  font-size: ${variables.SIZES.h6};
-`;
-
 // * Content
 
 const MarketContentContainer = styled.View`
@@ -288,8 +239,12 @@ const MarketContentContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 25px;
-  padding: 30px 20px 20px 25px;
+
+  padding: 10px 10px 10px 15px;
+  margin-top: 20px;
   margin-bottom: 80px;
+
+  /* padding: 30px 20px 20px 25px; */
 `;
 
 const MarketContentBox = styled.View`
