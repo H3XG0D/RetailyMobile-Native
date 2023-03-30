@@ -37,24 +37,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
     });
   }, [navigation]);
 
-  const [tabs, setTabs] = React.useState<any>([
-    {key: 0, value: 'Все', active: true},
-    {key: 1, value: 'Хлеб', active: false},
-    {key: 2, value: 'Молоко', active: false},
-    {key: 3, value: 'Напитки', active: false},
-    {key: 4, value: 'Мясные продукции', active: false},
-  ]);
-
-  const handleClick = (key: number) => {
-    let newTabs = [...tabs];
-
-    newTabs.forEach((item: any) => {
-      item.active = false;
-    });
-
-    newTabs.find((item: any) => item.key === key).active = true;
-    setTabs(newTabs);
-  };
+  const [active, setActive] = React.useState<string | undefined>(undefined);
 
   const getBanners = async () => {
     const result = await getClient({cmd: 'getbanners'});
@@ -112,19 +95,31 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={{marginTop: 25}}>
+          <TouchableOpacity onPress={() => setActive(undefined)}>
+            <MarketPaginationFilterAll
+              style={{
+                backgroundColor: active === undefined ? '#288AF4' : '#E4E4E6',
+              }}>
+              <MarketPaginationFilterTextTabs
+                style={{color: active === undefined ? 'white' : 'black'}}>
+                Все
+              </MarketPaginationFilterTextTabs>
+            </MarketPaginationFilterAll>
+          </TouchableOpacity>
           <MarketPaginationSpace>
-            {tabs.map((item: any) => {
+            {suppliers?.tags?.map((item: any) => {
               return (
-                <TouchableOpacity onPress={() => handleClick(item.key)}>
-                  <MarketPaginationFilterAll
+                <TouchableOpacity onPress={() => setActive(item.code)}>
+                  <MarketPagnationFilters
                     style={{
-                      backgroundColor: item.active ? '#288AF4' : '#E4E4E6',
+                      backgroundColor:
+                        item.code === active ? '#288AF4' : '#E4E4E6',
                     }}>
-                    <MarketPaginationFilterTexttabs
-                      style={{color: item.active ? 'white' : 'black'}}>
-                      {item.value}
-                    </MarketPaginationFilterTexttabs>
-                  </MarketPaginationFilterAll>
+                    <MarketPaginationFilterTextTabs
+                      style={{color: item.code === active ? 'white' : 'black'}}>
+                      {item.name}
+                    </MarketPaginationFilterTextTabs>
+                  </MarketPagnationFilters>
                 </TouchableOpacity>
               );
             })}
@@ -135,31 +130,37 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
       <ScrollView>
         <MarketContentContainer>
           {suppliers?.suppliers && suppliers.suppliers.length > 0
-            ? suppliers.suppliers.map((supplier: any) => {
-                return (
-                  <TouchableOpacity>
-                    <MarketContentBoxContainer>
-                      <MarketContentBox>
-                        <Image
-                          source={{
-                            uri:
-                              supplier &&
-                              supplier.images &&
-                              supplier.images.length > 0
-                                ? variables.siteUrl +
-                                  '/api/repo/' +
-                                  supplier.images[0]
-                                : undefined,
-                          }}
-                          style={{width: 130, height: 130}}></Image>
-                        <MarketContentBoxText>
-                          {supplier.name}
-                        </MarketContentBoxText>
-                      </MarketContentBox>
-                    </MarketContentBoxContainer>
-                  </TouchableOpacity>
-                );
-              })
+            ? suppliers.suppliers
+                .filter(
+                  (f: any) =>
+                    (f.tags && f.tags.some((t: any) => t === active)) ||
+                    !active,
+                )
+                .map((supplier: any) => {
+                  return (
+                    <TouchableOpacity>
+                      <MarketContentBoxContainer>
+                        <MarketContentBox>
+                          <Image
+                            source={{
+                              uri:
+                                supplier &&
+                                supplier.images &&
+                                supplier.images.length > 0
+                                  ? variables.siteUrl +
+                                    '/api/repo/' +
+                                    supplier.images[0]
+                                  : undefined,
+                            }}
+                            style={{width: 130, height: 130}}></Image>
+                          <MarketContentBoxText>
+                            {supplier.name}
+                          </MarketContentBoxText>
+                        </MarketContentBox>
+                      </MarketContentBoxContainer>
+                    </TouchableOpacity>
+                  );
+                })
             : undefined}
         </MarketContentContainer>
       </ScrollView>
@@ -308,6 +309,15 @@ const MarketPaginationFilterAll = styled.View`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  padding: 10px 15px;
+  margin-left: 15px;
+`;
+
+const MarketPagnationFilters = styled.View`
+  background-color: ${variables.COLORS.brightgray};
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
   margin-left: 5px;
   margin-right: 5px;
 
@@ -316,11 +326,11 @@ const MarketPaginationFilterAll = styled.View`
 
 const MarketPaginationSpace = styled.View`
   flex-direction: row;
-  margin-left: 15px;
+  margin-left: 5px;
   margin-right: 15px;
 `;
 
-const MarketPaginationFilterTexttabs = styled.Text`
+const MarketPaginationFilterTextTabs = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h6};
 `;
