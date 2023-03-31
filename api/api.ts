@@ -203,3 +203,31 @@ export const getClient = (json: any) => {
       return console.log(err);
     });
 };
+
+export const getShopsContract = (cmd: string, supplier: string) => {
+  return instance
+    .post('clientv7/contract', {
+      cmd: cmd,
+      supplier: supplier,
+    })
+    .then(res => {
+      return true;
+    })
+    .catch(err => {
+      return false;
+    });
+};
+
+export const getShopsInfo = (cmd: string, supplier: string) => {
+  return instance
+    .post('clientv7', {
+      cmd: cmd,
+      supplier: supplier,
+    })
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      return console.log(err);
+    });
+};

@@ -140,7 +140,11 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
                 )
                 .map((supplier: any) => {
                   return (
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPressIn={() => setContent(supplier)}
+                      onPress={() =>
+                        navigation.navigate('Supplier', {content})
+                      }>
                       <MarketContentBoxContainer>
                         <MarketContentBox>
                           <Image
@@ -366,7 +370,6 @@ const MarketBannerButton = styled.View`
   justify-content: center;
   width: 300px;
   height: 45px;
-  margin-top: 5px;
   margin-bottom: 60px;
   margin-left: auto;
   margin-right: auto;

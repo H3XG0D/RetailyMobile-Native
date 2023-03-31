@@ -5,7 +5,7 @@ import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../../retaily/navigation/StackScreen';
+import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {getPhoneVerify, getSMS} from '../../../api/api';
 
 const Code: React.FunctionComponent<IStackScreenProps> = props => {
