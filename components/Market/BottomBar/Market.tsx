@@ -301,7 +301,6 @@ const MarketPagnationFilters = styled.View`
   border-radius: 10px;
   margin-left: 5px;
   margin-right: 5px;
-
   padding: 10px 15px;
 `;
 
@@ -323,18 +322,15 @@ const MarketContentContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 25px;
-
   padding: 10px 10px 10px 15px;
   margin-top: 20px;
   margin-bottom: 90px;
-
   /* padding: 30px 20px 20px 25px; */
 `;
 
 const MarketContentBox = styled.View`
   width: 160px;
   height: 190px;
-
   align-items: center;
   justify-content: center;
   border-radius: 10px;
