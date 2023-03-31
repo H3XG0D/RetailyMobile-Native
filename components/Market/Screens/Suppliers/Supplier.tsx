@@ -14,18 +14,30 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const route = useRoute();
   const {content}: any = route.params;
 
-  const [find, setFind] = React.useState<string>('');
-
   const [shops, setShops] = React.useState<any>([]);
   const [select, setSelect] = React.useState<string | undefined>(undefined);
 
+  const [search, setSearch] = React.useState<any>('');
+
   const getContract = async () => {
     const contract = await getShopsContract('check', content.code);
+    console.log(contract);
   };
 
   const getContractInfo = async () => {
     const info = await getShopsInfo('getShops', content.code);
     setShops(info);
+  };
+
+  const filterList = (list: any) => {
+    return list.filter(
+      (listItem: any) =>
+        listItem.name &&
+        listItem.name
+          .toString()
+          .toLowerCase()
+          .includes(search.toString().toLowerCase()),
+    );
   };
 
   React.useLayoutEffect(() => {
@@ -46,21 +58,22 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
         <SupplierTitle>Выберите магазин</SupplierTitle>
 
         <SupplierFindInput
-          onChangeText={setFind}
-          value={find}
+          onChangeText={(search: string) => setSearch(search)}
           placeholder="Поиск..."
         />
 
         <ScrollView style={{height: 400}}>
           <View>
-            {shops.map((item: any) => {
+            {filterList(shops).map((item: any, index: any) => {
               return (
                 <Pressable onPress={() => setSelect(item.code)}>
                   <SupplierItemContent>
                     {item.code === select ? (
                       <SupplierItemLine>
                         <SuppliersSelectView>
-                          <SupplierItemText>{item.name}</SupplierItemText>
+                          <SupplierItemText key={index}>
+                            {item.name}
+                          </SupplierItemText>
                           <SupplierItemSubtitle>
                             Инн: {item.inn}
                           </SupplierItemSubtitle>
@@ -69,7 +82,9 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
                     ) : (
                       <SupplierItemLine>
                         <SuppliersUnSelectView>
-                          <SupplierItemText>{item.name}</SupplierItemText>
+                          <SupplierItemText key={index}>
+                            {item.name}
+                          </SupplierItemText>
                           <SupplierItemSubtitle>
                             Инн: {item.inn}
                           </SupplierItemSubtitle>
