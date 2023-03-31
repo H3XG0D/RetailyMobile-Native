@@ -1,10 +1,9 @@
 import {Text} from 'react-native';
 import React from 'react';
-import {IStackScreenProps} from '../../navigation/StackScreen';
+import {IStackScreenProps} from '../../../navigation/StackScreen';
 // @ts-ignore
 import styled from 'styled-components/native';
-import * as variables from '../../constants';
-
+import * as variables from '../../../constants';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
@@ -12,12 +11,12 @@ import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBask
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
 
-const MyRequest: React.FunctionComponent<IStackScreenProps> = props => {
+const Request: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Мои заявки',
+      headerTitle: 'Заявки',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
       headerTitleStyle: {fontSize: 27, fontWeight: '700'},
@@ -26,7 +25,8 @@ const MyRequest: React.FunctionComponent<IStackScreenProps> = props => {
   }, [navigation]);
 
   return (
-    <MyRequestMain>
+    <RequestMain>
+      <Text>Hello</Text>
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
           <MarketBottomMenuItems>
@@ -37,18 +37,18 @@ const MyRequest: React.FunctionComponent<IStackScreenProps> = props => {
 
         <MarketBottomMenuTab onPress={() => navigation.navigate('Request')}>
           <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faShoppingBasket} color={'gray'} size={30} />
+            <FontAwesomeIcon
+              icon={faShoppingBasket}
+              color={variables.COLORS.primary}
+              size={30}
+            />
             <MarketBottomMenuText>Корзина</MarketBottomMenuText>
           </MarketBottomMenuItems>
         </MarketBottomMenuTab>
 
         <MarketBottomMenuTab onPress={() => navigation.navigate('MyRequest')}>
           <MarketBottomMenuItems>
-            <FontAwesomeIcon
-              icon={faList}
-              color={variables.COLORS.primary}
-              size={30}
-            />
+            <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
             <MarketBottomMenuWideText>Мои заявки</MarketBottomMenuWideText>
           </MarketBottomMenuItems>
         </MarketBottomMenuTab>
@@ -60,13 +60,13 @@ const MyRequest: React.FunctionComponent<IStackScreenProps> = props => {
           </MarketBottomMenuItems>
         </MarketBottomMenuTab>
       </MarketBottomMenuContainer>
-    </MyRequestMain>
+    </RequestMain>
   );
 };
 
-export default MyRequest;
+export default Request;
 
-const MyRequestMain = styled.View`
+const RequestMain = styled.View`
   width: 100%;
   height: 100%;
   background-color: ${variables.COLORS.white};

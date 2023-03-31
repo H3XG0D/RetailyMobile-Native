@@ -4,14 +4,14 @@ import Registration from '../../components/login/registration/Registration';
 import Code from '../../components/login/registration/Code';
 import Details from '../../components/login/registration/Details';
 import Next from '../../components/login/registration/Next';
-import Market from '../../components/Market/Market';
+import Market from '../../components/Market/BottomBar/Market';
 import Forget from '../../components/login/forget-password/Forget';
 import ResetPassword from '../../components/login/forget-password/ResetPassword';
 import ForgetCode from '../../components/login/forget-password/ForgetCode';
 import LoadingScreen from '../../components/login/LoadingScreen';
-import Request from '../../components/Market/Request';
-import MyRequest from '../../components/Market/MyRequest';
-import UserProfile from '../../components/Market/UserProfile';
+import Request from '../../components/Market/BottomBar/Request';
+import MyRequest from '../../components/Market/BottomBar/MyRequest';
+import UserProfile from '../../components/Market/BottomBar/UserProfile';
 
 const routes: IRouteProps[] = [
   {

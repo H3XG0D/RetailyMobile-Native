@@ -16,9 +16,9 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import {ScrollView} from 'react-native-gesture-handler';
 
 // Imports all exports from local project
-import {IStackScreenProps} from '../../navigation/StackScreen';
-import * as variables from '../../constants';
-import {getClient} from '../../api/api';
+import {IStackScreenProps} from '../../../navigation/StackScreen';
+import * as variables from '../../../constants';
+import {getClient} from '../../../api/api';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
