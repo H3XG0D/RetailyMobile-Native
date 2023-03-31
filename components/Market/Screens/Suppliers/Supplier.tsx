@@ -15,6 +15,7 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const {content}: any = route.params;
 
   const [find, setFind] = React.useState<string>('');
+
   const [shops, setShops] = React.useState<any>([]);
   const [select, setSelect] = React.useState<string | undefined>(undefined);
 
@@ -41,47 +42,53 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
 
   return (
     <SuppliersMain>
-      <ScrollView>
-        <SupplierContent>
-          <SupplierTitle>Выберите магазин</SupplierTitle>
+      <SupplierContent>
+        <SupplierTitle>Выберите магазин</SupplierTitle>
 
-          <SupplierFindInput
-            onChangeText={setFind}
-            value={find}
-            placeholder="Поиск..."
-          />
+        <SupplierFindInput
+          onChangeText={setFind}
+          value={find}
+          placeholder="Поиск..."
+        />
 
-          {shops.map((item: any) => {
-            return (
-              <Pressable onPress={() => setSelect(item.code)}>
-                <SupplierItemContent>
-                  {item.code === select ? (
-                    <SuppliersSelectView>
-                      <SupplierItemText>{item.name}</SupplierItemText>
-                      <SupplierItemSubtitle>
-                        Инн: {item.inn}
-                      </SupplierItemSubtitle>
-                    </SuppliersSelectView>
-                  ) : (
-                    <SuppliersUnSelectView>
-                      <SupplierItemText>{item.name}</SupplierItemText>
-                      <SupplierItemSubtitle>
-                        Инн: {item.inn}
-                      </SupplierItemSubtitle>
-                    </SuppliersUnSelectView>
-                  )}
-                </SupplierItemContent>
-              </Pressable>
-            );
-          })}
+        <ScrollView style={{height: 400}}>
+          <View>
+            {shops.map((item: any) => {
+              return (
+                <Pressable onPress={() => setSelect(item.code)}>
+                  <SupplierItemContent>
+                    {item.code === select ? (
+                      <SupplierItemLine>
+                        <SuppliersSelectView>
+                          <SupplierItemText>{item.name}</SupplierItemText>
+                          <SupplierItemSubtitle>
+                            Инн: {item.inn}
+                          </SupplierItemSubtitle>
+                        </SuppliersSelectView>
+                      </SupplierItemLine>
+                    ) : (
+                      <SupplierItemLine>
+                        <SuppliersUnSelectView>
+                          <SupplierItemText>{item.name}</SupplierItemText>
+                          <SupplierItemSubtitle>
+                            Инн: {item.inn}
+                          </SupplierItemSubtitle>
+                        </SuppliersUnSelectView>
+                      </SupplierItemLine>
+                    )}
+                  </SupplierItemContent>
+                </Pressable>
+              );
+            })}
+          </View>
+        </ScrollView>
 
-          <TouchableOpacity>
-            <SuppliersButton>
-              <SuppliersButtonText>Выбрать</SuppliersButtonText>
-            </SuppliersButton>
-          </TouchableOpacity>
-        </SupplierContent>
-      </ScrollView>
+        <TouchableOpacity>
+          <SuppliersButton>
+            <SuppliersButtonText>Выбрать</SuppliersButtonText>
+          </SuppliersButton>
+        </TouchableOpacity>
+      </SupplierContent>
     </SuppliersMain>
   );
 };
@@ -123,13 +130,19 @@ const SupplierFindInput = styled.TextInput`
 
 const SupplierItemContent = styled.View`
   margin-top: 3px;
-  margin-left: 20px;
+`;
+
+const SupplierItemLine = styled.View`
+  border-bottom-width: 1px;
+  border-color: ${variables.COLORS.brightgray};
+
+  padding: 10px;
 `;
 
 const SuppliersSelectView = styled.View`
   border-color: ${variables.COLORS.primary};
 
-  width: 335px;
+  width: 350px;
   padding: 10px 5px 10px 5px;
 
   border-radius: 8px;
@@ -147,11 +160,13 @@ const SuppliersUnSelectView = styled.View`
 const SupplierItemText = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h7};
+  margin-left: 10px;
 `;
 
 const SupplierItemSubtitle = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h6};
+  margin-left: 10px;
 `;
 
 const SuppliersButton = styled.View`
