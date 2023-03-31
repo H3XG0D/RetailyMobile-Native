@@ -177,56 +177,55 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           padding: 0,
           justifyContent: 'flex-end',
         }}>
-        <View>
-          <ScrollView>
-            <View
-              style={{
-                maxHeight: 1100 - 20,
-                width: '100%',
-                backgroundColor: 'white',
-                alignItems: 'center',
-                borderRadius: 15,
-                marginTop: 50,
-              }}>
-              <TouchableOpacity onPress={() => showModal()}>
-                <FontAwesomeIcon
-                  icon={faClose}
-                  size={28}
-                  style={{
-                    position: 'relative',
-                    top: 15,
-                    left: '40%',
-                  }}></FontAwesomeIcon>
-              </TouchableOpacity>
-              <Image
-                source={{
-                  uri:
-                    variables.siteUrl +
-                    '/api/repo/' +
-                    (content && content.images?.length > 0
-                      ? content.images[0]
-                      : undefined),
-                }}
+        <View
+          style={{
+            maxHeight: 1100 - 20,
+            width: '100%',
+            backgroundColor: 'white',
+            borderRadius: 15,
+            marginTop: 50,
+          }}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <TouchableOpacity onPress={() => showModal()}>
+              <FontAwesomeIcon
+                icon={faClose}
+                size={28}
                 style={{
-                  width: 330,
-                  height: 200,
-                  borderRadius: 15,
-                  marginTop: 30,
-                }}></Image>
-              <MarketBannerView>
-                <MarketBannerTitle>
-                  {content ? content.title : undefined}
-                </MarketBannerTitle>
-                <MarketBannerSubtitle>
-                  {content ? content.content : undefined}
-                </MarketBannerSubtitle>
-              </MarketBannerView>
-              <TouchableOpacity>
-                <MarketBannerButton>
-                  <MarketBannerButtonText>Перейти</MarketBannerButtonText>
-                </MarketBannerButton>
-              </TouchableOpacity>
-            </View>
+                  marginLeft: 'auto',
+                  marginRight: 20,
+                  marginTop: 15,
+                }}></FontAwesomeIcon>
+            </TouchableOpacity>
+            <Image
+              source={{
+                uri:
+                  variables.siteUrl +
+                  '/api/repo/' +
+                  (content && content.images?.length > 0
+                    ? content.images[0]
+                    : undefined),
+              }}
+              style={{
+                width: 330,
+                height: 200,
+                borderRadius: 15,
+                marginTop: 20,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}></Image>
+            <MarketBannerView>
+              <MarketBannerTitle>
+                {content ? content.title : undefined}
+              </MarketBannerTitle>
+              <MarketBannerSubtitle>
+                {content ? content.content : undefined}
+              </MarketBannerSubtitle>
+            </MarketBannerView>
+            <TouchableOpacity>
+              <MarketBannerButton>
+                <MarketBannerButtonText>Перейти</MarketBannerButtonText>
+              </MarketBannerButton>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </Modal>
@@ -338,8 +337,6 @@ const MarketContentBox = styled.View`
 
   align-items: center;
   justify-content: center;
-  z-index: 2;
-
   border-radius: 10px;
 `;
 
@@ -351,7 +348,7 @@ const MarketContentBoxText = styled.Text`
 
 const MarketBannerView = styled.View`
   padding: 20px 20px;
-  margin-left: 5px;
+  margin-left: 10px;
   gap: 10px;
 `;
 
