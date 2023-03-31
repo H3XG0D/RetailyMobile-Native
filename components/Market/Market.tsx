@@ -1,4 +1,4 @@
-import {Button, Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Modal from 'react-native-modal';
 // @ts-ignore
@@ -129,7 +129,6 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           </MarketPaginationSpace>
         </ScrollView>
       </MarketPaginationContainer>
-
       <ScrollView>
         <MarketContentContainer>
           {suppliers?.suppliers && suppliers.suppliers.length > 0
@@ -168,57 +167,69 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
         </MarketContentContainer>
       </ScrollView>
 
-      <View style={{flex: 1}}>
-        <Modal isVisible={isModalVisible} backdropOpacity={0.4}>
-          <View
-            style={{
-              height: 400,
-              width: '100%',
-              backgroundColor: 'white',
-              alignItems: 'center',
-              borderRadius: 15,
-            }}>
-            <TouchableOpacity onPress={() => showModal()}>
-              <FontAwesomeIcon
-                icon={faClose}
-                size={28}
-                style={{
-                  position: 'relative',
-                  top: 15,
-                  left: '40%',
-                }}></FontAwesomeIcon>
-            </TouchableOpacity>
-            <Image
-              source={{
-                uri:
-                  variables.siteUrl +
-                  '/api/repo/' +
-                  (content && content.images?.length > 0
-                    ? content.images[0]
-                    : undefined),
-              }}
+      <Modal
+        isVisible={isModalVisible}
+        backdropOpacity={0.4}
+        style={{
+          width: '100%',
+          height: '100%',
+          margin: 0,
+          padding: 0,
+          justifyContent: 'flex-end',
+        }}>
+        <View>
+          <ScrollView>
+            <View
               style={{
-                width: 250,
-                height: 160,
+                maxHeight: 1100 - 20,
+                width: '100%',
+                backgroundColor: 'white',
+                alignItems: 'center',
                 borderRadius: 15,
-                marginTop: 30,
-              }}></Image>
-            <MarketBannerView>
-              <MarketBannerTitle>
-                {content ? content.title : undefined}
-              </MarketBannerTitle>
-              <MarketBannerSubtitle>
-                {content ? content.content : undefined}
-              </MarketBannerSubtitle>
+                marginTop: 50,
+              }}>
+              <TouchableOpacity onPress={() => showModal()}>
+                <FontAwesomeIcon
+                  icon={faClose}
+                  size={28}
+                  style={{
+                    position: 'relative',
+                    top: 15,
+                    left: '40%',
+                  }}></FontAwesomeIcon>
+              </TouchableOpacity>
+              <Image
+                source={{
+                  uri:
+                    variables.siteUrl +
+                    '/api/repo/' +
+                    (content && content.images?.length > 0
+                      ? content.images[0]
+                      : undefined),
+                }}
+                style={{
+                  width: 330,
+                  height: 200,
+                  borderRadius: 15,
+                  marginTop: 30,
+                }}></Image>
+              <MarketBannerView>
+                <MarketBannerTitle>
+                  {content ? content.title : undefined}
+                </MarketBannerTitle>
+                <MarketBannerSubtitle>
+                  {content ? content.content : undefined}
+                </MarketBannerSubtitle>
+              </MarketBannerView>
               <TouchableOpacity>
                 <MarketBannerButton>
                   <MarketBannerButtonText>Перейти</MarketBannerButtonText>
                 </MarketBannerButton>
               </TouchableOpacity>
-            </MarketBannerView>
-          </View>
-        </Modal>
-      </View>
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
 
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
@@ -228,6 +239,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
               color={variables.COLORS.primary}
               size={28}
             />
+
             <MarketBottomMenuText>Главная</MarketBottomMenuText>
           </MarketBottomMenuItems>
         </MarketBottomMenuTab>
@@ -338,14 +350,14 @@ const MarketContentBoxText = styled.Text`
 `;
 
 const MarketBannerView = styled.View`
-  margin-top: 23px;
-  margin-left: 20px;
-  gap: 5px;
+  padding: 20px 20px;
+  margin-left: 5px;
+  gap: 10px;
 `;
 
 const MarketBannerTitle = styled.Text`
   color: ${variables.COLORS.black};
-  font-size: ${variables.SIZES.h6};
+  font-size: ${variables.SIZES.h3};
   font-weight: ${variables.SIZES.bold};
 `;
 
@@ -357,11 +369,14 @@ const MarketBannerSubtitle = styled.Text`
 const MarketBannerButton = styled.View`
   background-color: ${variables.COLORS.tertiary};
   border-radius: ${variables.SIZES.radius};
-  margin-top: 15px;
   align-items: center;
   justify-content: center;
-  width: 290px;
+  width: 300px;
   height: 45px;
+  margin-top: 5px;
+  margin-bottom: 60px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const MarketBannerButtonText = styled.Text`
