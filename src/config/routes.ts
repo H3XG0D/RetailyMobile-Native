@@ -13,6 +13,7 @@ import Request from '../../components/Market/Screens/Request';
 import MyRequest from '../../components/Market/Screens/MyRequest';
 import UserProfile from '../../components/Market/Screens/UserProfile';
 import Supplier from '../../components/Market/Screens/Suppliers/Supplier';
+import ParentMeat from '../../components/Market/Screens/Suppliers/ParentMeat';
 
 const routes: IRouteProps[] = [
   {
@@ -66,6 +67,10 @@ const routes: IRouteProps[] = [
   {
     name: 'UserProfile',
     component: UserProfile,
+  },
+  {
+    name: 'ParentMeat',
+    component: ParentMeat,
   },
   {
     name: 'Supplier',

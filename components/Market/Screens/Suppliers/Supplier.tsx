@@ -21,7 +21,6 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
 
   const getContract = async () => {
     const contract = await getShopsContract('check', content.code);
-    console.log(contract);
   };
 
   const getContractInfo = async () => {

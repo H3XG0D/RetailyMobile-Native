@@ -34,6 +34,7 @@ instance.interceptors.response.use(
       const login = await AsyncStorage.getItem('login');
       const password = await AsyncStorage.getItem('password');
       let buyerType = await AsyncStorage.getItem('buyerType');
+
       return auth
         .login(login!, password!)
         .then((res: any) => {
