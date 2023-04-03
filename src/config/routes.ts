@@ -14,6 +14,8 @@ import MyRequest from '../../components/Market/Screens/MyRequest';
 import UserProfile from '../../components/Market/Screens/UserProfile';
 import Supplier from '../../components/Market/Screens/Suppliers/Supplier';
 import ParentMeat from '../../components/Market/Screens/Suppliers/ParentMeat';
+import Categories from '../../components/Market/Screens/Suppliers/Categories/Categories';
+import Products from '../../components/Market/Screens/Suppliers/Categories/Products/Products';
 
 const routes: IRouteProps[] = [
   {
@@ -75,6 +77,14 @@ const routes: IRouteProps[] = [
   {
     name: 'Supplier',
     component: Supplier,
+  },
+  {
+    name: 'Categories',
+    component: Categories,
+  },
+  {
+    name: 'Products',
+    component: Products,
   },
 ];
 

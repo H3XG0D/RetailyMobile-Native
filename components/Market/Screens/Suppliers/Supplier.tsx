@@ -97,7 +97,8 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
           </View>
         </ScrollView>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Categories', {shops, content})}>
           <SuppliersButton>
             <SuppliersButtonText>Выбрать</SuppliersButtonText>
           </SuppliersButton>

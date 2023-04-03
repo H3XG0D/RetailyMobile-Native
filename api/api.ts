@@ -232,3 +232,43 @@ export const getShopsInfo = (cmd: string, supplier: string) => {
       return console.log(err);
     });
 };
+
+export const getCategoriesInfo = (
+  cmd: string,
+  shop: string,
+  supplier: string,
+) => {
+  return instance
+    .post('clientv7', {
+      cmd: cmd,
+      shop: shop,
+      supplier: supplier,
+    })
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      return console.log(err);
+    });
+};
+
+export const getProductsInfo = (
+  cmd: string,
+  category: string,
+  shop: string,
+  supplier: string,
+) => {
+  return instance
+    .post('clientv7', {
+      cmd: cmd,
+      shop: shop,
+      category: category,
+      supplier: supplier,
+    })
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      return console.log(err);
+    });
+};
