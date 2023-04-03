@@ -147,7 +147,9 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
                     <TouchableOpacity
                       onPressIn={() => setContent(supplier)}
                       onPress={() =>
-                        navigation.navigate('Supplier', {content})
+                        supplier.code === 'parent_01'
+                          ? navigation.navigate('ParentMeat', {content})
+                          : navigation.navigate('Supplier', {content})
                       }>
                       <MarketContentBoxContainer>
                         <MarketContentBox>

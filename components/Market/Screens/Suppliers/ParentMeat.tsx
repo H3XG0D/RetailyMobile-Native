@@ -1,6 +1,5 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import Modal from 'react-native-modal';
 // @ts-ignore
 import styled from 'styled-components/native';
 
@@ -18,23 +17,22 @@ import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
+import {useRoute} from '@react-navigation/native';
 
 const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
 
   const [suppliers, setSuppliers] = React.useState<any>([]);
 
+  const route = useRoute();
+  const {content}: any = route.params;
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Главная',
-      headerTitleAlign: 'left',
-      headerLeft: () => <Text></Text>,
-      headerTitleStyle: {fontSize: 27, fontWeight: '700'},
-      animationEnabled: false,
+      headerTitle: content.name,
+      headerTitleStyle: {fontSize: 18},
     });
   }, [navigation]);
-
-  const [content, setContent] = React.useState<any>(undefined);
 
   const getSuppliers = async () => {
     const result = await getClient({cmd: 'getsuppliers'});
@@ -49,7 +47,7 @@ const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
     <View style={{height: '100%'}}>
       <ScrollView>
         <MarketContentContainer>
-          {suppliers?.suppliers && suppliers.suppliers.length > 0
+          {/* {suppliers?.suppliers && suppliers.suppliers.length > 0
             ? suppliers.suppliers.map((supplier: any) => {
                 return (
                   <TouchableOpacity
@@ -77,6 +75,38 @@ const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
                   </TouchableOpacity>
                 );
               })
+            : undefined} */}
+          {suppliers?.suppliers && suppliers.suppliers.length > 0
+            ? suppliers.suppliers
+                .filter((f: any) => f.parent_code == 'parent_01')
+                .map((content: any) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('Supplier', {content})
+                      }>
+                      <MarketContentBoxContainer>
+                        <MarketContentBox>
+                          <Image
+                            source={{
+                              uri:
+                                content &&
+                                content.images &&
+                                content.images.length > 0
+                                  ? variables.siteUrl +
+                                    '/api/repo/' +
+                                    content.images[0]
+                                  : undefined,
+                            }}
+                            style={{width: 130, height: 130}}></Image>
+                          <MarketContentBoxText>
+                            {content.name}
+                          </MarketContentBoxText>
+                        </MarketContentBox>
+                      </MarketContentBoxContainer>
+                    </TouchableOpacity>
+                  );
+                })
             : undefined}
         </MarketContentContainer>
       </ScrollView>
