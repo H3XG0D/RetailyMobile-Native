@@ -140,7 +140,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
                         (t: any) =>
                           t === active && f.parent_code != 'parent_01',
                       )) ||
-                    !active,
+                    (!active && f.parent_code != 'parent_01'),
                 )
                 .map((supplier: any) => {
                   return (
