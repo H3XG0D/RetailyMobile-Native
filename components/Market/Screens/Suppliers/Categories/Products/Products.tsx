@@ -52,7 +52,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
   }, []);
 
   return (
-    <View style={{height: '100%'}}>
+    <View>
       <ScrollView>
         <ProductsContentContainer>
           {products && products.length > 0
@@ -113,7 +113,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
         }}>
         <View
           style={{
-            maxHeight: 1100 - 10,
+            maxHeight: 1300 - 10,
             width: '100%',
             backgroundColor: 'white',
             borderRadius: 15,
@@ -157,13 +157,26 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                 {info?.properties1 && info?.properties1.length > 0
                   ? info.properties1.map((prop: any) => {
                       return (
-                        <View>
-                          <ProductModalInfoCharacteristic>
-                            {prop.name}:{' '}
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                          }}>
+                          <View style={{marginLeft: '5%'}}>
+                            <ProductModalInfoCharacteristic>
+                              {prop.name}:
+                            </ProductModalInfoCharacteristic>
+                          </View>
+
+                          <View
+                            style={{
+                              width: 150,
+                              marginLeft: 'auto',
+                              marginRight: '10%',
+                            }}>
                             <ProductModalInfoText>
                               {prop.value}
                             </ProductModalInfoText>
-                          </ProductModalInfoCharacteristic>
+                          </View>
                         </View>
                       );
                     })
@@ -255,16 +268,17 @@ const ProductsContentBoxTextContainer = styled.View`
 
 const ProductsModalContent = styled.View`
   background-color: ${variables.COLORS.milky};
-  height: 400px;
+  height: 450px;
 `;
 
 const ProductsModalImage = styled.Image`
   width: 300px;
   height: 250px;
-  border-radius: 15;
+  border-radius: 15px;
   object-fit: contain;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 30px;
 `;
 
 const ProductsModalHeader = styled.View`
@@ -314,13 +328,13 @@ const ProductsModalBtnText = styled.Text`
 const ProductModalInfoContainer = styled.View`
   margin-top: 20px;
   gap: 10px;
-  margin-left: 10%;
-  width: 300px;
 `;
 
 const ProductModalInfoCharacteristic = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h8};
+  text-align: right;
+  width: 150px;
 `;
 
 const ProductModalInfoText = styled.Text`
