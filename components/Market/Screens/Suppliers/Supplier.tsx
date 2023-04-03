@@ -15,7 +15,9 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const {content}: any = route.params;
 
   const [shops, setShops] = React.useState<any>([]);
-  const [select, setSelect] = React.useState<string | undefined>(undefined);
+  const [selectShop, setSelectShop] = React.useState<string | undefined>(
+    undefined,
+  );
 
   const [search, setSearch] = React.useState<any>('');
 
@@ -65,9 +67,9 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
           <View>
             {filterList(shops).map((item: any, index: any) => {
               return (
-                <Pressable onPress={() => setSelect(item.code)}>
+                <Pressable onPress={() => setSelectShop(item.code)}>
                   <SupplierItemContent>
-                    {item.code === select ? (
+                    {item.code === selectShop ? (
                       <SupplierItemLine>
                         <SuppliersSelectView>
                           <SupplierItemText key={index}>
@@ -98,7 +100,9 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
         </ScrollView>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Categories', {shops, content})}>
+          onPress={() =>
+            navigation.navigate('Categories', {selectShop, content})
+          }>
           <SuppliersButton>
             <SuppliersButtonText>Выбрать</SuppliersButtonText>
           </SuppliersButton>
