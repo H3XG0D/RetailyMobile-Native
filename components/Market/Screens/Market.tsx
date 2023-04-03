@@ -135,7 +135,11 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
             ? suppliers.suppliers
                 .filter(
                   (f: any) =>
-                    (f.tags && f.tags.some((t: any) => t === active)) ||
+                    (f.tags &&
+                      f.tags.some(
+                        (t: any) =>
+                          t === active && f.parent_code != 'parent_01',
+                      )) ||
                     !active,
                 )
                 .map((supplier: any) => {
