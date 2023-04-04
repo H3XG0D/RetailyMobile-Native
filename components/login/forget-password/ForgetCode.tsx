@@ -3,7 +3,7 @@ import {useRoute} from '@react-navigation/native';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../../retaily/navigation/StackScreen';
+import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
 import {getPhoneVerify, getSMS} from '../../../api/api';
 
