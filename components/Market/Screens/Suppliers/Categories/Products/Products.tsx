@@ -10,6 +10,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
+import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleton';
 
 const Products: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -31,8 +32,10 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
   const [info, setInfo] = React.useState<any>(undefined);
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
+  const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   const getProducts = async () => {
+    setLoadSkeleton(true);
     const products = await getProductsInfo(
       'getProducts',
       category.code,
@@ -41,6 +44,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
     );
 
     setProducts(products);
+    setLoadSkeleton(false);
   };
 
   const showModal = () => {
@@ -55,49 +59,55 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
     <View>
       <ScrollView>
         <ProductsContentContainer>
-          {products && products.length > 0
-            ? products.map((product: any) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => showModal()}
-                    onPressIn={() => setInfo(product)}>
-                    <ProductsContentBoxTextContainer>
-                      <ProductsContentOutsideBox>
-                        <ProductsContentBox>
-                          <ProductsContentImages
-                            source={{
-                              uri:
-                                product &&
-                                product.images &&
-                                product.images.length > 0
-                                  ? variables.siteUrl +
-                                    '/api/repo/' +
-                                    product.images[0]
-                                  : undefined,
-                            }}
-                          />
-                          <ProductsContentBoxText>
-                            {product.name}
-                          </ProductsContentBoxText>
+          {loadSkeleton ? (
+            <ProductsSkeleton />
+          ) : (
+            <>
+              {products && products.length > 0
+                ? products.map((product: any) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() => showModal()}
+                        onPressIn={() => setInfo(product)}>
+                        <ProductsContentBoxTextContainer>
+                          <ProductsContentOutsideBox>
+                            <ProductsContentBox>
+                              <ProductsContentImages
+                                source={{
+                                  uri:
+                                    product &&
+                                    product.images &&
+                                    product.images.length > 0
+                                      ? variables.siteUrl +
+                                        '/api/repo/' +
+                                        product.images[0]
+                                      : undefined,
+                                }}
+                              />
+                              <ProductsContentBoxText>
+                                {product.name}
+                              </ProductsContentBoxText>
 
-                          <ProductsContentBoxSubText>
-                            {product.description_short}
-                          </ProductsContentBoxSubText>
+                              <ProductsContentBoxSubText>
+                                {product.description_short}
+                              </ProductsContentBoxSubText>
 
-                          <TouchableOpacity>
-                            <ProductsContentBoxPriceContainer>
-                              <ProductsContentBoxPriceText>
-                                {product.price} ₽
-                              </ProductsContentBoxPriceText>
-                            </ProductsContentBoxPriceContainer>
-                          </TouchableOpacity>
-                        </ProductsContentBox>
-                      </ProductsContentOutsideBox>
-                    </ProductsContentBoxTextContainer>
-                  </TouchableOpacity>
-                );
-              })
-            : undefined}
+                              <TouchableOpacity>
+                                <ProductsContentBoxPriceContainer>
+                                  <ProductsContentBoxPriceText>
+                                    {product.price} ₽
+                                  </ProductsContentBoxPriceText>
+                                </ProductsContentBoxPriceContainer>
+                              </TouchableOpacity>
+                            </ProductsContentBox>
+                          </ProductsContentOutsideBox>
+                        </ProductsContentBoxTextContainer>
+                      </TouchableOpacity>
+                    );
+                  })
+                : undefined}
+            </>
+          )}
         </ProductsContentContainer>
       </ScrollView>
 
@@ -201,7 +211,6 @@ const ProductsContentContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
   padding: 5px 5px 5px 5px;
   gap: 10px;
 `;
