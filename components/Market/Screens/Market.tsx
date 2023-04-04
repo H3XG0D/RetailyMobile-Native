@@ -25,7 +25,10 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 
   const [image, setImage] = React.useState<any>([]);
   const [suppliers, setSuppliers] = React.useState<any>([]);
+
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
+
+  const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -119,7 +122,9 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
                         item.code === active ? '#288AF4' : '#E4E4E6',
                     }}>
                     <MarketPaginationFilterTextTabs
-                      style={{color: item.code === active ? 'white' : 'black'}}>
+                      style={{
+                        color: item.code === active ? 'white' : 'black',
+                      }}>
                       {item.name}
                     </MarketPaginationFilterTextTabs>
                   </MarketPagnationFilters>
