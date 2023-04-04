@@ -12,39 +12,99 @@ export const ProductsSkeleton = () => {
           marginLeft={5}
           gap={5}
           marginBottom={10}>
+          <SkeletonPlaceholder.Item width={115} height={200} borderRadius={8} />
+          <SkeletonPlaceholder.Item width={115} height={200} borderRadius={8} />
+          <SkeletonPlaceholder.Item width={115} height={200} borderRadius={8} />
           <SkeletonPlaceholder.Item
-            marginTop={6}
             width={115}
-            height={150}
+            height={200}
             borderRadius={8}
+            marginTop={30}
           />
           <SkeletonPlaceholder.Item
-            marginTop={6}
             width={115}
-            height={150}
+            height={200}
             borderRadius={8}
+            marginTop={30}
           />
           <SkeletonPlaceholder.Item
-            marginTop={6}
             width={115}
-            height={150}
+            height={200}
             borderRadius={8}
+            marginTop={30}
           />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
-          <SkeletonPlaceholder.Item width={115} height={150} borderRadius={8} />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
+          <SkeletonPlaceholder.Item
+            width={115}
+            height={200}
+            borderRadius={8}
+            marginTop={30}
+          />
         </SkeletonPlaceholder.Item>
       </SkeletonPlaceholder>
     </ScrollView>
