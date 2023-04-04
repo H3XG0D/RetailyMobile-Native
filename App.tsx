@@ -6,8 +6,12 @@ import routes from './src/config/routes';
 import {StatusBar} from 'react-native';
 import * as variables from './constants';
 const Stack = createStackNavigator();
+import {LogBox} from 'react-native';
 
 function App() {
+  LogBox.ignoreLogs(['Warning: ...']);
+  LogBox.ignoreAllLogs();
+
   return (
     <NavigationContainer>
       <Stack.Navigator
