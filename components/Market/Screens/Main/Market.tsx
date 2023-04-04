@@ -20,6 +20,9 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {IStackScreenProps} from '../../../../navigation/StackScreen';
 import * as variables from '../../../../constants';
 import {getClient} from '../../../../api/api';
+import BannerSkeleton from '../Skeletons/MarketSkeleton/BannerSkeleton';
+import TagsSkeleton from '../Skeletons/MarketSkeleton/TagsSkeleton';
+import SuppliersSkeleton from '../Skeletons/MarketSkeleton/SuppliersSkeleton';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -71,36 +74,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
             {loadSkeleton ? (
-              <SkeletonPlaceholder borderRadius={4}>
-                <SkeletonPlaceholder borderRadius={4}>
-                  <SkeletonPlaceholder.Item
-                    flexDirection="row"
-                    alignItems="center">
-                    <SkeletonPlaceholder.Item
-                      flexDirection="row"
-                      marginRight={20}
-                      marginTop={25}
-                      marginLeft={10}>
-                      <SkeletonPlaceholder.Item width={140} height={90} />
-                      <SkeletonPlaceholder.Item
-                        marginLeft={10}
-                        width={140}
-                        height={90}
-                      />
-                      <SkeletonPlaceholder.Item
-                        marginLeft={10}
-                        width={140}
-                        height={90}
-                      />
-                      <SkeletonPlaceholder.Item
-                        marginLeft={10}
-                        width={140}
-                        height={90}
-                      />
-                    </SkeletonPlaceholder.Item>
-                  </SkeletonPlaceholder.Item>
-                </SkeletonPlaceholder>
-              </SkeletonPlaceholder>
+              <BannerSkeleton />
             ) : (
               <View style={{flexDirection: 'row'}}>
                 {image?.standart && image.standart.length > 0
@@ -140,46 +114,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           showsHorizontalScrollIndicator={false}
           style={{marginTop: 25}}>
           {loadSkeleton ? (
-            <SkeletonPlaceholder borderRadius={4}>
-              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-                <SkeletonPlaceholder.Item
-                  marginLeft={15}
-                  flexDirection="row"
-                  gap={13}
-                  marginBottom={10}>
-                  <SkeletonPlaceholder.Item
-                    marginTop={6}
-                    width={65}
-                    height={40}
-                    borderRadius={8}
-                  />
-                  <SkeletonPlaceholder.Item
-                    marginTop={6}
-                    width={65}
-                    height={40}
-                    borderRadius={8}
-                  />
-                  <SkeletonPlaceholder.Item
-                    marginTop={6}
-                    width={90}
-                    height={40}
-                    borderRadius={8}
-                  />
-                  <SkeletonPlaceholder.Item
-                    marginTop={6}
-                    width={80}
-                    height={40}
-                    borderRadius={8}
-                  />
-                  <SkeletonPlaceholder.Item
-                    marginTop={6}
-                    width={140}
-                    height={40}
-                    borderRadius={8}
-                  />
-                </SkeletonPlaceholder.Item>
-              </SkeletonPlaceholder.Item>
-            </SkeletonPlaceholder>
+            <TagsSkeleton />
           ) : (
             <>
               <TouchableOpacity onPress={() => setActive(undefined)}>
@@ -220,37 +155,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
       </MarketPaginationContainer>
       <ScrollView>
         {loadSkeleton ? (
-          <SkeletonPlaceholder borderRadius={4}>
-            <SkeletonPlaceholder borderRadius={4}>
-              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-                <SkeletonPlaceholder.Item
-                  flexDirection="row"
-                  flexWrap="wrap"
-                  marginRight={20}
-                  marginLeft={15}
-                  borderRadius={10}
-                  marginTop={30}>
-                  <SkeletonPlaceholder.Item width={160} height={200} />
-                  <SkeletonPlaceholder.Item
-                    marginLeft={20}
-                    width={160}
-                    height={200}
-                  />
-                  <SkeletonPlaceholder.Item
-                    width={160}
-                    height={200}
-                    marginTop={30}
-                  />
-                  <SkeletonPlaceholder.Item
-                    marginLeft={20}
-                    width={160}
-                    height={200}
-                    marginTop={30}
-                  />
-                </SkeletonPlaceholder.Item>
-              </SkeletonPlaceholder.Item>
-            </SkeletonPlaceholder>
-          </SkeletonPlaceholder>
+          <SuppliersSkeleton />
         ) : (
           <MarketContentContainer>
             {suppliers?.suppliers && suppliers.suppliers.length > 0

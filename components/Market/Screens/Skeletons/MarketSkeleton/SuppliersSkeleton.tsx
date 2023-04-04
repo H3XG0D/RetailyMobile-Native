@@ -2,7 +2,7 @@ import {Text, View} from 'react-native';
 import React from 'react';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-export const BannerSkeleton = () => {
+export const SuppliersSkeleton = () => {
   return (
     <>
       <SkeletonPlaceholder borderRadius={4}>
@@ -10,24 +10,27 @@ export const BannerSkeleton = () => {
           <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
             <SkeletonPlaceholder.Item
               flexDirection="row"
+              flexWrap="wrap"
               marginRight={20}
-              marginTop={25}
-              marginLeft={10}>
-              <SkeletonPlaceholder.Item width={140} height={90} />
+              marginLeft={15}
+              borderRadius={10}
+              marginTop={30}>
+              <SkeletonPlaceholder.Item width={160} height={200} />
               <SkeletonPlaceholder.Item
-                marginLeft={10}
-                width={140}
-                height={90}
+                marginLeft={20}
+                width={160}
+                height={200}
               />
               <SkeletonPlaceholder.Item
-                marginLeft={10}
-                width={140}
-                height={90}
+                width={160}
+                height={200}
+                marginTop={30}
               />
               <SkeletonPlaceholder.Item
-                marginLeft={10}
-                width={140}
-                height={90}
+                marginLeft={20}
+                width={160}
+                height={200}
+                marginTop={30}
               />
             </SkeletonPlaceholder.Item>
           </SkeletonPlaceholder.Item>
@@ -37,4 +40,4 @@ export const BannerSkeleton = () => {
   );
 };
 
-export default BannerSkeleton;
+export default SuppliersSkeleton;
