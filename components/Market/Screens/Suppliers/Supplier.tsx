@@ -8,7 +8,7 @@ import * as variables from '../../../../constants';
 import {getShopsContract, getShopsInfo} from '../../../../api/api';
 import {useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import SupplierSkeleton from '../Skeletons/SupplierSkeleton';
+import SupplierSkeleton from '../Skeletons/SuppliersSkeleton/SupplierSkeleton';
 
 const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
