@@ -17,9 +17,9 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import {ScrollView} from 'react-native-gesture-handler';
 
 // Imports all exports from local project
-import {IStackScreenProps} from '../../../navigation/StackScreen';
-import * as variables from '../../../constants';
-import {getClient} from '../../../api/api';
+import {IStackScreenProps} from '../../../../navigation/StackScreen';
+import * as variables from '../../../../constants';
+import {getClient} from '../../../../api/api';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -273,20 +273,37 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
                             ? navigation.navigate('ParentMeat', {content})
                             : navigation.navigate('Supplier', {content})
                         }>
+                        {/* // ! TODO: Add skeleton here */}
                         <MarketContentBoxContainer>
                           <MarketContentBox>
-                            <Image
-                              source={{
-                                uri:
-                                  supplier &&
-                                  supplier.images &&
-                                  supplier.images.length > 0
-                                    ? variables.siteUrl +
-                                      '/api/repo/' +
-                                      supplier.images[0]
-                                    : undefined,
-                              }}
-                              style={{width: 130, height: 130}}></Image>
+                            {loadSkeleton ? (
+                              <SkeletonPlaceholder borderRadius={4}>
+                                <SkeletonPlaceholder.Item
+                                  flexDirection="row"
+                                  alignItems="center">
+                                  <SkeletonPlaceholder.Item>
+                                    <SkeletonPlaceholder.Item
+                                      width={130}
+                                      height={130}
+                                      borderRadius={8}
+                                    />
+                                  </SkeletonPlaceholder.Item>
+                                </SkeletonPlaceholder.Item>
+                              </SkeletonPlaceholder>
+                            ) : (
+                              <Image
+                                source={{
+                                  uri:
+                                    supplier &&
+                                    supplier.images &&
+                                    supplier.images.length > 0
+                                      ? variables.siteUrl +
+                                        '/api/repo/' +
+                                        supplier.images[0]
+                                      : undefined,
+                                }}
+                                style={{width: 130, height: 130}}></Image>
+                            )}
                             <MarketContentBoxText>
                               {supplier.name}
                             </MarketContentBoxText>

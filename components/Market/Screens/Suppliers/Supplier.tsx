@@ -1,12 +1,14 @@
 import React from 'react';
 import {Pressable, Text, TouchableOpacity, View} from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {IStackScreenProps} from '../../../../navigation/StackScreen';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../../constants';
-import {getClient, getShopsContract, getShopsInfo} from '../../../../api/api';
+import {getShopsContract, getShopsInfo} from '../../../../api/api';
 import {useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
+import SupplierSkeleton from '../Skeletons/SupplierSkeleton';
 
 const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -14,6 +16,7 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const route = useRoute();
   const {content}: any = route.params;
 
+  const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
   const [shops, setShops] = React.useState<any>([]);
   const [selectShop, setSelectShop] = React.useState<string | undefined>(
     undefined,
@@ -26,8 +29,10 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   };
 
   const getContractInfo = async () => {
+    setLoadSkeleton(true);
     const info = await getShopsInfo('getShops', content.code);
     setShops(info);
+    setLoadSkeleton(false);
   };
 
   const filterList = (list: any) => {
@@ -65,37 +70,43 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
 
         <ScrollView style={{height: 400}}>
           <View>
-            {filterList(shops).map((item: any, index: any) => {
-              return (
-                <Pressable onPress={() => setSelectShop(item.code)}>
-                  <SupplierItemContent>
-                    {item.code === selectShop ? (
-                      <SupplierItemLine>
-                        <SuppliersSelectView>
-                          <SupplierItemText key={index}>
-                            {item.name}
-                          </SupplierItemText>
-                          <SupplierItemSubtitle>
-                            Инн: {item.inn}
-                          </SupplierItemSubtitle>
-                        </SuppliersSelectView>
-                      </SupplierItemLine>
-                    ) : (
-                      <SupplierItemLine>
-                        <SuppliersUnSelectView>
-                          <SupplierItemText key={index}>
-                            {item.name}
-                          </SupplierItemText>
-                          <SupplierItemSubtitle>
-                            Инн: {item.inn}
-                          </SupplierItemSubtitle>
-                        </SuppliersUnSelectView>
-                      </SupplierItemLine>
-                    )}
-                  </SupplierItemContent>
-                </Pressable>
-              );
-            })}
+            {loadSkeleton ? (
+              <SupplierSkeleton />
+            ) : (
+              <>
+                {filterList(shops).map((item: any, index: any) => {
+                  return (
+                    <Pressable onPress={() => setSelectShop(item.code)}>
+                      <SupplierItemContent>
+                        {item.code === selectShop ? (
+                          <SupplierItemLine>
+                            <SuppliersSelectView>
+                              <SupplierItemText key={index}>
+                                {item.name}
+                              </SupplierItemText>
+                              <SupplierItemSubtitle>
+                                Инн: {item.inn}
+                              </SupplierItemSubtitle>
+                            </SuppliersSelectView>
+                          </SupplierItemLine>
+                        ) : (
+                          <SupplierItemLine>
+                            <SuppliersUnSelectView>
+                              <SupplierItemText key={index}>
+                                {item.name}
+                              </SupplierItemText>
+                              <SupplierItemSubtitle>
+                                Инн: {item.inn}
+                              </SupplierItemSubtitle>
+                            </SuppliersUnSelectView>
+                          </SupplierItemLine>
+                        )}
+                      </SupplierItemContent>
+                    </Pressable>
+                  );
+                })}
+              </>
+            )}
           </View>
         </ScrollView>
 

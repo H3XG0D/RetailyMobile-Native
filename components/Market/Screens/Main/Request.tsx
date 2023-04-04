@@ -1,9 +1,9 @@
 import {Text} from 'react-native';
 import React from 'react';
-import {IStackScreenProps} from '../../../navigation/StackScreen';
+import {IStackScreenProps} from '../../../../navigation/StackScreen';
 // @ts-ignore
 import styled from 'styled-components/native';
-import * as variables from '../../../constants';
+import * as variables from '../../../../constants';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';

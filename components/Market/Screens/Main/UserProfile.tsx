@@ -1,9 +1,9 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {IStackScreenProps} from '../../../navigation/StackScreen';
+import {IStackScreenProps} from '../../../../navigation/StackScreen';
 // @ts-ignore
 import styled from 'styled-components/native';
-import * as variables from '../../../constants';
+import * as variables from '../../../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -47,34 +47,20 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
         </UserSignIn>
       </TouchableOpacity>
 
-      <SkeletonPlaceholder borderRadius={4}>
+      {/* <SkeletonPlaceholder borderRadius={4}>
         <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-          <SkeletonPlaceholder.Item
-            marginLeft={20}
-            marginTop={20}
-            flexDirection="row"
-            gap={15}>
-            <SkeletonPlaceholder.Item
-              marginTop={6}
-              width={60}
-              height={40}
-              borderRadius={8}
-            />
-            <SkeletonPlaceholder.Item
-              marginTop={6}
-              width={60}
-              height={40}
-              borderRadius={8}
-            />
-            <SkeletonPlaceholder.Item
-              marginTop={6}
-              width={60}
-              height={40}
-              borderRadius={8}
-            />
+          <SkeletonPlaceholder.Item marginLeft={20}>
+            <SkeletonPlaceholder.Item width={160} height={20} />
+            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
+            <SkeletonPlaceholder.Item width={160} height={20} />
+            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
+            <SkeletonPlaceholder.Item width={160} height={20} />
+            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
+            <SkeletonPlaceholder.Item width={160} height={20} />
+            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
           </SkeletonPlaceholder.Item>
         </SkeletonPlaceholder.Item>
-      </SkeletonPlaceholder>
+      </SkeletonPlaceholder> */}
 
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
