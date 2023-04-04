@@ -7,6 +7,7 @@ import * as variables from '../../../../../constants';
 import {getCategoriesInfo} from '../../../../../api/api';
 import {useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
+import CategoriesSkeleton from '../../Skeletons/CategoriesSkeleton/CategoriesSkeleton';
 
 const Categories: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -24,14 +25,17 @@ const Categories: React.FunctionComponent<IStackScreenProps> = props => {
   const {selectShop}: any = route.params;
 
   const [categories, setCategories] = React.useState<any>(undefined);
+  const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   const getCategories = async () => {
+    setLoadSkeleton(true);
     const categories = await getCategoriesInfo(
       'getcategories',
       selectShop.code,
       content.code,
     );
     setCategories(categories);
+    setLoadSkeleton(false);
   };
 
   React.useEffect(() => {
@@ -42,40 +46,46 @@ const Categories: React.FunctionComponent<IStackScreenProps> = props => {
     <View style={{height: '100%'}}>
       <ScrollView>
         <CategoriesContentContainer>
-          {categories && categories.length > 0
-            ? categories.map((category: any) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('Products', {
-                        content,
-                        selectShop,
-                        category,
-                      })
-                    }>
-                    <CategoriesContentBox>
-                      <CategoriesContentImages
-                        source={{
-                          uri:
-                            category &&
-                            category.images &&
-                            category.images.length > 0
-                              ? variables.siteUrl +
-                                '/api/repo/' +
-                                category.images[0]
-                              : undefined,
-                        }}
-                      />
-                      <CategoriesContentBoxTextContainer>
-                        <CategoriesContentBoxText>
-                          {category.name}
-                        </CategoriesContentBoxText>
-                      </CategoriesContentBoxTextContainer>
-                    </CategoriesContentBox>
-                  </TouchableOpacity>
-                );
-              })
-            : undefined}
+          {loadSkeleton ? (
+            <CategoriesSkeleton />
+          ) : (
+            <>
+              {categories && categories.length > 0
+                ? categories.map((category: any) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Products', {
+                            content,
+                            selectShop,
+                            category,
+                          })
+                        }>
+                        <CategoriesContentBox>
+                          <CategoriesContentImages
+                            source={{
+                              uri:
+                                category &&
+                                category.images &&
+                                category.images.length > 0
+                                  ? variables.siteUrl +
+                                    '/api/repo/' +
+                                    category.images[0]
+                                  : undefined,
+                            }}
+                          />
+                          <CategoriesContentBoxTextContainer>
+                            <CategoriesContentBoxText>
+                              {category.name}
+                            </CategoriesContentBoxText>
+                          </CategoriesContentBoxTextContainer>
+                        </CategoriesContentBox>
+                      </TouchableOpacity>
+                    );
+                  })
+                : undefined}
+            </>
+          )}
         </CategoriesContentContainer>
       </ScrollView>
     </View>

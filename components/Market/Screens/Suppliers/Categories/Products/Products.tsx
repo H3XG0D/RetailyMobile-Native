@@ -150,9 +150,12 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                   </ProductsModalSubtitleCost>
                 </View>
               </ProductsModalHeader>
-              <ProductsModalBtn>
-                <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
-              </ProductsModalBtn>
+              <TouchableOpacity>
+                <ProductsModalBtn>
+                  <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
+                </ProductsModalBtn>
+              </TouchableOpacity>
+
               <ProductModalInfoContainer>
                 {info?.properties1 && info?.properties1.length > 0
                   ? info.properties1.map((prop: any) => {
