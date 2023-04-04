@@ -1,6 +1,5 @@
 import React from 'react';
 import {Pressable, Text, TouchableOpacity, View} from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {IStackScreenProps} from '../../../../navigation/StackScreen';
 // @ts-ignore
 import styled from 'styled-components/native';

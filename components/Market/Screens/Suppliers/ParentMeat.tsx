@@ -2,7 +2,6 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 // @ts-ignore
 import styled from 'styled-components/native';
-
 // ScrollView
 import {ScrollView} from 'react-native-gesture-handler';
 
@@ -18,11 +17,13 @@ import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBask
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
 import {useRoute} from '@react-navigation/native';
+import ParentMeatSkeleton from '../Skeletons/SuppliersSkeleton/ParentMeatSkeleton';
 
 const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
 
   const [suppliers, setSuppliers] = React.useState<any>([]);
+  const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   const route = useRoute();
   const {content}: any = route.params;
@@ -35,8 +36,10 @@ const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
   }, [navigation]);
 
   const getSuppliers = async () => {
+    setLoadSkeleton(true);
     const result = await getClient({cmd: 'getsuppliers'});
     setSuppliers(result);
+    setLoadSkeleton(false);
   };
 
   React.useEffect(() => {
@@ -47,67 +50,44 @@ const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
     <View style={{height: '100%'}}>
       <ScrollView>
         <MarketContentContainer>
-          {/* {suppliers?.suppliers && suppliers.suppliers.length > 0
-            ? suppliers.suppliers.map((supplier: any) => {
-                return (
-                  <TouchableOpacity
-                    onPressIn={() => setContent(supplier)}
-                    onPress={() => navigation.navigate('Supplier', {content})}>
-                    <MarketContentBoxContainer>
-                      <MarketContentBox>
-                        <Image
-                          source={{
-                            uri:
-                              supplier &&
-                              supplier.images &&
-                              supplier.images.length > 0
-                                ? variables.siteUrl +
-                                  '/api/repo/' +
-                                  supplier.images[0]
-                                : undefined,
-                          }}
-                          style={{width: 130, height: 130}}></Image>
-                        <MarketContentBoxText>
-                          {supplier.name}
-                        </MarketContentBoxText>
-                      </MarketContentBox>
-                    </MarketContentBoxContainer>
-                  </TouchableOpacity>
-                );
-              })
-            : undefined} */}
-          {suppliers?.suppliers && suppliers.suppliers.length > 0
-            ? suppliers.suppliers
-                .filter((f: any) => f.parent_code == 'parent_01')
-                .map((content: any) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('Supplier', {content})
-                      }>
-                      <MarketContentBoxContainer>
-                        <MarketContentBox>
-                          <Image
-                            source={{
-                              uri:
-                                content &&
-                                content.images &&
-                                content.images.length > 0
-                                  ? variables.siteUrl +
-                                    '/api/repo/' +
-                                    content.images[0]
-                                  : undefined,
-                            }}
-                            style={{width: 130, height: 130}}></Image>
-                          <MarketContentBoxText>
-                            {content.name}
-                          </MarketContentBoxText>
-                        </MarketContentBox>
-                      </MarketContentBoxContainer>
-                    </TouchableOpacity>
-                  );
-                })
-            : undefined}
+          {loadSkeleton ? (
+            <ParentMeatSkeleton />
+          ) : (
+            <>
+              {suppliers?.suppliers && suppliers.suppliers.length > 0
+                ? suppliers.suppliers
+                    .filter((f: any) => f.parent_code == 'parent_01')
+                    .map((content: any) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() =>
+                            navigation.navigate('Supplier', {content})
+                          }>
+                          <MarketContentBoxContainer>
+                            <MarketContentBox>
+                              <Image
+                                source={{
+                                  uri:
+                                    content &&
+                                    content.images &&
+                                    content.images.length > 0
+                                      ? variables.siteUrl +
+                                        '/api/repo/' +
+                                        content.images[0]
+                                      : undefined,
+                                }}
+                                style={{width: 130, height: 130}}></Image>
+                              <MarketContentBoxText>
+                                {content.name}
+                              </MarketContentBoxText>
+                            </MarketContentBox>
+                          </MarketContentBoxContainer>
+                        </TouchableOpacity>
+                      );
+                    })
+                : undefined}
+            </>
+          )}
         </MarketContentContainer>
       </ScrollView>
 
