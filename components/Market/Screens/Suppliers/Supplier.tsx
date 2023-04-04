@@ -8,6 +8,7 @@ import {getShopsContract, getShopsInfo} from '../../../../api/api';
 import {useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SupplierSkeleton from '../Skeletons/SuppliersSkeleton/SupplierSkeleton';
+import {ActivityIndicator} from 'react-native';
 
 const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -16,6 +17,9 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const {content}: any = route.params;
 
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
+  const [load, setLoad] = React.useState<boolean>(false);
+  const [choosed, setChoosed] = React.useState<boolean>(false);
+
   const [shops, setShops] = React.useState<any>([]);
   const [selectShop, setSelectShop] = React.useState<string | undefined>(
     undefined,
@@ -43,6 +47,10 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
           .toLowerCase()
           .includes(search.toString().toLowerCase()),
     );
+  };
+
+  const ChooseHandler = () => {
+    setChoosed(true);
   };
 
   React.useLayoutEffect(() => {
@@ -75,7 +83,9 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
               <>
                 {filterList(shops).map((item: any, index: any) => {
                   return (
-                    <Pressable onPress={() => setSelectShop(item.code)}>
+                    <Pressable
+                      onPress={() => setSelectShop(item.code)}
+                      onPressIn={() => ChooseHandler()}>
                       <SupplierItemContent>
                         {item.code === selectShop ? (
                           <SupplierItemLine>
@@ -109,14 +119,34 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
           </View>
         </ScrollView>
 
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Categories', {selectShop, content})
-          }>
-          <SuppliersButton>
-            <SuppliersButtonText>Выбрать</SuppliersButtonText>
-          </SuppliersButton>
-        </TouchableOpacity>
+        {load ? (
+          <TouchableOpacity disabled={true}>
+            <SuppliersButton>
+              <SuppliersButtonText>
+                <ActivityIndicator size="large" color="white" />
+              </SuppliersButtonText>
+            </SuppliersButton>
+          </TouchableOpacity>
+        ) : (
+          <>
+            {choosed ? (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Categories', {selectShop, content})
+                }>
+                <SuppliersButton>
+                  <SuppliersButtonText>Выбрать</SuppliersButtonText>
+                </SuppliersButton>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity disabled={true}>
+                <SuppliersButtonOff>
+                  <SuppliersButtonText>Выбрать</SuppliersButtonText>
+                </SuppliersButtonOff>
+              </TouchableOpacity>
+            )}
+          </>
+        )}
       </SupplierContent>
     </SuppliersMain>
   );
@@ -200,6 +230,19 @@ const SupplierItemSubtitle = styled.Text`
 
 const SuppliersButton = styled.View`
   background-color: ${variables.COLORS.tertiary};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 45px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const SuppliersButtonOff = styled.View`
+  background-color: ${variables.COLORS.gray};
   border-radius: ${variables.SIZES.radius};
   align-items: center;
   justify-content: center;
