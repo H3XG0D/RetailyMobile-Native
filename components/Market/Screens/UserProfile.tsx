@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {IStackScreenProps} from '../../../navigation/StackScreen';
 // @ts-ignore
@@ -12,6 +12,8 @@ import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
+
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
@@ -44,6 +46,35 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
           <UserSignInText>Выйти</UserSignInText>
         </UserSignIn>
       </TouchableOpacity>
+
+      <SkeletonPlaceholder borderRadius={4}>
+        <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+          <SkeletonPlaceholder.Item
+            marginLeft={20}
+            marginTop={20}
+            flexDirection="row"
+            gap={15}>
+            <SkeletonPlaceholder.Item
+              marginTop={6}
+              width={60}
+              height={40}
+              borderRadius={8}
+            />
+            <SkeletonPlaceholder.Item
+              marginTop={6}
+              width={60}
+              height={40}
+              borderRadius={8}
+            />
+            <SkeletonPlaceholder.Item
+              marginTop={6}
+              width={60}
+              height={40}
+              borderRadius={8}
+            />
+          </SkeletonPlaceholder.Item>
+        </SkeletonPlaceholder.Item>
+      </SkeletonPlaceholder>
 
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>

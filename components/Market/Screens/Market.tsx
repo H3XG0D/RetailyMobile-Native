@@ -3,6 +3,7 @@ import React from 'react';
 import Modal from 'react-native-modal';
 // @ts-ignore
 import styled from 'styled-components/native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 // Icons
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -44,6 +45,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const [content, setContent] = React.useState<any>(undefined);
 
   const getBanners = async () => {
+    setLoadSkeleton(true);
     const result = await getClient({cmd: 'getbanners'});
     setImage(result);
   };
@@ -51,6 +53,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const getSuppliers = async () => {
     const result = await getClient({cmd: 'getsuppliers'});
     setSuppliers(result);
+    setLoadSkeleton(false);
   };
 
   const showModal = () => {
@@ -67,33 +70,68 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
       <MarketPaginationContainer>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>
-            {image?.standart && image.standart.length > 0
-              ? image.standart.map((banner: any) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() => showModal()}
-                      onPressIn={() => setContent(banner)}>
-                      <MarketPaginationBox>
-                        <Image
-                          source={{
-                            uri:
-                              banner &&
-                              banner.images &&
-                              banner.images.length > 0
-                                ? variables.siteUrl +
-                                  '/api/repo/' +
-                                  banner.images[0]
-                                : undefined,
-                          }}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                          }}></Image>
-                      </MarketPaginationBox>
-                    </TouchableOpacity>
-                  );
-                })
-              : undefined}
+            {loadSkeleton ? (
+              <SkeletonPlaceholder borderRadius={4}>
+                <SkeletonPlaceholder borderRadius={4}>
+                  <SkeletonPlaceholder.Item
+                    flexDirection="row"
+                    alignItems="center">
+                    <SkeletonPlaceholder.Item
+                      flexDirection="row"
+                      marginRight={20}
+                      marginTop={25}
+                      marginLeft={10}>
+                      <SkeletonPlaceholder.Item width={140} height={90} />
+                      <SkeletonPlaceholder.Item
+                        marginLeft={10}
+                        width={140}
+                        height={90}
+                      />
+                      <SkeletonPlaceholder.Item
+                        marginLeft={10}
+                        width={140}
+                        height={90}
+                      />
+                      <SkeletonPlaceholder.Item
+                        marginLeft={10}
+                        width={140}
+                        height={90}
+                      />
+                    </SkeletonPlaceholder.Item>
+                  </SkeletonPlaceholder.Item>
+                </SkeletonPlaceholder>
+              </SkeletonPlaceholder>
+            ) : (
+              <View style={{flexDirection: 'row'}}>
+                {image?.standart && image.standart.length > 0
+                  ? image.standart.map((banner: any) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => showModal()}
+                          onPressIn={() => setContent(banner)}>
+                          <MarketPaginationBox>
+                            <Image
+                              source={{
+                                uri:
+                                  banner &&
+                                  banner.images &&
+                                  banner.images.length > 0
+                                    ? variables.siteUrl +
+                                      '/api/repo/' +
+                                      banner.images[0]
+                                    : undefined,
+                              }}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                              }}></Image>
+                          </MarketPaginationBox>
+                        </TouchableOpacity>
+                      );
+                    })
+                  : undefined}
+              </View>
+            )}
           </MarketPaginationSpace>
         </ScrollView>
 
@@ -101,85 +139,165 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={{marginTop: 25}}>
-          <TouchableOpacity onPress={() => setActive(undefined)}>
-            <MarketPaginationFilterAll
-              style={{
-                backgroundColor: active === undefined ? '#288AF4' : '#E4E4E6',
-              }}>
-              <MarketPaginationFilterTextTabs
-                style={{color: active === undefined ? 'white' : 'black'}}>
-                Все
-              </MarketPaginationFilterTextTabs>
-            </MarketPaginationFilterAll>
-          </TouchableOpacity>
-          <MarketPaginationSpace>
-            {suppliers?.tags?.map((item: any) => {
-              return (
-                <TouchableOpacity onPress={() => setActive(item.code)}>
-                  <MarketPagnationFilters
-                    style={{
-                      backgroundColor:
-                        item.code === active ? '#288AF4' : '#E4E4E6',
-                    }}>
-                    <MarketPaginationFilterTextTabs
-                      style={{
-                        color: item.code === active ? 'white' : 'black',
-                      }}>
-                      {item.name}
-                    </MarketPaginationFilterTextTabs>
-                  </MarketPagnationFilters>
-                </TouchableOpacity>
-              );
-            })}
-          </MarketPaginationSpace>
+          {loadSkeleton ? (
+            <SkeletonPlaceholder borderRadius={4}>
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                <SkeletonPlaceholder.Item
+                  marginLeft={15}
+                  flexDirection="row"
+                  gap={13}
+                  marginBottom={10}>
+                  <SkeletonPlaceholder.Item
+                    marginTop={6}
+                    width={65}
+                    height={40}
+                    borderRadius={8}
+                  />
+                  <SkeletonPlaceholder.Item
+                    marginTop={6}
+                    width={65}
+                    height={40}
+                    borderRadius={8}
+                  />
+                  <SkeletonPlaceholder.Item
+                    marginTop={6}
+                    width={90}
+                    height={40}
+                    borderRadius={8}
+                  />
+                  <SkeletonPlaceholder.Item
+                    marginTop={6}
+                    width={80}
+                    height={40}
+                    borderRadius={8}
+                  />
+                  <SkeletonPlaceholder.Item
+                    marginTop={6}
+                    width={140}
+                    height={40}
+                    borderRadius={8}
+                  />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder>
+          ) : (
+            <>
+              <TouchableOpacity onPress={() => setActive(undefined)}>
+                <MarketPaginationFilterAll
+                  style={{
+                    backgroundColor:
+                      active === undefined ? '#288AF4' : '#E4E4E6',
+                  }}>
+                  <MarketPaginationFilterTextTabs
+                    style={{color: active === undefined ? 'white' : 'black'}}>
+                    Все
+                  </MarketPaginationFilterTextTabs>
+                </MarketPaginationFilterAll>
+              </TouchableOpacity>
+              <MarketPaginationSpace>
+                {suppliers?.tags?.map((item: any) => {
+                  return (
+                    <TouchableOpacity onPress={() => setActive(item.code)}>
+                      <MarketPagnationFilters
+                        style={{
+                          backgroundColor:
+                            item.code === active ? '#288AF4' : '#E4E4E6',
+                        }}>
+                        <MarketPaginationFilterTextTabs
+                          style={{
+                            color: item.code === active ? 'white' : 'black',
+                          }}>
+                          {item.name}
+                        </MarketPaginationFilterTextTabs>
+                      </MarketPagnationFilters>
+                    </TouchableOpacity>
+                  );
+                })}
+              </MarketPaginationSpace>
+            </>
+          )}
         </ScrollView>
       </MarketPaginationContainer>
       <ScrollView>
-        <MarketContentContainer>
-          {suppliers?.suppliers && suppliers.suppliers.length > 0
-            ? suppliers.suppliers
-                .filter(
-                  (f: any) =>
-                    (f.tags &&
-                      f.tags.some(
-                        (t: any) =>
-                          t === active && f.parent_code != 'parent_01',
-                      )) ||
-                    (!active && f.parent_code != 'parent_01'),
-                )
-                .map((supplier: any) => {
-                  return (
-                    <TouchableOpacity
-                      onPressIn={() => setContent(supplier)}
-                      onPress={() =>
-                        supplier.code === 'parent_01'
-                          ? navigation.navigate('ParentMeat', {content})
-                          : navigation.navigate('Supplier', {content})
-                      }>
-                      <MarketContentBoxContainer>
-                        <MarketContentBox>
-                          <Image
-                            source={{
-                              uri:
-                                supplier &&
-                                supplier.images &&
-                                supplier.images.length > 0
-                                  ? variables.siteUrl +
-                                    '/api/repo/' +
-                                    supplier.images[0]
-                                  : undefined,
-                            }}
-                            style={{width: 130, height: 130}}></Image>
-                          <MarketContentBoxText>
-                            {supplier.name}
-                          </MarketContentBoxText>
-                        </MarketContentBox>
-                      </MarketContentBoxContainer>
-                    </TouchableOpacity>
-                  );
-                })
-            : undefined}
-        </MarketContentContainer>
+        {loadSkeleton ? (
+          <SkeletonPlaceholder borderRadius={4}>
+            <SkeletonPlaceholder borderRadius={4}>
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                <SkeletonPlaceholder.Item
+                  flexDirection="row"
+                  flexWrap="wrap"
+                  marginRight={20}
+                  marginLeft={15}
+                  borderRadius={10}
+                  marginTop={30}>
+                  <SkeletonPlaceholder.Item width={160} height={200} />
+                  <SkeletonPlaceholder.Item
+                    marginLeft={20}
+                    width={160}
+                    height={200}
+                  />
+                  <SkeletonPlaceholder.Item
+                    width={160}
+                    height={200}
+                    marginTop={30}
+                  />
+                  <SkeletonPlaceholder.Item
+                    marginLeft={20}
+                    width={160}
+                    height={200}
+                    marginTop={30}
+                  />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder>
+          </SkeletonPlaceholder>
+        ) : (
+          <MarketContentContainer>
+            {suppliers?.suppliers && suppliers.suppliers.length > 0
+              ? suppliers.suppliers
+                  .filter(
+                    (f: any) =>
+                      (f.tags &&
+                        f.tags.some(
+                          (t: any) =>
+                            t === active && f.parent_code != 'parent_01',
+                        )) ||
+                      (!active && f.parent_code != 'parent_01'),
+                  )
+                  .map((supplier: any) => {
+                    return (
+                      <TouchableOpacity
+                        onPressIn={() => setContent(supplier)}
+                        onPress={() =>
+                          supplier.code === 'parent_01'
+                            ? navigation.navigate('ParentMeat', {content})
+                            : navigation.navigate('Supplier', {content})
+                        }>
+                        <MarketContentBoxContainer>
+                          <MarketContentBox>
+                            <Image
+                              source={{
+                                uri:
+                                  supplier &&
+                                  supplier.images &&
+                                  supplier.images.length > 0
+                                    ? variables.siteUrl +
+                                      '/api/repo/' +
+                                      supplier.images[0]
+                                    : undefined,
+                              }}
+                              style={{width: 130, height: 130}}></Image>
+                            <MarketContentBoxText>
+                              {supplier.name}
+                            </MarketContentBoxText>
+                          </MarketContentBox>
+                        </MarketContentBoxContainer>
+                      </TouchableOpacity>
+                    );
+                  })
+              : undefined}
+          </MarketContentContainer>
+        )}
       </ScrollView>
 
       <Modal
