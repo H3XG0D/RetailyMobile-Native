@@ -119,34 +119,26 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
           </View>
         </ScrollView>
 
-        {load ? (
-          <TouchableOpacity disabled={true}>
-            <SuppliersButton>
-              <SuppliersButtonText>
+        <TouchableOpacity
+          disabled={load || !choosed ? true : false}
+          onPress={() =>
+            navigation.navigate('Categories', {selectShop, content})
+          }>
+          <SuppliersButton
+            style={{
+              backgroundColor: choosed
+                ? variables.COLORS.tertiary
+                : variables.COLORS.gray,
+            }}>
+            <SuppliersButtonText>
+              {load ? (
                 <ActivityIndicator size="large" color="white" />
-              </SuppliersButtonText>
-            </SuppliersButton>
-          </TouchableOpacity>
-        ) : (
-          <>
-            {choosed ? (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Categories', {selectShop, content})
-                }>
-                <SuppliersButton>
-                  <SuppliersButtonText>Выбрать</SuppliersButtonText>
-                </SuppliersButton>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity disabled={true}>
-                <SuppliersButtonOff>
-                  <SuppliersButtonText>Выбрать</SuppliersButtonText>
-                </SuppliersButtonOff>
-              </TouchableOpacity>
-            )}
-          </>
-        )}
+              ) : (
+                'Выбрать'
+              )}
+            </SuppliersButtonText>
+          </SuppliersButton>
+        </TouchableOpacity>
       </SupplierContent>
     </SuppliersMain>
   );
@@ -230,19 +222,6 @@ const SupplierItemSubtitle = styled.Text`
 
 const SuppliersButton = styled.View`
   background-color: ${variables.COLORS.tertiary};
-  border-radius: ${variables.SIZES.radius};
-  align-items: center;
-  justify-content: center;
-  width: 350px;
-  height: 45px;
-  margin-top: 15px;
-  margin-bottom: 50px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const SuppliersButtonOff = styled.View`
-  background-color: ${variables.COLORS.gray};
   border-radius: ${variables.SIZES.radius};
   align-items: center;
   justify-content: center;

@@ -16,6 +16,7 @@ import MyRequest from '../../components/Market/Screens/Main/MyRequest';
 import UserProfile from '../../components/Market/Screens/Main/UserProfile';
 import Supplier from '../../components/Market/Screens/Suppliers/Supplier';
 import Request from '../../components/Market/Screens/Main/Request';
+import App from '../../App';
 
 const routes: IRouteProps[] = [
   {
@@ -53,6 +54,10 @@ const routes: IRouteProps[] = [
   {
     name: 'Next',
     component: Next,
+  },
+  {
+    name: 'App',
+    component: App,
   },
   {
     name: 'Market',

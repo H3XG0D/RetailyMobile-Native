@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import {StatusBar} from 'react-native';
 import * as variables from './constants';
 import {LogBox} from 'react-native';
-import NavigationScreens from './NavigationScreens';
+import NavigationScreens from './navigation/NavigationScreens';
 
 function App() {
   LogBox.ignoreLogs(['Warning: ...']);

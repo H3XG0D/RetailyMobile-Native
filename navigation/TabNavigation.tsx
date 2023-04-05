@@ -3,9 +3,9 @@ import {
   createBottomTabNavigator,
   BottomTabBar,
 } from '@react-navigation/bottom-tabs';
-import bottombar from './navigation/BottomBar';
+import bottombar from './BottomBar';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import * as variables from './constants';
+import * as variables from '../constants';
 import {NavigationContainer} from '@react-navigation/native';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 

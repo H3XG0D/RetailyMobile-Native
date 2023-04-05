@@ -23,7 +23,6 @@ import {getClient} from '../../../../api/api';
 import BannerSkeleton from '../Skeletons/MarketSkeleton/BannerSkeleton';
 import TagsSkeleton from '../Skeletons/MarketSkeleton/TagsSkeleton';
 import SuppliersSkeleton from '../Skeletons/MarketSkeleton/SuppliersSkeleton';
-import TabNavigation from '../../../../TabNavigation';
 
 const Market: React.FunctionComponent<IStackScreenProps> = props => {
   const {navigation} = props;
