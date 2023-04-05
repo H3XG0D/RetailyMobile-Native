@@ -14,22 +14,18 @@ const bottombar: IRouteProps[] = [
   {
     name: 'Market',
     component: Market,
-    icon: {faHome},
   },
   {
     name: 'Request',
     component: Request,
-    icon: {faShoppingBasket},
   },
   {
     name: 'MyRequest',
     component: MyRequest,
-    icon: {faList},
   },
   {
     name: 'UserProfile',
     component: UserProfile,
-    icon: {faCog},
   },
 ];
 

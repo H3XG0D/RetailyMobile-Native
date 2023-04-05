@@ -62,7 +62,7 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
         </SkeletonPlaceholder.Item>
       </SkeletonPlaceholder> */}
 
-      <MarketBottomMenuContainer>
+      {/* <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
           <MarketBottomMenuItems>
             <FontAwesomeIcon icon={faHome} size={28} color={'gray'} />
@@ -94,7 +94,7 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
             <MarketBottomMenuText>Профиль</MarketBottomMenuText>
           </MarketBottomMenuItems>
         </MarketBottomMenuTab>
-      </MarketBottomMenuContainer>
+      </MarketBottomMenuContainer> */}
     </MainUserProfile>
   );
 };

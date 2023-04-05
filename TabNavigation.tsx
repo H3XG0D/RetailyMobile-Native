@@ -7,38 +7,37 @@ import bottombar from './navigation/BottomBar';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import * as variables from './constants';
 import {NavigationContainer} from '@react-navigation/native';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
 
 const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
 
-  const customBottomBar = {
-    activeColor: '#278AF5',
-    inActiveColor: 'gray',
-    style: {backgroundColor: 'white'},
-  };
-
   return (
-    <Tab.Navigator tabBar={(props: any) => <BottomTabBar {...props} />}>
-      {bottombar.map((item, index) => (
-        <Tab.Screen
-          key={index}
-          name={item.name}
-          options={() => ({
-            tabBarIcon: () => {
-              return (
-                <FontAwesomeIcon
-                  icon={item.icon}
-                  color={variables.COLORS.primary}
-                  size={30}
-                />
-              );
-            },
-            headerShown: false,
-          })}>
-          {props => <item.component nameProp={item.name} {...props} />}
-        </Tab.Screen>
-      ))}
-    </Tab.Navigator>
+    <NavigationContainer>
+      <Tab.Navigator tabBar={(props: any) => <BottomTabBar {...props} />}>
+        {bottombar.map((item, index) => (
+          <Tab.Screen
+            key={index}
+            name={item.name}
+            options={() => ({
+              tabBarIcon: () => {
+                return (
+                  <FontAwesomeIcon
+                    icon={faHome}
+                    color={variables.COLORS.primary}
+                    size={30}
+                  />
+                );
+              },
+              headerShown: false,
+              tabBarActiveTintColor: '#278AF5',
+              tabBarInactiveTintColor: 'gray',
+            })}>
+            {props => <item.component nameProp={item.name} {...props} />}
+          </Tab.Screen>
+        ))}
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
