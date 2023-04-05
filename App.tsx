@@ -10,16 +10,16 @@ import {
   BottomTabBar,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import bottombar from './navigation/BottomBar';
-
+import TabNavigation from './TabNavigation';
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
-const customBottomBar = {
-  activeColor: '#278AF5',
-  inActiveColor: 'gray',
-  style: {backgroundColor: 'white'},
-};
+// const Tab = createBottomTabNavigator();
+
+// const customBottomBar = {
+//   activeColor: '#278AF5',
+//   inActiveColor: 'gray',
+//   style: {backgroundColor: 'white'},
+// };
 
 function App() {
   LogBox.ignoreLogs(['Warning: ...']);
@@ -42,24 +42,6 @@ function App() {
         </Stack.Navigator>
         <StatusBar backgroundColor={variables.COLORS.forth} />
       </NavigationContainer>
-
-      {/* <NavigationContainer>
-        <Tab.Navigator tabBar={(props: any) => <BottomTabBar {...props} />}>
-          {bottombar.map((item, index) => (
-            <Tab.Screen
-              key={index}
-              name={item.name}
-              options={() => ({
-                tabBarIcon: ({focused, color, size}) => {
-                  let IconName;
-                },
-                headerShown: false,
-              })}>
-              {item.component}
-            </Tab.Screen>
-          ))}
-        </Tab.Navigator>
-      </NavigationContainer> */}
     </>
   );
 }
