@@ -285,7 +285,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
         </View>
       </Modal>
 
-      <MarketBottomMenuContainer>
+      {/* <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
           <MarketBottomMenuItems>
             <FontAwesomeIcon
@@ -318,7 +318,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
             <MarketBottomMenuText>Профиль</MarketBottomMenuText>
           </MarketBottomMenuItems>
         </MarketBottomMenuTab>
-      </MarketBottomMenuContainer>
+      </MarketBottomMenuContainer> */}
     </View>
   );
 };
