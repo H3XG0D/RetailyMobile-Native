@@ -4,8 +4,13 @@ import {StatusBar} from 'react-native';
 import * as variables from './constants';
 import {LogBox} from 'react-native';
 import NavigationScreens from './navigation/NavigationScreens';
+import TabNavigation from './navigation/TabNavigation';
 
-function App() {
+const TabContainer = () => {
+  <TabNavigation />;
+};
+
+const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
 
@@ -15,6 +20,6 @@ function App() {
       <StatusBar backgroundColor={variables.COLORS.forth} />
     </>
   );
-}
+};
 
 export default App;

@@ -14,7 +14,7 @@ const TabNavigation = () => {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator tabBar={(props: any) => <BottomTabBar {...props} />}>
+      <Tab.Navigator>
         {bottombar.map((item, index) => (
           <Tab.Screen
             key={index}

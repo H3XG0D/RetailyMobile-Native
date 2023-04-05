@@ -5,26 +5,21 @@ import MyRequest from '../components/Market/Screens/Main/MyRequest';
 import Request from '../components/Market/Screens/Main/Request';
 import UserProfile from '../components/Market/Screens/Main/UserProfile';
 
-import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
-import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
-import {faList} from '@fortawesome/free-solid-svg-icons/faList';
-import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
-
 const bottombar: IRouteProps[] = [
   {
-    name: 'Market',
+    name: 'MarketBottom',
     component: Market,
   },
   {
-    name: 'Request',
+    name: 'RequestBottom',
     component: Request,
   },
   {
-    name: 'MyRequest',
+    name: 'MyRequestBottom',
     component: MyRequest,
   },
   {
-    name: 'UserProfile',
+    name: 'UserProfileBottom',
     component: UserProfile,
   },
 ];

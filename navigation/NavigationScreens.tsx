@@ -2,6 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import routes from '../src/config/routes';
+import TabNavigation from './TabNavigation';
 
 const NavigationScreens = () => {
   const Stack = createStackNavigator();
@@ -19,6 +20,8 @@ const NavigationScreens = () => {
             {props => <r.component nameProp={r.name} {...props} />}
           </Stack.Screen>
         ))}
+
+        <Stack.Screen name={'Tab'} component={TabNavigation}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

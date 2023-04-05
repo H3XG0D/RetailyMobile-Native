@@ -17,6 +17,7 @@ import UserProfile from '../../components/Market/Screens/Main/UserProfile';
 import Supplier from '../../components/Market/Screens/Suppliers/Supplier';
 import Request from '../../components/Market/Screens/Main/Request';
 import App from '../../App';
+import BottomTabNav from '../../components/Market/Screens/Main/BottomTabNav';
 
 const routes: IRouteProps[] = [
   {
@@ -58,6 +59,10 @@ const routes: IRouteProps[] = [
   {
     name: 'App',
     component: App,
+  },
+  {
+    name: 'BottomTabNav',
+    component: BottomTabNav,
   },
   {
     name: 'Market',
