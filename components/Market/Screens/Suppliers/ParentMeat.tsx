@@ -131,39 +131,3 @@ const MarketContentBoxContainer = styled.View`
   height: 200px;
   border-radius: 10px;
 `;
-
-// * Bottom Menu
-
-const MarketBottomMenuContainer = styled.View`
-  position: absolute;
-  justify-content: space-between;
-  flex-direction: row;
-  background-color: ${variables.COLORS.white};
-  width: 100%;
-  bottom: 0;
-  right: 0;
-  padding: 10px 15px;
-`;
-
-const MarketBottomMenuItems = styled.View`
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
-  padding-right: 10px;
-`;
-
-const MarketBottomMenuText = styled.Text`
-  font-size: ${variables.SIZES.h8};
-  margin-top: 5px;
-`;
-
-const MarketBottomMenuWideText = styled.Text`
-  color: ${variables.COLORS.gray};
-  font-size: ${variables.SIZES.h8};
-  margin-top: 5px;
-`;
-
-const MarketBottomMenuTab = styled.TouchableOpacity`
-  align-items: center;
-  justify-content: center;
-`;

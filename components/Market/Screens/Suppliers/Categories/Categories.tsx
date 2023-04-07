@@ -10,6 +10,7 @@ import CategoriesSkeleton from '../../Skeletons/CategoriesSkeleton/CategoriesSke
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../src/config/routes';
+import BottomTabNav from '../../Main/BottomTabNav';
 
 const Categories = () => {
   const navigation =
@@ -92,6 +93,7 @@ const Categories = () => {
           )}
         </CategoriesContentContainer>
       </ScrollView>
+      <BottomTabNav />
     </View>
   );
 };
