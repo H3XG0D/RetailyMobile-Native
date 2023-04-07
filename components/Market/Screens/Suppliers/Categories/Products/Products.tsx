@@ -120,7 +120,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                                       : undefined,
                                 }}
                               />
-                              <ProductsContentBoxText>
+                              <ProductsContentBoxText numberOfLines={3}>
                                 {product.name}
                               </ProductsContentBoxText>
 
