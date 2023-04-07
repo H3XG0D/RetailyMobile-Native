@@ -7,10 +7,6 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 // Icons
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
-import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
-import {faList} from '@fortawesome/free-solid-svg-icons/faList';
-import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
 import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 
 // ScrollView
@@ -27,6 +23,7 @@ import SuppliersSkeleton from '../Skeletons/MarketSkeleton/SuppliersSkeleton';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../src/config/routes';
+
 import BottomTabNav from './BottomTabNav';
 
 const Market = () => {
@@ -75,7 +72,10 @@ const Market = () => {
   }, []);
 
   return (
-    <View style={{height: '100%'}}>
+    <View
+      style={{
+        height: '100%',
+      }}>
       <MarketPaginationContainer>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <MarketPaginationSpace>

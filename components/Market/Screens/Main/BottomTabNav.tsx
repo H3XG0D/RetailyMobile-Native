@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
@@ -15,12 +16,16 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../src/config/routes';
 
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 const BottomTabNav = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <MarketBottomMenuContainer>
+    <MarketBottomMenuContainer style={{paddingBottom: insets.bottom}}>
       <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
         <MarketBottomMenuItems>
           <FontAwesomeIcon
