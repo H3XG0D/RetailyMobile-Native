@@ -30,6 +30,8 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
 
+  const [buy, setBuy] = React.useState<boolean>(false);
+
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
@@ -85,6 +87,12 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
 
   const HandleButton = (product: any) => {
     setInfo(product);
+  };
+
+  const discount = (info?.price * info?.quantum).toFixed(2);
+
+  const buyProduct = () => {
+    setBuy(!buy);
   };
 
   React.useEffect(() => {
@@ -165,18 +173,17 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
             borderRadius: 15,
             marginTop: 50,
           }}>
+          <TouchableOpacity onPress={() => showModal()}>
+            <FontAwesomeIcon
+              icon={faClose}
+              size={28}
+              style={{
+                marginLeft: 'auto',
+                marginRight: 20,
+                marginTop: 15,
+              }}></FontAwesomeIcon>
+          </TouchableOpacity>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <TouchableOpacity onPress={() => showModal()}>
-              <FontAwesomeIcon
-                icon={faClose}
-                size={28}
-                style={{
-                  marginLeft: 'auto',
-                  marginRight: 20,
-                  marginTop: 15,
-                }}></FontAwesomeIcon>
-            </TouchableOpacity>
-
             <ProductsModalImage
               source={{
                 uri:
@@ -191,9 +198,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                 <ProductsModalTitle>{info?.name}</ProductsModalTitle>
                 <View style={{alignItems: 'center'}}>
                   {info?.quantum > 0 ? (
-                    <ProductsModalCost>
-                      {info?.price * info?.quantum} ₽
-                    </ProductsModalCost>
+                    <ProductsModalCost>{discount} ₽</ProductsModalCost>
                   ) : (
                     <ProductsModalCost style={{color: variables.COLORS.black}}>
                       {info?.price} ₽
