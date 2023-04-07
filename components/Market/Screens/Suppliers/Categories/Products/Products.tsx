@@ -29,9 +29,6 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
 
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
-  const [addToCart, setAddToCart] = React.useState<boolean>(false);
-
-  const [count, setCount] = React.useState<any>(0);
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -53,9 +50,41 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
     setModalVisible(!isModalVisible);
   };
 
-  const AddProduct = () => {
-    setAddToCart(!addToCart);
-    setCount(count + 1);
+  const AddProduct = (info: any) => {
+    let obj = {...info};
+
+    obj.quantum += obj.step;
+    setInfo(obj);
+  };
+
+  const incrementCounter = (info: any) => {
+    let obj = {...info};
+
+    obj.quantum = obj.quantum + obj.step;
+
+    let newArray = [...products];
+    let newRow = newArray.find((a: any) => a.code === obj.code);
+    newRow.quantum = obj.quantum;
+
+    setProducts(newArray);
+    setInfo(obj);
+  };
+
+  const decrementCounter = (info: any) => {
+    let obj = {...info};
+
+    obj.quantum = obj.quantum - obj.step;
+
+    let newArray = [...products];
+    let newRow = newArray.find((a: any) => a.code === obj.code);
+    newRow.quantum = obj.quantum;
+
+    setProducts(newArray);
+    setInfo(obj);
+  };
+
+  const HandleButton = (product: any) => {
+    setInfo(product);
   };
 
   React.useEffect(() => {
@@ -75,7 +104,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                     return (
                       <TouchableOpacity
                         onPress={() => showModal()}
-                        onPressIn={() => setInfo(product)}>
+                        onPressIn={() => HandleButton(product)}>
                         <ProductsContentBoxTextContainer>
                           <ProductsContentOutsideBox>
                             <ProductsContentBox>
@@ -161,77 +190,45 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
               <ProductsModalHeader>
                 <ProductsModalTitle>{info?.name}</ProductsModalTitle>
                 <View style={{alignItems: 'center'}}>
-                  <ProductsModalCost>{info?.price} ₽</ProductsModalCost>
-                  <ProductsModalSubtitleCost>
-                    {info?.price} ₽
-                  </ProductsModalSubtitleCost>
+                  {info?.quantum > 0 ? (
+                    <ProductsModalCost>
+                      {info?.price * info?.quantum} ₽
+                    </ProductsModalCost>
+                  ) : (
+                    <Text style={{color: variables.COLORS.black}}>
+                      {info?.price}
+                    </Text>
+                  )}
+                  {info?.quantum > 0 ? (
+                    <ProductsModalSubtitleCost>
+                      {info?.price} ₽
+                    </ProductsModalSubtitleCost>
+                  ) : null}
                 </View>
               </ProductsModalHeader>
 
-              {count == 0 ? (
-                <>
-                  {addToCart ? (
-                    <ProductsModalCountView>
-                      <TouchableOpacity onPress={() => setCount(count - 1)}>
-                        <ProductsModalMinusBtn>
-                          <ProductsModalMinusText>-</ProductsModalMinusText>
-                        </ProductsModalMinusBtn>
-                      </TouchableOpacity>
-                      <ProductsModalCountInput
-                        maxLength={1}
-                        keyboardType="number-pad"
-                        onChangeText={setCount}
-                        value={count}>
-                        <Text>{count}</Text>
-                      </ProductsModalCountInput>
-                      <TouchableOpacity onPress={() => setCount(count + 1)}>
-                        <ProductsModalPlusBtn>
-                          <ProductsModalPlusText>+</ProductsModalPlusText>
-                        </ProductsModalPlusBtn>
-                      </TouchableOpacity>
-                    </ProductsModalCountView>
-                  ) : (
-                    <TouchableOpacity onPress={() => AddProduct()}>
-                      <ProductsModalBtn>
-                        <ProductsModalBtnText>
-                          {info?.price} ₽
-                        </ProductsModalBtnText>
-                      </ProductsModalBtn>
-                    </TouchableOpacity>
-                  )}
-                </>
+              {info?.quantum > 0 ? (
+                <ProductsModalCountView>
+                  <TouchableOpacity onPress={() => decrementCounter(info)}>
+                    <ProductsModalMinusBtn>
+                      <ProductsModalMinusText>-</ProductsModalMinusText>
+                    </ProductsModalMinusBtn>
+                  </TouchableOpacity>
+                  <ProductsModalCountInput>
+                    <Text>{info?.quantum}</Text>
+                  </ProductsModalCountInput>
+                  <TouchableOpacity onPress={() => incrementCounter(info)}>
+                    <ProductsModalPlusBtn>
+                      <ProductsModalPlusText>+</ProductsModalPlusText>
+                    </ProductsModalPlusBtn>
+                  </TouchableOpacity>
+                </ProductsModalCountView>
               ) : (
-                <>
-                  {addToCart ? (
-                    <ProductsModalCountView>
-                      <TouchableOpacity onPress={() => setCount(count - 1)}>
-                        <ProductsModalMinusBtn>
-                          <ProductsModalMinusText>-</ProductsModalMinusText>
-                        </ProductsModalMinusBtn>
-                      </TouchableOpacity>
-                      <ProductsModalCountInput
-                        maxLength={1}
-                        keyboardType="number-pad"
-                        onChangeText={setCount}
-                        value={count}>
-                        <Text>{count}</Text>
-                      </ProductsModalCountInput>
-                      <TouchableOpacity onPress={() => setCount(count + 1)}>
-                        <ProductsModalPlusBtn>
-                          <ProductsModalPlusText>+</ProductsModalPlusText>
-                        </ProductsModalPlusBtn>
-                      </TouchableOpacity>
-                    </ProductsModalCountView>
-                  ) : (
-                    <TouchableOpacity onPress={() => AddProduct()}>
-                      <ProductsModalBtn>
-                        <ProductsModalBtnText>
-                          {info?.price} ₽
-                        </ProductsModalBtnText>
-                      </ProductsModalBtn>
-                    </TouchableOpacity>
-                  )}
-                </>
+                <TouchableOpacity onPress={() => AddProduct(info)}>
+                  <ProductsModalBtn>
+                    <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
+                  </ProductsModalBtn>
+                </TouchableOpacity>
               )}
 
               <ProductModalInfoContainer>
@@ -270,8 +267,6 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
     </View>
   );
 };
-
-// Code.Weight: name; value, sert, storage_life, storage_cond = properties1
 
 export default Products;
 
@@ -349,6 +344,14 @@ const ProductsContentBoxTextContainer = styled.View`
 const ProductsModalContent = styled.View`
   background-color: ${variables.COLORS.milky};
   height: 450px;
+`;
+
+const ProductsModalBackground = styled.View`
+  max-height: 1300px - 10px;
+  width: 100%;
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 50px;
 `;
 
 const ProductsModalImage = styled.Image`
