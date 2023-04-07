@@ -1,6 +1,6 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {IStackScreenProps} from '../../../../navigation/StackScreen';
+
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../../constants';
@@ -15,8 +15,14 @@ import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
 
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../src/config/routes';
+import BottomTabNav from './BottomTabNav';
+
+const UserProfile = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,7 +30,7 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
       headerTitleStyle: {fontSize: 27, fontWeight: '700'},
-      animationEnabled: false,
+      animation: 'none',
     });
   }, [navigation]);
 
@@ -32,8 +38,6 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
     await AsyncStorage.removeItem('login');
     await AsyncStorage.removeItem('password');
     await AsyncStorage.removeItem('token');
-
-    navigation.navigate('Login');
   };
 
   return (
@@ -46,55 +50,7 @@ const UserProfile: React.FunctionComponent<IStackScreenProps> = props => {
           <UserSignInText>Выйти</UserSignInText>
         </UserSignIn>
       </TouchableOpacity>
-
-      {/* <SkeletonPlaceholder borderRadius={4}>
-        <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-          <SkeletonPlaceholder.Item marginLeft={20}>
-            <SkeletonPlaceholder.Item width={160} height={20} />
-            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
-            <SkeletonPlaceholder.Item width={160} height={20} />
-            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
-            <SkeletonPlaceholder.Item width={160} height={20} />
-            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
-            <SkeletonPlaceholder.Item width={160} height={20} />
-            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
-          </SkeletonPlaceholder.Item>
-        </SkeletonPlaceholder.Item>
-      </SkeletonPlaceholder> */}
-
-      <MarketBottomMenuContainer>
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faHome} size={28} color={'gray'} />
-            <MarketBottomMenuText>Главная</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Request')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faShoppingBasket} color={'gray'} size={30} />
-            <MarketBottomMenuText>Корзина</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('MyRequest')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
-            <MarketBottomMenuWideText>Мои заявки</MarketBottomMenuWideText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('UserProfile')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon
-              icon={faCog}
-              color={variables.COLORS.primary}
-              size={30}
-            />
-            <MarketBottomMenuText>Профиль</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-      </MarketBottomMenuContainer>
+      <BottomTabNav />
     </MainUserProfile>
   );
 };

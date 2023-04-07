@@ -1,12 +1,17 @@
 import React from 'react';
-import {IStackScreenProps} from '../../navigation/StackScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from './../../constants';
 
-const LoadingScreen: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../src/config/routes';
+
+const LoadingScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useLayoutEffect(() => {
@@ -30,9 +35,7 @@ const LoadingScreen: React.FunctionComponent<IStackScreenProps> = props => {
 
   return (
     <>
-      {loading === false ? (
-        navigation.navigate('Login')
-      ) : (
+      {loading === false ? undefined : (
         <LoadingContent>
           <LoadingLogo>
             <LogoImage source={require('./images/logo.png')} />

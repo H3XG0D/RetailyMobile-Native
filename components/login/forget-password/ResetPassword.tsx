@@ -6,15 +6,24 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {IStackScreenProps} from '../../../../retaily/navigation/StackScreen';
+
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../constants';
 import {useRoute} from '@react-navigation/native';
 import {forgotPassword} from '../../../api/api';
 
-const ResetPassword: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../src/config/routes';
+
+const ResetPassword = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({headerTitle: 'Подтверждение'});
+  }, [navigation]);
 
   const route = useRoute();
   const {userNumber}: any = route.params;
@@ -26,13 +35,6 @@ const ResetPassword: React.FunctionComponent<IStackScreenProps> = props => {
   const [error, setError] = React.useState<string>();
 
   const [load, setLoad] = React.useState<boolean>(false);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: 'Восстановление пароля',
-      headerTitleStyle: {fontSize: 22},
-    });
-  }, [navigation]);
 
   const passwordForget = async () => {
     setLoad(true);

@@ -1,23 +1,26 @@
 import React, {useRef, useState} from 'react';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
 // @ts-ignore
 import styled from 'styled-components/native';
 
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../navigation/StackScreen';
+
 import {getPhoneVerify, getSMS} from '../../../api/api';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../src/config/routes';
 
-const Code: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
-
-  const route = useRoute();
-  const {userNumber}: any = route.params;
-  const number = 8 + String(userNumber);
+const Code = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerTitle: 'Подтверждение'});
   }, [navigation]);
+
+  const route = useRoute();
+  const {userNumber}: any = route.params;
+  const number = 8 + String(userNumber);
 
   const firstInput = useRef<any>();
   const secondInput = useRef<any>();

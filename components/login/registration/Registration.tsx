@@ -8,11 +8,16 @@ import {
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {getSMS, loginCheck} from '../../../api/api';
 
-const Registration: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../src/config/routes';
+import {useNavigation} from '@react-navigation/native';
+
+const Registration = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const [number, onChangeText] = React.useState<any>('');
   const [numberError, setNumberError] = React.useState<any>('');
   const [disable, setDisable] = React.useState<boolean>(true);

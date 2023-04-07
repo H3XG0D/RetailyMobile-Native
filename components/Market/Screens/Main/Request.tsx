@@ -1,6 +1,5 @@
 import {Text} from 'react-native';
 import React from 'react';
-import {IStackScreenProps} from '../../../../navigation/StackScreen';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../../constants';
@@ -11,8 +10,14 @@ import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBask
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
 
-const Request: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../src/config/routes';
+import BottomTabNav from './BottomTabNav';
+
+const Request = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -20,7 +25,7 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
       headerTitleStyle: {fontSize: 27, fontWeight: '700'},
-      animationEnabled: false,
+      animation: 'none',
     });
   }, [navigation]);
 
@@ -28,40 +33,7 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
     <RequestMain>
       <Text>Корзина для покупок</Text>
 
-      {/* Bottom Market Container */}
-      <MarketBottomMenuContainer>
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faHome} size={28} color={'gray'} />
-            <MarketBottomMenuText>Главная</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Request')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon
-              icon={faShoppingBasket}
-              color={variables.COLORS.primary}
-              size={30}
-            />
-            <MarketBottomMenuText>Корзина</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('MyRequest')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
-            <MarketBottomMenuWideText>Мои заявки</MarketBottomMenuWideText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('UserProfile')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faCog} color={'gray'} size={30} />
-            <MarketBottomMenuText>Профиль</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-      </MarketBottomMenuContainer>
+      <BottomTabNav />
     </RequestMain>
   );
 };

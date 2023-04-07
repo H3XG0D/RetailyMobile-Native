@@ -12,7 +12,7 @@ export const SuppliersSkeleton = () => {
               flexDirection="row"
               flexWrap="wrap"
               marginRight={20}
-              marginLeft={15}
+              marginLeft={30}
               borderRadius={10}
               marginTop={30}>
               <SkeletonPlaceholder.Item width={160} height={200} />

@@ -1,38 +1,28 @@
 import React from 'react';
 
 import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
-import {IStackScreenProps} from '../../navigation/StackScreen';
 import {Platform} from 'react-native';
-import DeviceInfo from 'react-native-device-info';
 
 // @ts-ignore
 import styled from 'styled-components/native';
 // IMPORT CSS LIBRARY
-import * as variables from './../../constants';
+import * as variables from '../../constants';
 import {auth} from '../../api/api';
 
-// * Async Storage for user session
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../src/config/routes';
 
-const LoginPage: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+const LoginPage = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const [text, onChangeText] = React.useState<string>('');
   const [password, onChangePassword] = React.useState<string>('');
-  const [modelId, setModelId] = React.useState<string>('');
 
   const [error, setError] = React.useState<string | boolean>();
   const [loadError, setLoadError] = React.useState<boolean>();
   const [load, setLoad] = React.useState<boolean>(false);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: false});
-  }, [navigation]);
-
-  const detectModel = () => {
-    let model = DeviceInfo.getModel();
-    setModelId(model);
-  };
 
   const loginCheck = async () => {
     setLoad(true);

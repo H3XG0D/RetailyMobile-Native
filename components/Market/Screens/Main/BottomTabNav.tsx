@@ -10,10 +10,14 @@ import * as variables from '../../../../constants';
 
 // @ts-ignore
 import styled from 'styled-components/native';
-import {IStackScreenProps} from '../../../../navigation/StackScreen';
 
-const BottomTabNav: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../src/config/routes';
+
+const BottomTabNav = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <MarketBottomMenuContainer>

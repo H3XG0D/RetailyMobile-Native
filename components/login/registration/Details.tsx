@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {
   TouchableOpacity,
   ScrollView,
@@ -18,6 +17,11 @@ import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {getClientObjects, userRegister} from '../../../api/api';
 import axios from 'axios';
 
+import {getPhoneVerify, getSMS} from '../../../api/api';
+
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../src/config/routes';
+
 interface Ioktmo {
   name: string;
   code: string;
@@ -30,8 +34,9 @@ export interface Idata {
   passwordCheck: string | undefined;
 }
 
-const Details: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+const Details = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const route = useRoute();
   const {userNumber}: any = route.params;

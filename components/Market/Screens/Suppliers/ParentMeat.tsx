@@ -6,34 +6,35 @@ import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
 
 // Imports all exports from local project
-import {IStackScreenProps} from '../../../../navigation/StackScreen';
+
 import * as variables from '../../../../constants';
 import {getClient} from '../../../../api/api';
 
 // Icons
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
-import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
-import {faList} from '@fortawesome/free-solid-svg-icons/faList';
-import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import ParentMeatSkeleton from '../Skeletons/SuppliersSkeleton/ParentMeatSkeleton';
 
-const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../src/config/routes';
+import BottomTabNav from '../Main/BottomTabNav';
+
+const ParentMeat = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: content.name,
+      headerTitleStyle: {fontSize: 20},
+      headerLeft: () => <Text></Text>,
+    });
+  }, [navigation]);
 
   const [suppliers, setSuppliers] = React.useState<any>([]);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   const route = useRoute();
   const {content}: any = route.params;
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: content.name,
-      headerTitleStyle: {fontSize: 18},
-    });
-  }, [navigation]);
 
   const getSuppliers = async () => {
     setLoadSkeleton(true);
@@ -90,41 +91,7 @@ const ParentMeat: React.FunctionComponent<IStackScreenProps> = props => {
           )}
         </MarketContentContainer>
       </ScrollView>
-
-      <MarketBottomMenuContainer>
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon
-              icon={faHome}
-              color={variables.COLORS.primary}
-              size={28}
-            />
-
-            <MarketBottomMenuText>Главная</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Request')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faShoppingBasket} color={'gray'} size={30} />
-            <MarketBottomMenuText>Корзина</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('MyRequest')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
-            <MarketBottomMenuWideText>Мои заявки</MarketBottomMenuWideText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('UserProfile')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faCog} color={'gray'} size={30} />
-            <MarketBottomMenuText>Профиль</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-      </MarketBottomMenuContainer>
+      <BottomTabNav />
     </View>
   );
 };

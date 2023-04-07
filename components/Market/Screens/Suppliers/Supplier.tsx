@@ -1,17 +1,29 @@
 import React from 'react';
 import {Pressable, Text, TouchableOpacity, View} from 'react-native';
-import {IStackScreenProps} from '../../../../navigation/StackScreen';
+
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../../constants';
 import {getShopsContract, getShopsInfo} from '../../../../api/api';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SupplierSkeleton from '../Skeletons/SuppliersSkeleton/SupplierSkeleton';
 import {ActivityIndicator} from 'react-native';
 
-const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../src/config/routes';
+
+const Supplier = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: content.name,
+      headerTitleStyle: {fontSize: 20},
+      headerLeft: () => <Text></Text>,
+    });
+  }, [navigation]);
 
   const route = useRoute();
   const {content}: any = route.params;
@@ -52,13 +64,6 @@ const Supplier: React.FunctionComponent<IStackScreenProps> = props => {
   const ChooseHandler = () => {
     setChoosed(true);
   };
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: content.name,
-      headerTitleStyle: {fontSize: 20},
-    });
-  }, [navigation]);
 
   React.useEffect(() => {
     getContract();

@@ -1,21 +1,25 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {IStackScreenProps} from '../../../../../navigation/StackScreen';
+import {Text, TouchableOpacity, View} from 'react-native';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../../../constants';
 import {getCategoriesInfo} from '../../../../../api/api';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import CategoriesSkeleton from '../../Skeletons/CategoriesSkeleton/CategoriesSkeleton';
 
-const Categories: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../../src/config/routes';
+
+const Categories = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: content.name,
       headerTitleStyle: {fontSize: 20},
+      headerLeft: () => <Text></Text>,
     });
   }, [navigation]);
 
@@ -99,8 +103,7 @@ const CategoriesContentContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 15px;
-  padding: 10px 10px 10px 10px;
-  /* padding: 30px 20px 20px 25px; */
+  padding: 30px 20px 20px 25px;
 `;
 
 const CategoriesContentBox = styled.View`

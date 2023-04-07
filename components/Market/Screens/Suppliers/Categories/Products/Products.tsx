@@ -1,23 +1,27 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {IStackScreenProps} from '../../../../../../navigation/StackScreen';
 import styled from 'styled-components/native';
 import * as variables from '../../../../../../constants';
 import {getProductsInfo} from '../../../../../../api/api';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleton';
 
-const Products: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../../../src/config/routes';
+
+const Products = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: category.name,
       headerTitleStyle: {fontSize: 20},
+      headerLeft: () => <Text></Text>,
     });
   }, [navigation]);
 
@@ -29,6 +33,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
 
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
+  const [result, setResut] = React.useState<any>();
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -86,6 +91,8 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
   const HandleButton = (product: any) => {
     setInfo(product);
   };
+
+  const discount = (info?.price * info?.quantum).toFixed(2);
 
   React.useEffect(() => {
     getProducts();
@@ -191,9 +198,7 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                 <ProductsModalTitle>{info?.name}</ProductsModalTitle>
                 <View style={{alignItems: 'center'}}>
                   {info?.quantum > 0 ? (
-                    <ProductsModalCost>
-                      {info?.price * info?.quantum} ₽
-                    </ProductsModalCost>
+                    <ProductsModalCost>{discount} ₽</ProductsModalCost>
                   ) : (
                     <ProductsModalCost style={{color: variables.COLORS.black}}>
                       {info?.price} ₽
@@ -274,7 +279,7 @@ const ProductsContentContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px 10px 15px;
   gap: 10px;
 `;
 
@@ -284,7 +289,6 @@ const ProductsContentOutsideBox = styled.View`
 
 const ProductsContentBox = styled.View`
   background-color: ${variables.COLORS.white};
-
   width: 115px;
   height: 110px;
   border-radius: 8px;
@@ -292,7 +296,6 @@ const ProductsContentBox = styled.View`
 
 const ProductsContentImages = styled.Image`
   object-fit: contain;
-
   width: 100%;
   height: 100%;
   border-radius: 8px;
@@ -301,7 +304,6 @@ const ProductsContentImages = styled.Image`
 const ProductsContentBoxText = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h9};
-
   height: 50%;
   margin-left: 10px;
   margin-top: 10px;
@@ -310,7 +312,6 @@ const ProductsContentBoxText = styled.Text`
 const ProductsContentBoxSubText = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h9};
-
   margin-left: 10px;
   margin-top: 15px;
 `;
@@ -319,11 +320,9 @@ const ProductsContentBoxPriceContainer = styled.View`
   background-color: ${variables.COLORS.white};
   font-size: ${variables.SIZES.h8};
   margin-top: 15px;
-
   width: 90px;
   padding: 5px;
   border-radius: 5px;
-
   margin-left: auto;
   margin-right: auto;
 `;
@@ -336,7 +335,6 @@ const ProductsContentBoxPriceText = styled.Text`
 
 const ProductsContentBoxTextContainer = styled.View`
   background-color: ${variables.COLORS.brightgray};
-
   border-radius: 8px;
   margin-bottom: 15px;
 `;

@@ -17,15 +17,21 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import {ScrollView} from 'react-native-gesture-handler';
 
 // Imports all exports from local project
-import {IStackScreenProps} from '../../../../navigation/StackScreen';
+
 import * as variables from '../../../../constants';
 import {getClient} from '../../../../api/api';
 import BannerSkeleton from '../Skeletons/MarketSkeleton/BannerSkeleton';
 import TagsSkeleton from '../Skeletons/MarketSkeleton/TagsSkeleton';
 import SuppliersSkeleton from '../Skeletons/MarketSkeleton/SuppliersSkeleton';
 
-const Market: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../../src/config/routes';
+import BottomTabNav from './BottomTabNav';
+
+const Market = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const [image, setImage] = React.useState<any>([]);
   const [suppliers, setSuppliers] = React.useState<any>([]);
@@ -34,18 +40,18 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
 
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
+  const [active, setActive] = React.useState<string | undefined>(undefined);
+  const [content, setContent] = React.useState<any>(undefined);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: 'Главная',
       headerTitleAlign: 'left',
       headerLeft: () => <Text></Text>,
       headerTitleStyle: {fontSize: 27, fontWeight: '700'},
-      animationEnabled: false,
+      animation: 'none',
     });
   }, [navigation]);
-
-  const [active, setActive] = React.useState<string | undefined>(undefined);
-  const [content, setContent] = React.useState<any>(undefined);
 
   const getBanners = async () => {
     setLoadSkeleton(true);
@@ -284,41 +290,7 @@ const Market: React.FunctionComponent<IStackScreenProps> = props => {
           </ScrollView>
         </View>
       </Modal>
-
-      <MarketBottomMenuContainer>
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon
-              icon={faHome}
-              color={variables.COLORS.primary}
-              size={28}
-            />
-
-            <MarketBottomMenuText>Главная</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('Request')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faShoppingBasket} color={'gray'} size={30} />
-            <MarketBottomMenuText>Корзина</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('MyRequest')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faList} color={'gray'} size={30} />
-            <MarketBottomMenuWideText>Мои заявки</MarketBottomMenuWideText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-
-        <MarketBottomMenuTab onPress={() => navigation.navigate('UserProfile')}>
-          <MarketBottomMenuItems>
-            <FontAwesomeIcon icon={faCog} color={'gray'} size={30} />
-            <MarketBottomMenuText>Профиль</MarketBottomMenuText>
-          </MarketBottomMenuItems>
-        </MarketBottomMenuTab>
-      </MarketBottomMenuContainer>
+      <BottomTabNav />
     </View>
   );
 };
@@ -377,10 +349,8 @@ const MarketContentContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 25px;
-  padding: 10px 10px 10px 15px;
-  margin-top: 20px;
   margin-bottom: 90px;
-  /* padding: 30px 20px 20px 25px; */
+  padding: 30px 20px 20px 25px;
 `;
 
 const MarketContentBox = styled.View`
@@ -437,40 +407,4 @@ const MarketContentBoxContainer = styled.View`
   width: 160px;
   height: 200px;
   border-radius: 10px;
-`;
-
-// * Bottom Menu
-
-const MarketBottomMenuContainer = styled.View`
-  position: absolute;
-  justify-content: space-between;
-  flex-direction: row;
-  background-color: ${variables.COLORS.white};
-  width: 100%;
-  bottom: 0;
-  right: 0;
-  padding: 10px 15px;
-`;
-
-const MarketBottomMenuItems = styled.View`
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
-  padding-right: 10px;
-`;
-
-const MarketBottomMenuText = styled.Text`
-  font-size: ${variables.SIZES.h8};
-  margin-top: 5px;
-`;
-
-const MarketBottomMenuWideText = styled.Text`
-  color: ${variables.COLORS.gray};
-  font-size: ${variables.SIZES.h8};
-  margin-top: 5px;
-`;
-
-const MarketBottomMenuTab = styled.TouchableOpacity`
-  align-items: center;
-  justify-content: center;
 `;

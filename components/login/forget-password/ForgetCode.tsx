@@ -3,12 +3,16 @@ import {useRoute} from '@react-navigation/native';
 // @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../constants';
-import {IStackScreenProps} from '../../../navigation/StackScreen';
 import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
 import {getPhoneVerify, getSMS} from '../../../api/api';
 
-const ForgetCode: React.FunctionComponent<IStackScreenProps> = props => {
-  const {navigation} = props;
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParams} from '../../../src/config/routes';
+
+const ForgetCode = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const route = useRoute();
   const {userNumber}: any = route.params;
