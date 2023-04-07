@@ -15,7 +15,7 @@ const LoadingScreen = () => {
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: false});
+    navigation.setOptions({headerShown: false, animation: 'fade'});
   }, [navigation]);
 
   const readData = async () => {

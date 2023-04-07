@@ -23,6 +23,7 @@ const Supplier = () => {
       headerTitle: content.name,
       headerTitleStyle: {fontSize: 20},
       headerLeft: () => <Text></Text>,
+      animation: 'fade',
     });
   }, [navigation]);
 
