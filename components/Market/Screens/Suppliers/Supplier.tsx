@@ -12,7 +12,7 @@ import {ActivityIndicator} from 'react-native';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../src/config/routes';
-import BottomTabNav from '../Main/BottomTabNav';
+import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const Supplier = () => {
   const navigation =

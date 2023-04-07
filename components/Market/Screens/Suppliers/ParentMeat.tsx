@@ -16,7 +16,7 @@ import ParentMeatSkeleton from '../Skeletons/SuppliersSkeleton/ParentMeatSkeleto
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../src/config/routes';
-import BottomTabNav from '../Main/BottomTabNav';
+import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const ParentMeat = () => {
   const navigation =

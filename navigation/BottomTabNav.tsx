@@ -1,20 +1,18 @@
 import React from 'react';
-import {View} from 'react-native';
-
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faShoppingBasket} from '@fortawesome/free-solid-svg-icons/faShoppingBasket';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faCog} from '@fortawesome/free-solid-svg-icons/faCog';
 
-import * as variables from '../../../../constants';
+import * as variables from '../constants';
 
 // @ts-ignore
 import styled from 'styled-components/native';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../../src/config/routes';
+import {RootStackParams} from '../src/config/routes';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 

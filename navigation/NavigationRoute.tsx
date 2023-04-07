@@ -23,7 +23,7 @@ import Products from '../components/Market/Screens/Suppliers/Categories/Products
 import Categories from '../components/Market/Screens/Suppliers/Categories/Categories';
 import ParentMeat from '../components/Market/Screens/Suppliers/ParentMeat';
 import Supplier from '../components/Market/Screens/Suppliers/Supplier';
-import BottomTabNav from '../components/Market/Screens/Main/BottomTabNav';
+import BottomTabNav from './BottomTabNav';
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
 

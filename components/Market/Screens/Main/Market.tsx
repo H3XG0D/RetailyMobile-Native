@@ -24,7 +24,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../src/config/routes';
 
-import BottomTabNav from './BottomTabNav';
+import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const Market = () => {
   const navigation =
