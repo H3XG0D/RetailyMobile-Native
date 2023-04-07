@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {IStackScreenProps} from '../../../../../../navigation/StackScreen';
-// @ts-ignore
 import styled from 'styled-components/native';
 import * as variables from '../../../../../../constants';
 import {getProductsInfo} from '../../../../../../api/api';
@@ -30,6 +29,9 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
 
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
+  const [addToCart, setAddToCart] = React.useState<boolean>(false);
+
+  const [count, setCount] = React.useState<any>(0);
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -49,6 +51,11 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
 
   const showModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const AddProduct = () => {
+    setAddToCart(!addToCart);
+    setCount(count + 1);
   };
 
   React.useEffect(() => {
@@ -160,11 +167,72 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                   </ProductsModalSubtitleCost>
                 </View>
               </ProductsModalHeader>
-              <TouchableOpacity>
-                <ProductsModalBtn>
-                  <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
-                </ProductsModalBtn>
-              </TouchableOpacity>
+
+              {count == 0 ? (
+                <>
+                  {addToCart ? (
+                    <ProductsModalCountView>
+                      <TouchableOpacity onPress={() => setCount(count - 1)}>
+                        <ProductsModalMinusBtn>
+                          <ProductsModalMinusText>-</ProductsModalMinusText>
+                        </ProductsModalMinusBtn>
+                      </TouchableOpacity>
+                      <ProductsModalCountInput
+                        maxLength={1}
+                        keyboardType="number-pad"
+                        onChangeText={setCount}
+                        value={count}>
+                        <Text>{count}</Text>
+                      </ProductsModalCountInput>
+                      <TouchableOpacity onPress={() => setCount(count + 1)}>
+                        <ProductsModalPlusBtn>
+                          <ProductsModalPlusText>+</ProductsModalPlusText>
+                        </ProductsModalPlusBtn>
+                      </TouchableOpacity>
+                    </ProductsModalCountView>
+                  ) : (
+                    <TouchableOpacity onPress={() => AddProduct()}>
+                      <ProductsModalBtn>
+                        <ProductsModalBtnText>
+                          {info?.price} ₽
+                        </ProductsModalBtnText>
+                      </ProductsModalBtn>
+                    </TouchableOpacity>
+                  )}
+                </>
+              ) : (
+                <>
+                  {addToCart ? (
+                    <ProductsModalCountView>
+                      <TouchableOpacity onPress={() => setCount(count - 1)}>
+                        <ProductsModalMinusBtn>
+                          <ProductsModalMinusText>-</ProductsModalMinusText>
+                        </ProductsModalMinusBtn>
+                      </TouchableOpacity>
+                      <ProductsModalCountInput
+                        maxLength={1}
+                        keyboardType="number-pad"
+                        onChangeText={setCount}
+                        value={count}>
+                        <Text>{count}</Text>
+                      </ProductsModalCountInput>
+                      <TouchableOpacity onPress={() => setCount(count + 1)}>
+                        <ProductsModalPlusBtn>
+                          <ProductsModalPlusText>+</ProductsModalPlusText>
+                        </ProductsModalPlusBtn>
+                      </TouchableOpacity>
+                    </ProductsModalCountView>
+                  ) : (
+                    <TouchableOpacity onPress={() => AddProduct()}>
+                      <ProductsModalBtn>
+                        <ProductsModalBtnText>
+                          {info?.price} ₽
+                        </ProductsModalBtnText>
+                      </ProductsModalBtn>
+                    </TouchableOpacity>
+                  )}
+                </>
+              )}
 
               <ProductModalInfoContainer>
                 {info?.properties1 && info?.properties1.length > 0
@@ -352,4 +420,48 @@ const ProductModalInfoCharacteristic = styled.Text`
 const ProductModalInfoText = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h8};
+`;
+
+const ProductsModalCountView = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 15px;
+`;
+
+const ProductsModalMinusBtn = styled.View`
+  background-color: ${variables.COLORS.white};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+`;
+
+const ProductsModalMinusText = styled.Text`
+  font-weight: ${variables.SIZES.bold};
+`;
+
+const ProductsModalCountInput = styled.TextInput`
+  font-size: 20px;
+  width: 80px;
+  height: 50px;
+  background-color: ${variables.COLORS.white};
+  color: ${variables.COLORS.black};
+  font-weight: ${variables.SIZES.bold};
+  text-align: center;
+`;
+
+const ProductsModalPlusBtn = styled.View`
+  background-color: ${variables.COLORS.white};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+`;
+
+const ProductsModalPlusText = styled.Text`
+  font-weight: ${variables.SIZES.bold};
 `;

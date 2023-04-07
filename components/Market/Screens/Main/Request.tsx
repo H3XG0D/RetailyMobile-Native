@@ -26,7 +26,9 @@ const Request: React.FunctionComponent<IStackScreenProps> = props => {
 
   return (
     <RequestMain>
-      <Text>Hello</Text>
+      <Text>Корзина для покупок</Text>
+
+      {/* Bottom Market Container */}
       <MarketBottomMenuContainer>
         <MarketBottomMenuTab onPress={() => navigation.navigate('Market')}>
           <MarketBottomMenuItems>
