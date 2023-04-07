@@ -1,0 +1,297 @@
+import {Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+
+import styled from 'styled-components/native';
+import * as variables from '../../../../../../constants';
+
+import {ScrollView} from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
+
+const [info, setInfo] = React.useState<any>(undefined);
+const [products, setProducts] = React.useState<any>(undefined);
+
+const discount = (info?.price * info?.quantum).toFixed(2);
+
+const incrementCounter = (info: any) => {
+  let obj = {...info};
+
+  obj.quantum = obj.quantum + obj.step;
+
+  let newArray = [...products];
+  let newRow = newArray.find((a: any) => a.code === obj.code);
+  newRow.quantum = obj.quantum;
+
+  setProducts(newArray);
+  setInfo(obj);
+};
+
+const decrementCounter = (info: any) => {
+  let obj = {...info};
+
+  obj.quantum = obj.quantum - obj.step;
+
+  let newArray = [...products];
+  let newRow = newArray.find((a: any) => a.code === obj.code);
+  newRow.quantum = obj.quantum;
+
+  setProducts(newArray);
+  setInfo(obj);
+};
+
+const AddProduct = (info: any) => {
+  let obj = {...info};
+
+  obj.quantum += obj.step;
+  setInfo(obj);
+};
+
+const ProductsModal = ({isModalVisible, showModal}: any) => {
+  return (
+    <Modal
+      isVisible={isModalVisible}
+      backdropOpacity={0.4}
+      style={{
+        width: '100%',
+        height: '100%',
+        margin: 0,
+        padding: 0,
+        justifyContent: 'flex-end',
+      }}>
+      <View
+        style={{
+          maxHeight: 1300 - 10,
+          width: '100%',
+          backgroundColor: 'white',
+          borderRadius: 15,
+          marginTop: 50,
+        }}>
+        <TouchableOpacity onPress={() => showModal()}>
+          <FontAwesomeIcon
+            icon={faClose}
+            size={28}
+            style={{
+              marginLeft: 'auto',
+              marginRight: 20,
+              marginTop: 15,
+            }}></FontAwesomeIcon>
+        </TouchableOpacity>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <ProductsModalImage
+            source={{
+              uri:
+                info && info.images && info.images.length > 0
+                  ? variables.siteUrl + '/api/repo/' + info.images[0]
+                  : undefined,
+            }}
+          />
+
+          <ProductsModalContent>
+            <ProductsModalHeader>
+              <ProductsModalTitle>{info?.name}</ProductsModalTitle>
+              <View style={{alignItems: 'center'}}>
+                {info?.quantum > 0 ? (
+                  <ProductsModalCost>{discount} ₽</ProductsModalCost>
+                ) : (
+                  <ProductsModalCost style={{color: variables.COLORS.black}}>
+                    {info?.price} ₽
+                  </ProductsModalCost>
+                )}
+                {info?.quantum > 0 ? (
+                  <ProductsModalSubtitleCost>
+                    {info?.price} ₽
+                  </ProductsModalSubtitleCost>
+                ) : null}
+              </View>
+            </ProductsModalHeader>
+
+            {info?.quantum > 0 ? (
+              <ProductsModalCountView>
+                <TouchableOpacity onPress={() => decrementCounter(info)}>
+                  <ProductsModalMinusBtn>
+                    <ProductsModalMinusText>-</ProductsModalMinusText>
+                  </ProductsModalMinusBtn>
+                </TouchableOpacity>
+                <ProductsModalCountInput>
+                  <Text>{info?.quantum}</Text>
+                </ProductsModalCountInput>
+                <TouchableOpacity onPress={() => incrementCounter(info)}>
+                  <ProductsModalPlusBtn>
+                    <ProductsModalPlusText>+</ProductsModalPlusText>
+                  </ProductsModalPlusBtn>
+                </TouchableOpacity>
+              </ProductsModalCountView>
+            ) : (
+              <TouchableOpacity onPress={() => AddProduct(info)}>
+                <ProductsModalBtn>
+                  <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
+                </ProductsModalBtn>
+              </TouchableOpacity>
+            )}
+
+            <ProductModalInfoContainer>
+              {info?.properties1 && info?.properties1.length > 0
+                ? info.properties1.map((prop: any) => {
+                    return (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                        }}>
+                        <View style={{marginLeft: '5%'}}>
+                          <ProductModalInfoCharacteristic>
+                            {prop.name}:
+                          </ProductModalInfoCharacteristic>
+                        </View>
+
+                        <View
+                          style={{
+                            width: 150,
+                            marginLeft: 'auto',
+                            marginRight: '10%',
+                          }}>
+                          <ProductModalInfoText>
+                            {prop.value}
+                          </ProductModalInfoText>
+                        </View>
+                      </View>
+                    );
+                  })
+                : undefined}
+            </ProductModalInfoContainer>
+          </ProductsModalContent>
+        </ScrollView>
+      </View>
+    </Modal>
+  );
+};
+
+export default ProductsModal;
+
+const ProductsModalContent = styled.View`
+  background-color: ${variables.COLORS.milky};
+  height: 450px;
+`;
+
+const ProductsModalBackground = styled.View`
+  max-height: 1300px - 10px;
+  width: 100%;
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 50px;
+`;
+
+const ProductsModalImage = styled.Image`
+  width: 300px;
+  height: 250px;
+  border-radius: 15px;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+`;
+
+const ProductsModalHeader = styled.View`
+  gap: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+const ProductsModalTitle = styled.Text`
+  font-size: ${variables.SIZES.h6};
+  color: ${variables.COLORS.black};
+  width: 235px;
+`;
+
+const ProductsModalCost = styled.Text`
+  font-size: ${variables.SIZES.h5};
+  font-weight: ${variables.SIZES.bold};
+  color: ${variables.COLORS.forth};
+`;
+
+const ProductsModalSubtitleCost = styled.Text`
+  font-size: ${variables.SIZES.h7};
+  font-weight: ${variables.SIZES.bold};
+  color: ${variables.COLORS.gray};
+`;
+
+const ProductsModalBtn = styled.View`
+  background-color: ${variables.COLORS.tertiary};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 45px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const ProductsModalBtnText = styled.Text`
+  color: ${variables.COLORS.white};
+  font-size: ${variables.SIZES.h5};
+  font-weight: ${variables.SIZES.bold};
+`;
+
+const ProductModalInfoContainer = styled.View`
+  margin-top: 20px;
+  gap: 10px;
+`;
+
+const ProductModalInfoCharacteristic = styled.Text`
+  color: ${variables.COLORS.gray};
+  font-size: ${variables.SIZES.h8};
+  text-align: right;
+  width: 150px;
+`;
+
+const ProductModalInfoText = styled.Text`
+  color: ${variables.COLORS.black};
+  font-size: ${variables.SIZES.h8};
+`;
+
+const ProductsModalCountView = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 15px;
+`;
+
+const ProductsModalMinusBtn = styled.View`
+  background-color: ${variables.COLORS.white};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+`;
+
+const ProductsModalMinusText = styled.Text`
+  font-weight: ${variables.SIZES.bold};
+`;
+
+const ProductsModalCountInput = styled.TextInput`
+  font-size: 20px;
+  width: 80px;
+  height: 50px;
+  background-color: ${variables.COLORS.white};
+  color: ${variables.COLORS.black};
+  font-weight: ${variables.SIZES.bold};
+  text-align: center;
+`;
+
+const ProductsModalPlusBtn = styled.View`
+  background-color: ${variables.COLORS.white};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+`;
+
+const ProductsModalPlusText = styled.Text`
+  font-weight: ${variables.SIZES.bold};
+`;
