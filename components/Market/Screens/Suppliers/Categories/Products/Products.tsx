@@ -195,9 +195,9 @@ const Products: React.FunctionComponent<IStackScreenProps> = props => {
                       {info?.price * info?.quantum} ₽
                     </ProductsModalCost>
                   ) : (
-                    <Text style={{color: variables.COLORS.black}}>
-                      {info?.price}
-                    </Text>
+                    <ProductsModalCost style={{color: variables.COLORS.black}}>
+                      {info?.price} ₽
+                    </ProductsModalCost>
                   )}
                   {info?.quantum > 0 ? (
                     <ProductsModalSubtitleCost>
@@ -404,7 +404,7 @@ const ProductsModalBtn = styled.View`
 
 const ProductsModalBtnText = styled.Text`
   color: ${variables.COLORS.white};
-  font-size: ${variables.SIZES.h6};
+  font-size: ${variables.SIZES.h5};
   font-weight: ${variables.SIZES.bold};
 `;
 
