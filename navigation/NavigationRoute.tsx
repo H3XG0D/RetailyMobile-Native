@@ -6,6 +6,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParams} from '../src/config/routes';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Linking, Platform} from 'react-native';
+
 import LoginPage from '../components/Login/Login';
 import Market from '../components/Market/Screens/Main/Market';
 import Forget from '../components/Login/forget-password/Forget';
@@ -27,10 +30,48 @@ import BottomTabNav from './BottomTabNav';
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
+const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
+
 const NavigationRoute = () => {
+  const [isReady, setIsReady] = React.useState<boolean>(false);
+  const [initialState, setInitialState] = React.useState<any>();
+
+  React.useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const initialUrl = await Linking.getInitialURL();
+
+        if (Platform.OS !== 'web' && initialUrl == null) {
+          const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
+          const state = savedStateString
+            ? JSON.parse(savedStateString)
+            : undefined;
+
+          if (state !== undefined) {
+            setInitialState(state);
+          }
+        }
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    if (!isReady) {
+      restoreState();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
+
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer
+        initialState={initialState}
+        onStateChange={state =>
+          AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+        }>
         {/* Login Screens */}
         <RootStack.Navigator
           initialRouteName={'LoadingScreen'}
