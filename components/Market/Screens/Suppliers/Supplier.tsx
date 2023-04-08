@@ -53,7 +53,7 @@ const Supplier = () => {
   };
 
   const filterList = (list: any) => {
-    return list.filter(
+    return list?.filter(
       (listItem: any) =>
         listItem.name &&
         listItem.name

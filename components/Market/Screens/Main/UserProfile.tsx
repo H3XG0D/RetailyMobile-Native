@@ -30,6 +30,7 @@ const UserProfile = () => {
     await AsyncStorage.removeItem('login');
     await AsyncStorage.removeItem('password');
     await AsyncStorage.removeItem('token');
+    navigation.navigate('Login');
   };
 
   return (
