@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 import * as variables from '../../../../../../constants';
 import {getProductsInfo} from '../../../../../../api/api';
@@ -23,6 +23,7 @@ const Products = () => {
       headerTitle: category.name,
       headerTitleStyle: {fontSize: 20},
       headerLeft: () => <Text></Text>,
+      animation: 'fade',
     });
   }, [navigation]);
 
