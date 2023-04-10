@@ -2,7 +2,7 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // @ts-ignore
 import styled from 'styled-components/native';
-import * as variables from './../../constants';
+import * as variables from '../../constants';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';

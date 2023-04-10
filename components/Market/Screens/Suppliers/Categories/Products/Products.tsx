@@ -15,6 +15,8 @@ import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleto
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import * as variables from '../../../../../../constants';
 
 const Products = () => {
