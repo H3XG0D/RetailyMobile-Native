@@ -13,11 +13,7 @@ import {getSMS, loginCheck} from '../../../api/api';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyRootStackParams,
-  RetailyStackParams,
-  RootStackParams,
-} from '../../../src/config/routes';
+import {RetailyRootStackParams} from '../../../src/config/routes';
 
 const Forget = () => {
   const navigation =
