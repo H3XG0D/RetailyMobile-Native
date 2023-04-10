@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+Ionicons.loadFont();
 
 import {
   RetailyRootStackParams,
@@ -99,6 +100,18 @@ const NavigationRoute = () => {
           options={{
             tabBarLabel: 'Корзина',
             tabBarActiveTintColor: variables.COLORS.primary,
+            tabBarIcon: tabinfo => {
+              return (
+                <Ionicons
+                  name="md-basket"
+                  size={30}
+                  color={
+                    tabinfo.focused
+                      ? variables.COLORS.primary
+                      : variables.COLORS.gray
+                  }></Ionicons>
+              );
+            },
           }}></RootStack.Screen>
         <RootStack.Screen
           name="MyRequest"
@@ -106,6 +119,18 @@ const NavigationRoute = () => {
           options={{
             tabBarLabel: 'Мои заявки',
             tabBarActiveTintColor: variables.COLORS.primary,
+            tabBarIcon: tabinfo => {
+              return (
+                <Ionicons
+                  name="md-list"
+                  size={30}
+                  color={
+                    tabinfo.focused
+                      ? variables.COLORS.primary
+                      : variables.COLORS.gray
+                  }></Ionicons>
+              );
+            },
           }}></RootStack.Screen>
         <RootStack.Screen
           name="UserProfile"
@@ -113,6 +138,18 @@ const NavigationRoute = () => {
           options={{
             tabBarLabel: 'Профиль',
             tabBarActiveTintColor: variables.COLORS.primary,
+            tabBarIcon: tabinfo => {
+              return (
+                <Ionicons
+                  name="md-person"
+                  size={26}
+                  color={
+                    tabinfo.focused
+                      ? variables.COLORS.primary
+                      : variables.COLORS.gray
+                  }></Ionicons>
+              );
+            },
           }}></RootStack.Screen>
       </RootStack.Navigator>
     </SafeAreaProvider>
