@@ -3,8 +3,9 @@ import 'react-native-gesture-handler';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {RootStackParams} from '../src/config/routes';
+import {RetailyStackParams, RootStackParams} from '../src/config/routes';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Linking, Platform} from 'react-native';
@@ -28,9 +29,36 @@ import ParentMeat from '../components/Market/Screens/Suppliers/ParentMeat';
 import Supplier from '../components/Market/Screens/Suppliers/Supplier';
 import BottomTabNav from './BottomTabNav';
 
-const RootStack = createNativeStackNavigator<RootStackParams>();
+const RootStack = createBottomTabNavigator<RootStackParams>();
+const RetailyStack = createNativeStackNavigator<RetailyStackParams>();
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
+
+const RetailyScreen = () => {
+  return (
+    <RetailyStack.Navigator initialRouteName="Market">
+      <RetailyStack.Screen
+        name="Market"
+        component={Market}></RetailyStack.Screen>
+
+      <RetailyStack.Screen
+        name="Products"
+        component={Products}></RetailyStack.Screen>
+
+      <RetailyStack.Screen
+        name="Categories"
+        component={Categories}></RetailyStack.Screen>
+
+      <RetailyStack.Screen
+        name="ParentMeat"
+        component={ParentMeat}></RetailyStack.Screen>
+
+      <RetailyStack.Screen
+        name="Supplier"
+        component={Supplier}></RetailyStack.Screen>
+    </RetailyStack.Navigator>
+  );
+};
 
 const NavigationRoute = () => {
   const [isReady, setIsReady] = React.useState<boolean>(false);
@@ -80,68 +108,17 @@ const NavigationRoute = () => {
             headerTitleStyle: {fontSize: 24},
           }}>
           <RootStack.Screen
-            name="Login"
-            component={LoginPage}
-            options={{headerShown: false}}></RootStack.Screen>
-
-          <RootStack.Screen name="Forget" component={Forget}></RootStack.Screen>
-          <RootStack.Screen
-            name="ForgetCode"
-            component={ForgetCode}></RootStack.Screen>
-
-          <RootStack.Screen name="Code" component={Code}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="ResetPassword"
-            component={ResetPassword}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="Details"
-            component={Details}></RootStack.Screen>
-
-          <RootStack.Screen name="Next" component={Next}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="Registration"
-            component={Registration}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="LoadingScreen"
-            component={LoadingScreen}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="MyRequest"
-            component={MyRequest}></RootStack.Screen>
-
+            name="MarketStack"
+            component={RetailyScreen}></RootStack.Screen>
           <RootStack.Screen
             name="Request"
             component={Request}></RootStack.Screen>
-
+          <RootStack.Screen
+            name="MyRequest"
+            component={MyRequest}></RootStack.Screen>
           <RootStack.Screen
             name="UserProfile"
             component={UserProfile}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="Products"
-            component={Products}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="Categories"
-            component={Categories}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="ParentMeat"
-            component={ParentMeat}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="Supplier"
-            component={Supplier}></RootStack.Screen>
-
-          <RootStack.Screen
-            name="BottomTabNav"
-            component={BottomTabNav}></RootStack.Screen>
-
-          <RootStack.Screen name="Market" component={Market}></RootStack.Screen>
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

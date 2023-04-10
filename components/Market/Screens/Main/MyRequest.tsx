@@ -7,13 +7,16 @@ import * as variables from '../../../../constants';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../../src/config/routes';
+import {
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../../src/config/routes';
 
 import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const MyRequest = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,11 +28,7 @@ const MyRequest = () => {
     });
   }, [navigation]);
 
-  return (
-    <MyRequestMain>
-      <BottomTabNav />
-    </MyRequestMain>
-  );
+  return <MyRequestMain></MyRequestMain>;
 };
 
 export default MyRequest;

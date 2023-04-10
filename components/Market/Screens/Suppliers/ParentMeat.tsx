@@ -92,7 +92,6 @@ const ParentMeat = () => {
           )}
         </MarketContentContainer>
       </ScrollView>
-      <BottomTabNav />
     </View>
   );
 };

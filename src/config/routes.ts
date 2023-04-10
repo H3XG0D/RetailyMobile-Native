@@ -12,6 +12,22 @@ export type RootStackParams = {
   LoadingScreen: any;
 
   // Market Folder:
+  MarketStack: RetailyStackParams;
+  MyRequest: any;
+  Request: any;
+  UserProfile: any;
+
+  Products: any;
+  Categories: any;
+  ParentMeat: any;
+  Supplier: any;
+
+  // Bottom Menu:
+  BottomTabNav: any;
+};
+
+export type RetailyStackParams = {
+  // Market Folder:
   Market: any;
   MyRequest: any;
   Request: any;

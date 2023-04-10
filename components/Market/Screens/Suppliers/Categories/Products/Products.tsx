@@ -5,7 +5,7 @@ import * as variables from '../../../../../../constants';
 import {getProductsInfo} from '../../../../../../api/api';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import Modal from 'react-native-modal';
+
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleton';
@@ -13,6 +13,7 @@ import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleto
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
 import BottomTabNav from '../../../../../../navigation/BottomTabNav';
+import Modal from 'react-native-modal';
 
 const Products = () => {
   const navigation =
@@ -35,7 +36,6 @@ const Products = () => {
 
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
-  const [result, setResut] = React.useState<any>();
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -271,7 +271,6 @@ const Products = () => {
           </ScrollView>
         </View>
       </Modal>
-      <BottomTabNav />
     </View>
   );
 };

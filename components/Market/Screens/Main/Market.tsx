@@ -22,13 +22,16 @@ import SuppliersSkeleton from '../Skeletons/MarketSkeleton/SuppliersSkeleton';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../../src/config/routes';
+import {
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../../src/config/routes';
 
 import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const Market = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyStackParams>>();
 
   const [image, setImage] = React.useState<any>([]);
   const [suppliers, setSuppliers] = React.useState<any>([]);
@@ -290,7 +293,6 @@ const Market = () => {
           </ScrollView>
         </View>
       </Modal>
-      <BottomTabNav />
     </View>
   );
 };

@@ -94,7 +94,6 @@ const Categories = () => {
           )}
         </CategoriesContentContainer>
       </ScrollView>
-      <BottomTabNav />
     </View>
   );
 };

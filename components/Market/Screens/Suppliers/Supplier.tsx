@@ -11,12 +11,15 @@ import SupplierSkeleton from '../Skeletons/SuppliersSkeleton/SupplierSkeleton';
 import {ActivityIndicator} from 'react-native';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../../src/config/routes';
+import {
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../../src/config/routes';
 import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const Supplier = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -147,7 +150,6 @@ const Supplier = () => {
           </SuppliersButton>
         </TouchableOpacity>
       </SupplierContent>
-      <BottomTabNav />
     </SuppliersMain>
   );
 };

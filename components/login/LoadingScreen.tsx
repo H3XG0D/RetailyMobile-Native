@@ -23,7 +23,7 @@ const LoadingScreen = () => {
     const password = await AsyncStorage.getItem('password');
 
     if (login !== null && password !== null) {
-      navigation.navigate('Market');
+      navigation.navigate('MarketStack');
     } else {
       setLoading(false);
     }
