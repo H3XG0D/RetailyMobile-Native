@@ -68,7 +68,7 @@ const Products = () => {
     setBuy(false);
     let obj = {...info};
 
-    obj.quantum += obj.step;
+    obj.quantum = obj.step;
     setInfo(obj);
   };
 
@@ -158,15 +158,19 @@ const Products = () => {
                                       {product?.price}
                                     </Text>
                                   ) : (
-                                    <Text
-                                      style={{
-                                        fontSize: variables.SIZES.h9,
-                                        marginLeft: 10,
-                                        marginBottom: 2,
-                                        color: variables.COLORS.primary,
-                                      }}>
-                                      {discount}
-                                    </Text>
+                                    <>
+                                      {info?.quantum <= 0 ? null : (
+                                        <Text
+                                          style={{
+                                            fontSize: variables.SIZES.h9,
+                                            marginLeft: 10,
+                                            marginBottom: 2,
+                                            color: variables.COLORS.primary,
+                                          }}>
+                                          {discount}
+                                        </Text>
+                                      )}
+                                    </>
                                   )}
                                 </>
                               ) : null}
