@@ -40,6 +40,7 @@ const Products = () => {
   const [products, setProducts] = React.useState<any>(undefined);
   const [saveProduct, setSaveProduct] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
+  const [cost, setCost] = React.useState<any>(undefined);
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -105,6 +106,10 @@ const Products = () => {
     setInfo(product);
   };
 
+  const GetProductCost = (product: any) => {
+    setCost(product);
+  };
+
   const storeData = async (item: any) => {
     try {
       const savedProductData = JSON.stringify({
@@ -120,6 +125,7 @@ const Products = () => {
 
   const getDataProduct = async () => {
     const getProductData = await AsyncStorage.getItem('savedProductData');
+    console.log(getProductData);
     setSaveProduct(getProductData);
   };
 
@@ -145,7 +151,9 @@ const Products = () => {
                 ? products.map((product: any) => {
                     return (
                       <TouchableOpacity
-                        onPress={() => showModal()}
+                        onPress={() => {
+                          showModal();
+                        }}
                         onPressIn={() => HandleButton(product)}>
                         <ProductsContentBoxTextContainer>
                           <ProductsContentOutsideBox>
@@ -190,7 +198,8 @@ const Products = () => {
                                           }}>
                                           {(
                                             product?.price * product?.quantum
-                                          ).toFixed(2)}
+                                          ).toFixed(2)}{' '}
+                                          ₽
                                         </Text>
                                       )}
                                     </>
@@ -198,13 +207,22 @@ const Products = () => {
                                 </>
                               ) : null}
 
-                              <ProductsContentBoxSubText>
-                                {product.description_short}
-                              </ProductsContentBoxSubText>
+                              {choosed == product.code &&
+                              product?.quantum > 0 ? (
+                                <ProductsContentBoxSubText>
+                                  {product.description_short} • {product.price}{' '}
+                                  ₽
+                                </ProductsContentBoxSubText>
+                              ) : (
+                                <ProductsContentBoxSubText>
+                                  {product.description_short}
+                                </ProductsContentBoxSubText>
+                              )}
 
                               <TouchableOpacity
                                 onPress={() => {
                                   storeData(product);
+                                  GetProductCost(product);
                                 }}
                                 onPressIn={() => {
                                   setChoosed(product?.code);
@@ -225,9 +243,9 @@ const Products = () => {
                                     ) : (
                                       <ProductsContentBoxMiniPrice>
                                         <TouchableOpacity
-                                          onPress={() =>
-                                            decrementCounter(product)
-                                          }>
+                                          onPress={() => {
+                                            decrementCounter(product);
+                                          }}>
                                           <ProductsMiniMinusBtn>
                                             <ProductsModalMinusText>
                                               -
@@ -241,9 +259,9 @@ const Products = () => {
                                           {product?.quantum}
                                         </Text>
                                         <TouchableOpacity
-                                          onPress={() =>
-                                            incrementCounter(product)
-                                          }>
+                                          onPress={() => {
+                                            incrementCounter(product);
+                                          }}>
                                           <ProductsMiniMinusBtn>
                                             <ProductsModalPlusText>
                                               +
@@ -462,7 +480,7 @@ const ProductsContentBoxSubText = styled.Text`
 const ProductsContentBoxPriceContainer = styled.View`
   background-color: ${variables.COLORS.white};
   font-size: ${variables.SIZES.h8};
-  margin-top: 15px;
+  margin-top: 30px;
   width: 90px;
   padding: 5px;
   border-radius: 5px;
