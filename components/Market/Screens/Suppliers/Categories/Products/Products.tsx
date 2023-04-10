@@ -42,6 +42,9 @@ const Products = () => {
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   const [active, setActive] = React.useState<boolean>(false);
+  const [miniActive, setMiniActive] = React.useState<boolean>(false);
+  const [buy, setBuy] = React.useState<boolean>(false);
+  const [defaultCost, setDefaultCost] = React.useState<boolean>(false);
 
   const getProducts = async () => {
     setLoadSkeleton(true);
@@ -63,6 +66,7 @@ const Products = () => {
 
   const AddProduct = (info: any) => {
     setActive(false);
+    setBuy(false);
     let obj = {...info};
 
     obj.quantum += obj.step;
@@ -97,6 +101,16 @@ const Products = () => {
 
   const HandleButton = (product: any) => {
     setInfo(product);
+  };
+
+  const makeActive = () => {
+    setMiniActive(true);
+  };
+
+  const goDefault = () => {
+    if (info?.quantum <= 0) {
+      setDefaultCost(true);
+    }
   };
 
   const discount = (info?.price * info?.quantum).toFixed(2);
@@ -138,16 +152,83 @@ const Products = () => {
                                 {product.name}
                               </ProductsContentBoxText>
 
+                              {miniActive == true ? (
+                                <>
+                                  {buy ? (
+                                    <Text
+                                      style={{
+                                        fontSize: variables.SIZES.h9,
+                                        marginLeft: 10,
+                                        marginBottom: 2,
+                                        color: variables.COLORS.primary,
+                                      }}>
+                                      {product?.price}
+                                    </Text>
+                                  ) : (
+                                    <>
+                                      {defaultCost == true ? (
+                                        <Text
+                                          style={{
+                                            fontSize: variables.SIZES.h9,
+                                            marginLeft: 10,
+                                            marginBottom: 2,
+                                            color: variables.COLORS.primary,
+                                          }}>
+                                          {product?.price}
+                                        </Text>
+                                      ) : (
+                                        <Text
+                                          style={{
+                                            fontSize: variables.SIZES.h9,
+                                            marginLeft: 10,
+                                            marginBottom: 2,
+                                            color: variables.COLORS.primary,
+                                          }}>
+                                          {discount}
+                                        </Text>
+                                      )}
+                                    </>
+                                  )}
+                                </>
+                              ) : null}
+
                               <ProductsContentBoxSubText>
                                 {product.description_short}
                               </ProductsContentBoxSubText>
 
-                              <TouchableOpacity>
-                                <ProductsContentBoxPriceContainer>
-                                  <ProductsContentBoxPriceText>
-                                    {product.price} ₽
-                                  </ProductsContentBoxPriceText>
-                                </ProductsContentBoxPriceContainer>
+                              <TouchableOpacity
+                                onPress={() => makeActive()}
+                                onPressIn={() => HandleButton(product)}>
+                                {miniActive == true ? (
+                                  <ProductsContentBoxMiniPrice>
+                                    <TouchableOpacity
+                                      onPress={() => decrementCounter(info)}>
+                                      <ProductsMiniMinusBtn>
+                                        <ProductsModalMinusText>
+                                          -
+                                        </ProductsModalMinusText>
+                                      </ProductsMiniMinusBtn>
+                                    </TouchableOpacity>
+                                    <Text
+                                      style={{fontSize: variables.SIZES.h8}}>
+                                      {info?.quantum}
+                                    </Text>
+                                    <TouchableOpacity
+                                      onPress={() => incrementCounter(info)}>
+                                      <ProductsMiniMinusBtn>
+                                        <ProductsModalPlusText>
+                                          +
+                                        </ProductsModalPlusText>
+                                      </ProductsMiniMinusBtn>
+                                    </TouchableOpacity>
+                                  </ProductsContentBoxMiniPrice>
+                                ) : (
+                                  <ProductsContentBoxPriceContainer>
+                                    <ProductsContentBoxPriceText>
+                                      {product.price} ₽
+                                    </ProductsContentBoxPriceText>
+                                  </ProductsContentBoxPriceContainer>
+                                )}
                               </TouchableOpacity>
                             </ProductsContentBox>
                           </ProductsContentOutsideBox>
@@ -320,7 +401,6 @@ const ProductsContentBoxSubText = styled.Text`
   color: ${variables.COLORS.gray};
   font-size: ${variables.SIZES.h9};
   margin-left: 10px;
-  margin-top: 15px;
 `;
 
 const ProductsContentBoxPriceContainer = styled.View`
@@ -338,6 +418,15 @@ const ProductsContentBoxPriceText = styled.Text`
   color: ${variables.COLORS.black};
   font-size: ${variables.SIZES.h8};
   text-align: center;
+`;
+
+const ProductsContentBoxMiniPrice = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+  margin-top: 10px;
 `;
 
 const ProductsContentBoxTextContainer = styled.View`
@@ -449,6 +538,15 @@ const ProductsModalMinusBtn = styled.View`
 
 const ProductsModalMinusText = styled.Text`
   font-weight: ${variables.SIZES.bold};
+`;
+
+const ProductsMiniMinusBtn = styled.View`
+  background-color: ${variables.COLORS.white};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
 `;
 
 const ProductsModalCountInput = styled.TextInput`
