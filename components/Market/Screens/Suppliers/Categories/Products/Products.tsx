@@ -41,6 +41,8 @@ const Products = () => {
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
+  const [active, setActive] = React.useState<boolean>(false);
+
   const getProducts = async () => {
     setLoadSkeleton(true);
     const products = await getProductsInfo(
@@ -56,9 +58,11 @@ const Products = () => {
 
   const showModal = () => {
     setModalVisible(!isModalVisible);
+    setActive(true);
   };
 
   const AddProduct = (info: any) => {
+    setActive(false);
     let obj = {...info};
 
     obj.quantum += obj.step;
@@ -200,22 +204,28 @@ const Products = () => {
               <ProductsModalHeader>
                 <ProductsModalTitle>{info?.name}</ProductsModalTitle>
                 <View style={{alignItems: 'center'}}>
-                  {info?.quantum > 0 ? (
-                    <ProductsModalCost>{discount} ₽</ProductsModalCost>
-                  ) : (
+                  {active == true ? (
                     <ProductsModalCost style={{color: variables.COLORS.black}}>
                       {info?.price} ₽
                     </ProductsModalCost>
+                  ) : (
+                    <ProductsModalCost>{discount} ₽</ProductsModalCost>
                   )}
-                  {info?.quantum > 0 ? (
+                  {active == true ? null : (
                     <ProductsModalSubtitleCost>
                       {info?.price} ₽
                     </ProductsModalSubtitleCost>
-                  ) : null}
+                  )}
                 </View>
               </ProductsModalHeader>
 
-              {info?.quantum > 0 ? (
+              {active == true ? (
+                <TouchableOpacity onPress={() => AddProduct(info)}>
+                  <ProductsModalBtn>
+                    <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
+                  </ProductsModalBtn>
+                </TouchableOpacity>
+              ) : (
                 <ProductsModalCountView>
                   <TouchableOpacity onPress={() => decrementCounter(info)}>
                     <ProductsModalMinusBtn>
@@ -231,12 +241,6 @@ const Products = () => {
                     </ProductsModalPlusBtn>
                   </TouchableOpacity>
                 </ProductsModalCountView>
-              ) : (
-                <TouchableOpacity onPress={() => AddProduct(info)}>
-                  <ProductsModalBtn>
-                    <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
-                  </ProductsModalBtn>
-                </TouchableOpacity>
               )}
 
               <ProductModalInfoContainer>
