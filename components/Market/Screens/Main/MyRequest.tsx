@@ -23,7 +23,16 @@ const MyRequest = () => {
     });
   }, [navigation]);
 
-  return <MyRequestMain></MyRequestMain>;
+  return (
+    <MyRequestMain>
+      <Text
+        style={{
+          textAlign: 'center',
+        }}>
+        Мои заявки
+      </Text>
+    </MyRequestMain>
+  );
 };
 
 export default MyRequest;

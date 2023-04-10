@@ -24,7 +24,12 @@ const Request = () => {
 
   return (
     <RequestMain>
-      <Text>Корзина</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+        }}>
+        Корзина
+      </Text>
     </RequestMain>
   );
 };

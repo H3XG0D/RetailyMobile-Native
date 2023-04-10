@@ -1,7 +1,9 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
+
+import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
-import * as variables from '../../../../../../constants';
+
 import {getProductsInfo} from '../../../../../../api/api';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -12,7 +14,8 @@ import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleto
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
-import Modal from 'react-native-modal';
+
+import * as variables from '../../../../../../constants';
 
 const Products = () => {
   const navigation =

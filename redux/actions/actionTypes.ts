@@ -1,0 +1,8 @@
+export const ADD_PRODUCT = 'ADD_PRODUCT';
+export type ADD_PRODUCT = typeof ADD_PRODUCT;
+
+export const DECREASE_PRODUCT = 'DECRASE_PRODUCT';
+export type DECREASE_PRODUCT = typeof DECREASE_PRODUCT;
+
+export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+export type REMOVE_PRODUCT = typeof REMOVE_PRODUCT;

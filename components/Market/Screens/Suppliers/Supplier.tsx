@@ -11,10 +11,7 @@ import SupplierSkeleton from '../Skeletons/SuppliersSkeleton/SupplierSkeleton';
 import {ActivityIndicator} from 'react-native';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyStackParams,
-  RootStackParams,
-} from '../../../../src/config/routes';
+import {RetailyStackParams} from '../../../../src/config/routes';
 
 const Supplier = () => {
   const navigation =
