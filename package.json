@@ -35,6 +35,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-skeleton-placeholder": "^5.2.4",
     "react-native-svg": "12.1.1",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-version-info": "^1.1.1",
     "styled-components": "^5.3.9"
   },

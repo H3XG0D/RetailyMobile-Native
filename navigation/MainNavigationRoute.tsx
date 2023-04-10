@@ -1,15 +1,18 @@
 import React from 'react';
-import 'react-native-gesture-handler';
 import {Text} from 'react-native';
+import 'react-native-gesture-handler';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {
   RetailyRootStackParams,
   RetailyStackParams,
   RootStackParams,
 } from '../src/config/routes';
+
+import * as variables from '../constants';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
@@ -73,14 +76,44 @@ const NavigationRoute = () => {
         <RootStack.Screen
           name="MarketStack"
           component={RetailyBottomScreen}
-          options={{headerShown: false}}></RootStack.Screen>
-        <RootStack.Screen name="Request" component={Request}></RootStack.Screen>
+          options={{
+            headerShown: false,
+            tabBarLabel: 'Главная',
+            tabBarActiveTintColor: variables.COLORS.primary,
+            tabBarIcon: tabinfo => {
+              return (
+                <Ionicons
+                  name="md-home"
+                  size={24}
+                  color={
+                    tabinfo.focused
+                      ? variables.COLORS.primary
+                      : variables.COLORS.gray
+                  }></Ionicons>
+              );
+            },
+          }}></RootStack.Screen>
+        <RootStack.Screen
+          name="Request"
+          component={Request}
+          options={{
+            tabBarLabel: 'Корзина',
+            tabBarActiveTintColor: variables.COLORS.primary,
+          }}></RootStack.Screen>
         <RootStack.Screen
           name="MyRequest"
-          component={MyRequest}></RootStack.Screen>
+          component={MyRequest}
+          options={{
+            tabBarLabel: 'Мои заявки',
+            tabBarActiveTintColor: variables.COLORS.primary,
+          }}></RootStack.Screen>
         <RootStack.Screen
           name="UserProfile"
-          component={UserProfile}></RootStack.Screen>
+          component={UserProfile}
+          options={{
+            tabBarLabel: 'Профиль',
+            tabBarActiveTintColor: variables.COLORS.primary,
+          }}></RootStack.Screen>
       </RootStack.Navigator>
     </SafeAreaProvider>
   );
