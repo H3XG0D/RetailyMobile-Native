@@ -103,11 +103,6 @@ const Products = () => {
     setInfo(product);
   };
 
-  const makeActive = () => {
-    AddProduct(info);
-    setMiniActive(true);
-  };
-
   const discount = (info?.price * info?.quantum).toFixed(2);
 
   React.useEffect(() => {
@@ -169,7 +164,9 @@ const Products = () => {
                                             marginBottom: 2,
                                             color: variables.COLORS.primary,
                                           }}>
-                                          {product?.price * product?.quantum}
+                                          {(
+                                            product?.price * product?.quantum
+                                          ).toFixed(2)}
                                         </Text>
                                       )}
                                     </>
@@ -182,17 +179,24 @@ const Products = () => {
                               </ProductsContentBoxSubText>
 
                               <TouchableOpacity
-                                onPress={() => makeActive()}
+                                onPress={() => {
+                                  setMiniActive(true);
+                                }}
                                 onPressIn={() => setChoosed(product?.code)}>
                                 {miniActive == true &&
                                 choosed == product.code ? (
                                   <>
                                     {product?.quantum <= 0 ? (
-                                      <ProductsContentBoxPriceContainer>
-                                        <ProductsContentBoxPriceText>
-                                          {product.price} ₽
-                                        </ProductsContentBoxPriceText>
-                                      </ProductsContentBoxPriceContainer>
+                                      <TouchableOpacity
+                                        onPress={() => {
+                                          incrementCounter(product);
+                                        }}>
+                                        <ProductsContentBoxPriceContainer>
+                                          <ProductsContentBoxPriceText>
+                                            {product.price} ₽
+                                          </ProductsContentBoxPriceText>
+                                        </ProductsContentBoxPriceContainer>
+                                      </TouchableOpacity>
                                     ) : (
                                       <ProductsContentBoxMiniPrice>
                                         <TouchableOpacity
