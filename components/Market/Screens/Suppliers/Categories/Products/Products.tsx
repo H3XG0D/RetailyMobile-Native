@@ -103,6 +103,7 @@ const Products = () => {
   };
 
   const makeActive = () => {
+    AddProduct(info);
     setMiniActive(true);
   };
 
@@ -183,28 +184,44 @@ const Products = () => {
                                 onPress={() => makeActive()}
                                 onPressIn={() => HandleButton(product)}>
                                 {miniActive == true ? (
-                                  <ProductsContentBoxMiniPrice>
-                                    <TouchableOpacity
-                                      onPress={() => decrementCounter(info)}>
-                                      <ProductsMiniMinusBtn>
-                                        <ProductsModalMinusText>
-                                          -
-                                        </ProductsModalMinusText>
-                                      </ProductsMiniMinusBtn>
-                                    </TouchableOpacity>
-                                    <Text
-                                      style={{fontSize: variables.SIZES.h8}}>
-                                      {info?.quantum}
-                                    </Text>
-                                    <TouchableOpacity
-                                      onPress={() => incrementCounter(info)}>
-                                      <ProductsMiniMinusBtn>
-                                        <ProductsModalPlusText>
-                                          +
-                                        </ProductsModalPlusText>
-                                      </ProductsMiniMinusBtn>
-                                    </TouchableOpacity>
-                                  </ProductsContentBoxMiniPrice>
+                                  <>
+                                    {info?.quantum <= 0 ? (
+                                      <ProductsContentBoxPriceContainer>
+                                        <ProductsContentBoxPriceText>
+                                          {product.price} ₽
+                                        </ProductsContentBoxPriceText>
+                                      </ProductsContentBoxPriceContainer>
+                                    ) : (
+                                      <ProductsContentBoxMiniPrice>
+                                        <TouchableOpacity
+                                          onPress={() =>
+                                            decrementCounter(info)
+                                          }>
+                                          <ProductsMiniMinusBtn>
+                                            <ProductsModalMinusText>
+                                              -
+                                            </ProductsModalMinusText>
+                                          </ProductsMiniMinusBtn>
+                                        </TouchableOpacity>
+                                        <Text
+                                          style={{
+                                            fontSize: variables.SIZES.h8,
+                                          }}>
+                                          {info?.quantum}
+                                        </Text>
+                                        <TouchableOpacity
+                                          onPress={() =>
+                                            incrementCounter(info)
+                                          }>
+                                          <ProductsMiniMinusBtn>
+                                            <ProductsModalPlusText>
+                                              +
+                                            </ProductsModalPlusText>
+                                          </ProductsMiniMinusBtn>
+                                        </TouchableOpacity>
+                                      </ProductsContentBoxMiniPrice>
+                                    )}
+                                  </>
                                 ) : (
                                   <ProductsContentBoxPriceContainer>
                                     <ProductsContentBoxPriceText>
@@ -273,12 +290,25 @@ const Products = () => {
                       {info?.price} ₽
                     </ProductsModalCost>
                   ) : (
-                    <ProductsModalCost>{discount} ₽</ProductsModalCost>
+                    <>
+                      {info?.quantum <= 0 ? (
+                        <ProductsModalCost
+                          style={{color: variables.COLORS.black}}>
+                          {info?.price} ₽
+                        </ProductsModalCost>
+                      ) : (
+                        <ProductsModalCost>{discount} ₽</ProductsModalCost>
+                      )}
+                    </>
                   )}
                   {active == true ? null : (
-                    <ProductsModalSubtitleCost>
-                      {info?.price} ₽
-                    </ProductsModalSubtitleCost>
+                    <>
+                      {info?.quantum <= 0 ? null : (
+                        <ProductsModalSubtitleCost>
+                          {info?.price} ₽
+                        </ProductsModalSubtitleCost>
+                      )}
+                    </>
                   )}
                 </View>
               </ProductsModalHeader>
@@ -290,21 +320,33 @@ const Products = () => {
                   </ProductsModalBtn>
                 </TouchableOpacity>
               ) : (
-                <ProductsModalCountView>
-                  <TouchableOpacity onPress={() => decrementCounter(info)}>
-                    <ProductsModalMinusBtn>
-                      <ProductsModalMinusText>-</ProductsModalMinusText>
-                    </ProductsModalMinusBtn>
-                  </TouchableOpacity>
-                  <ProductsModalCountInput>
-                    <Text>{info?.quantum}</Text>
-                  </ProductsModalCountInput>
-                  <TouchableOpacity onPress={() => incrementCounter(info)}>
-                    <ProductsModalPlusBtn>
-                      <ProductsModalPlusText>+</ProductsModalPlusText>
-                    </ProductsModalPlusBtn>
-                  </TouchableOpacity>
-                </ProductsModalCountView>
+                <>
+                  {info?.quantum <= 0 ? (
+                    <TouchableOpacity onPress={() => AddProduct(info)}>
+                      <ProductsModalBtn>
+                        <ProductsModalBtnText>
+                          {info?.price} ₽
+                        </ProductsModalBtnText>
+                      </ProductsModalBtn>
+                    </TouchableOpacity>
+                  ) : (
+                    <ProductsModalCountView>
+                      <TouchableOpacity onPress={() => decrementCounter(info)}>
+                        <ProductsModalMinusBtn>
+                          <ProductsModalMinusText>-</ProductsModalMinusText>
+                        </ProductsModalMinusBtn>
+                      </TouchableOpacity>
+                      <ProductsModalCountInput>
+                        <Text>{info?.quantum}</Text>
+                      </ProductsModalCountInput>
+                      <TouchableOpacity onPress={() => incrementCounter(info)}>
+                        <ProductsModalPlusBtn>
+                          <ProductsModalPlusText>+</ProductsModalPlusText>
+                        </ProductsModalPlusBtn>
+                      </TouchableOpacity>
+                    </ProductsModalCountView>
+                  )}
+                </>
               )}
 
               <ProductModalInfoContainer>
