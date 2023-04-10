@@ -68,12 +68,7 @@ const RetailyBottomScreen = () => {
 const NavigationRoute = () => {
   return (
     <SafeAreaProvider>
-      <RootStack.Navigator
-        initialRouteName={'MarketStack'}
-        screenOptions={{
-          headerTitleAlign: 'center',
-          headerTitleStyle: {fontSize: 24},
-        }}>
+      <RootStack.Navigator initialRouteName={'MarketStack'}>
         <RootStack.Screen
           name="MarketStack"
           component={RetailyBottomScreen}
@@ -160,9 +155,7 @@ const RootNavigation = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <RetailyRootStack.Navigator
-          initialRouteName="LoadingScreen"
-          screenOptions={{headerLeft: () => <Text></Text>, headerShown: false}}>
+        <RetailyRootStack.Navigator initialRouteName="LoadingScreen">
           <RetailyRootStack.Screen
             name="Login"
             component={LoginPage}
@@ -202,7 +195,10 @@ const RootNavigation = () => {
 
           <RetailyRootStack.Screen
             name="Market"
-            component={NavigationRoute}></RetailyRootStack.Screen>
+            component={NavigationRoute}
+            options={{
+              headerShown: false,
+            }}></RetailyRootStack.Screen>
         </RetailyRootStack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

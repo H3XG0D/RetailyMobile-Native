@@ -10,7 +10,6 @@ import CategoriesSkeleton from '../../Skeletons/CategoriesSkeleton/CategoriesSke
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../src/config/routes';
-import BottomTabNav from '../../../../../navigation/BottomTabNav';
 
 const Categories = () => {
   const navigation =
@@ -20,7 +19,6 @@ const Categories = () => {
     navigation.setOptions({
       headerTitle: content.name,
       headerTitleStyle: {fontSize: 20},
-      headerLeft: () => <Text></Text>,
       animation: 'fade',
     });
   }, [navigation]);

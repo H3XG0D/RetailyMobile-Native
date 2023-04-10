@@ -16,7 +16,6 @@ import ParentMeatSkeleton from '../Skeletons/SuppliersSkeleton/ParentMeatSkeleto
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../src/config/routes';
-import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const ParentMeat = () => {
   const navigation =
@@ -26,7 +25,6 @@ const ParentMeat = () => {
     navigation.setOptions({
       headerTitle: content.name,
       headerTitleStyle: {fontSize: 20},
-      headerLeft: () => <Text></Text>,
       animation: 'fade',
     });
   }, [navigation]);

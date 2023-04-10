@@ -12,7 +12,6 @@ import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleto
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
-import BottomTabNav from '../../../../../../navigation/BottomTabNav';
 import Modal from 'react-native-modal';
 
 const Products = () => {
@@ -23,7 +22,6 @@ const Products = () => {
     navigation.setOptions({
       headerTitle: category.name,
       headerTitleStyle: {fontSize: 20},
-      headerLeft: () => <Text></Text>,
       animation: 'fade',
     });
   }, [navigation]);
