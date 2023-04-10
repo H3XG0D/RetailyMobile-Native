@@ -42,9 +42,8 @@ const Products = () => {
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
   const [active, setActive] = React.useState<boolean>(false);
-  const [miniActive, setMiniActive] = React.useState<boolean>(false);
   const [buy, setBuy] = React.useState<boolean>(false);
-  const [defaultCost, setDefaultCost] = React.useState<boolean>(false);
+  const [miniActive, setMiniActive] = React.useState<boolean>(false);
 
   const getProducts = async () => {
     setLoadSkeleton(true);
@@ -107,12 +106,6 @@ const Products = () => {
     setMiniActive(true);
   };
 
-  const goDefault = () => {
-    if (info?.quantum <= 0) {
-      setDefaultCost(true);
-    }
-  };
-
   const discount = (info?.price * info?.quantum).toFixed(2);
 
   React.useEffect(() => {
@@ -165,29 +158,15 @@ const Products = () => {
                                       {product?.price}
                                     </Text>
                                   ) : (
-                                    <>
-                                      {defaultCost == true ? (
-                                        <Text
-                                          style={{
-                                            fontSize: variables.SIZES.h9,
-                                            marginLeft: 10,
-                                            marginBottom: 2,
-                                            color: variables.COLORS.primary,
-                                          }}>
-                                          {product?.price}
-                                        </Text>
-                                      ) : (
-                                        <Text
-                                          style={{
-                                            fontSize: variables.SIZES.h9,
-                                            marginLeft: 10,
-                                            marginBottom: 2,
-                                            color: variables.COLORS.primary,
-                                          }}>
-                                          {discount}
-                                        </Text>
-                                      )}
-                                    </>
+                                    <Text
+                                      style={{
+                                        fontSize: variables.SIZES.h9,
+                                        marginLeft: 10,
+                                        marginBottom: 2,
+                                        color: variables.COLORS.primary,
+                                      }}>
+                                      {discount}
+                                    </Text>
                                   )}
                                 </>
                               ) : null}
