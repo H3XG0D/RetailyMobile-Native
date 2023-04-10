@@ -27,8 +27,6 @@ import {
   RootStackParams,
 } from '../../../../src/config/routes';
 
-import BottomTabNav from '../../../../navigation/BottomTabNav';
-
 const Market = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RetailyStackParams>>();

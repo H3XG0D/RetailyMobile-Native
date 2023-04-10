@@ -8,11 +8,15 @@ import * as variables from '../../../constants';
 
 import {getPhoneVerify, getSMS} from '../../../api/api';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../src/config/routes';
+import {
+  RetailyRootStackParams,
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../src/config/routes';
 
 const Code = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerTitle: 'Подтверждение'});

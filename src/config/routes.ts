@@ -1,16 +1,4 @@
 export type RootStackParams = {
-  // Login Folder:
-
-  Login: any;
-  Forget: any;
-  ForgetCode: any;
-  ResetPassword: any;
-  Code: any;
-  Details: any;
-  Next: any;
-  Registration: any;
-  LoadingScreen: any;
-
   // Market Folder:
   MarketStack: RetailyStackParams;
   MyRequest: any;
@@ -21,9 +9,6 @@ export type RootStackParams = {
   Categories: any;
   ParentMeat: any;
   Supplier: any;
-
-  // Bottom Menu:
-  BottomTabNav: any;
 };
 
 export type RetailyStackParams = {
@@ -37,7 +22,20 @@ export type RetailyStackParams = {
   Categories: any;
   ParentMeat: any;
   Supplier: any;
+};
 
-  // Bottom Menu:
-  BottomTabNav: any;
+export type RetailyRootStackParams = {
+  // Login Folder:
+  Login: any;
+  Forget: any;
+  ForgetCode: any;
+  ResetPassword: any;
+  Code: any;
+  Details: any;
+  Next: any;
+  Registration: any;
+  LoadingScreen: any;
+
+  // Market Folder:
+  Market: any;
 };

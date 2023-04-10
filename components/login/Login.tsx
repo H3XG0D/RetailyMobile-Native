@@ -11,11 +11,15 @@ import {auth} from '../../api/api';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../src/config/routes';
+import {
+  RetailyRootStackParams,
+  RetailyStackParams,
+  RootStackParams,
+} from '../../src/config/routes';
 
 const LoginPage = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   const [text, onChangeText] = React.useState<string>('');
   const [password, onChangePassword] = React.useState<string>('');

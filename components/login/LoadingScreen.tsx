@@ -6,11 +6,15 @@ import * as variables from './../../constants';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../src/config/routes';
+import {
+  RetailyRootStackParams,
+  RetailyStackParams,
+  RootStackParams,
+} from '../../src/config/routes';
 
 const LoadingScreen = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   const [loading, setLoading] = React.useState<boolean>(true);
 
@@ -23,7 +27,7 @@ const LoadingScreen = () => {
     const password = await AsyncStorage.getItem('password');
 
     if (login !== null && password !== null) {
-      navigation.navigate('MarketStack');
+      navigation.navigate('Market');
     } else {
       setLoading(false);
     }

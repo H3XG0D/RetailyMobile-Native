@@ -20,7 +20,11 @@ import axios from 'axios';
 import {getPhoneVerify, getSMS} from '../../../api/api';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../src/config/routes';
+import {
+  RetailyRootStackParams,
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../src/config/routes';
 
 interface Ioktmo {
   name: string;
@@ -36,7 +40,7 @@ export interface Idata {
 
 const Details = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   const route = useRoute();
   const {userNumber}: any = route.params;

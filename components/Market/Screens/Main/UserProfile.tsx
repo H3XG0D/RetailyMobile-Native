@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
+  RetailyRootStackParams,
   RetailyStackParams,
   RootStackParams,
 } from '../../../../src/config/routes';
@@ -17,7 +18,7 @@ import BottomTabNav from '../../../../navigation/BottomTabNav';
 
 const UserProfile = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

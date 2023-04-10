@@ -11,12 +11,16 @@ import * as variables from '../../../constants';
 import {getSMS, loginCheck} from '../../../api/api';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../src/config/routes';
+import {
+  RetailyRootStackParams,
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../src/config/routes';
 import {useNavigation} from '@react-navigation/native';
 
 const Registration = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   const [number, onChangeText] = React.useState<any>('');
   const [numberError, setNumberError] = React.useState<any>('');

@@ -13,11 +13,15 @@ import {getSMS, loginCheck} from '../../../api/api';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../../src/config/routes';
+import {
+  RetailyRootStackParams,
+  RetailyStackParams,
+  RootStackParams,
+} from '../../../src/config/routes';
 
 const Forget = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<RetailyRootStackParams>>();
 
   const [number, onChangeText] = React.useState<any>('');
   const [load, setLoad] = React.useState<boolean>(false);
