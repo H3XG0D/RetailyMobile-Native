@@ -22,10 +22,7 @@ import SuppliersSkeleton from '../Skeletons/MarketSkeleton/SuppliersSkeleton';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyStackParams,
-  RootStackParams,
-} from '../../../../src/config/routes';
+import {RetailyStackParams} from '../../../../src/config/routes';
 
 const Market = () => {
   const navigation =
