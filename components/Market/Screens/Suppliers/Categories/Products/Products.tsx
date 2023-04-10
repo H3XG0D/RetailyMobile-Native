@@ -44,6 +44,7 @@ const Products = () => {
   const [active, setActive] = React.useState<boolean>(false);
   const [buy, setBuy] = React.useState<boolean>(false);
   const [miniActive, setMiniActive] = React.useState<boolean>(false);
+  const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
 
   const getProducts = async () => {
     setLoadSkeleton(true);
@@ -146,7 +147,7 @@ const Products = () => {
                                 {product.name}
                               </ProductsContentBoxText>
 
-                              {miniActive == true ? (
+                              {miniActive == true && choosed == product.code ? (
                                 <>
                                   {buy ? (
                                     <Text
@@ -160,7 +161,7 @@ const Products = () => {
                                     </Text>
                                   ) : (
                                     <>
-                                      {info?.quantum <= 0 ? null : (
+                                      {product?.quantum <= 0 ? null : (
                                         <Text
                                           style={{
                                             fontSize: variables.SIZES.h9,
@@ -168,7 +169,7 @@ const Products = () => {
                                             marginBottom: 2,
                                             color: variables.COLORS.primary,
                                           }}>
-                                          {discount}
+                                          {product?.price * product?.quantum}
                                         </Text>
                                       )}
                                     </>
@@ -182,10 +183,11 @@ const Products = () => {
 
                               <TouchableOpacity
                                 onPress={() => makeActive()}
-                                onPressIn={() => HandleButton(product)}>
-                                {miniActive == true ? (
+                                onPressIn={() => setChoosed(product?.code)}>
+                                {miniActive == true &&
+                                choosed == product.code ? (
                                   <>
-                                    {info?.quantum <= 0 ? (
+                                    {product?.quantum <= 0 ? (
                                       <ProductsContentBoxPriceContainer>
                                         <ProductsContentBoxPriceText>
                                           {product.price} ₽
@@ -195,7 +197,7 @@ const Products = () => {
                                       <ProductsContentBoxMiniPrice>
                                         <TouchableOpacity
                                           onPress={() =>
-                                            decrementCounter(info)
+                                            decrementCounter(product)
                                           }>
                                           <ProductsMiniMinusBtn>
                                             <ProductsModalMinusText>
@@ -207,11 +209,11 @@ const Products = () => {
                                           style={{
                                             fontSize: variables.SIZES.h8,
                                           }}>
-                                          {info?.quantum}
+                                          {product?.quantum}
                                         </Text>
                                         <TouchableOpacity
                                           onPress={() =>
-                                            incrementCounter(info)
+                                            incrementCounter(product)
                                           }>
                                           <ProductsMiniMinusBtn>
                                             <ProductsModalPlusText>
