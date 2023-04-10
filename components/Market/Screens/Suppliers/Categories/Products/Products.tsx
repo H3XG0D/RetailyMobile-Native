@@ -38,6 +38,7 @@ const Products = () => {
   const {category}: any = route.params; // Bread
 
   const [products, setProducts] = React.useState<any>(undefined);
+  const [saveProduct, setSaveProduct] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
@@ -45,7 +46,6 @@ const Products = () => {
 
   const [active, setActive] = React.useState<boolean>(false);
   const [buy, setBuy] = React.useState<boolean>(false);
-  const [miniActive, setMiniActive] = React.useState<boolean>(false);
   const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
 
   const getProducts = async () => {
@@ -105,10 +105,32 @@ const Products = () => {
     setInfo(product);
   };
 
+  const storeData = async (item: any) => {
+    try {
+      const savedProductData = JSON.stringify({
+        productCode: item.code,
+        productQuantum: item.quantum,
+      });
+      await AsyncStorage.setItem('savedProductData', savedProductData);
+      // console.log('data saved');
+    } catch (e: any) {
+      console.log('error data save');
+    }
+  };
+
+  const getDataProduct = async () => {
+    const getProductData = await AsyncStorage.getItem('savedProductData');
+    setSaveProduct(getProductData);
+  };
+
   const discount = (info?.price * info?.quantum).toFixed(2);
 
   React.useEffect(() => {
     getProducts();
+  }, []);
+
+  React.useEffect(() => {
+    getDataProduct();
   }, []);
 
   return (
@@ -144,7 +166,7 @@ const Products = () => {
                                 {product.name}
                               </ProductsContentBoxText>
 
-                              {miniActive == true && choosed == product.code ? (
+                              {choosed == product.code ? (
                                 <>
                                   {buy ? (
                                     <Text
@@ -182,11 +204,12 @@ const Products = () => {
 
                               <TouchableOpacity
                                 onPress={() => {
-                                  setMiniActive(true);
+                                  storeData(product);
                                 }}
-                                onPressIn={() => setChoosed(product?.code)}>
-                                {miniActive == true &&
-                                choosed == product.code ? (
+                                onPressIn={() => {
+                                  setChoosed(product?.code);
+                                }}>
+                                {choosed == product.code ? (
                                   <>
                                     {product?.quantum <= 0 ? (
                                       <TouchableOpacity
