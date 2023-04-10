@@ -17,16 +17,8 @@ import * as variables from '../constants';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import LoginPage from '../components/Login/Login';
-import Forget from '../components/Login/forget-password/Forget';
-import ForgetCode from '../components/Login/forget-password/ForgetCode';
-import ResetPassword from '../components/Login/forget-password/ResetPassword';
-import Details from '../components/Login/registration/Details';
-import Next from '../components/Login/registration/Next';
-import Registration from '../components/Login/registration/Registration';
-import LoadingScreen from '../components/Login/LoadingScreen';
+import LoginPage from '../components/login/Login';
 import Market from '../components/Market/Screens/Main/Market';
-import Code from '../components/Login/registration/Code';
 import MyRequest from '../components/Market/Screens/Main/MyRequest';
 import Request from '../components/Market/Screens/Main/Request';
 import UserProfile from '../components/Market/Screens/Main/UserProfile';
@@ -34,6 +26,14 @@ import Products from '../components/Market/Screens/Suppliers/Categories/Products
 import Categories from '../components/Market/Screens/Suppliers/Categories/Categories';
 import ParentMeat from '../components/Market/Screens/Suppliers/ParentMeat';
 import Supplier from '../components/Market/Screens/Suppliers/Supplier';
+import Forget from '../components/login/forget-password/Forget';
+import ForgetCode from '../components/login/forget-password/ForgetCode';
+import Code from '../components/login/registration/Code';
+import ResetPassword from '../components/login/forget-password/ResetPassword';
+import Details from '../components/login/registration/Details';
+import Next from '../components/login/registration/Next';
+import Registration from '../components/login/registration/Registration';
+import LoadingScreen from '../components/login/LoadingScreen';
 
 const RetailyRootStack = createNativeStackNavigator<RetailyRootStackParams>();
 const RootStack = createBottomTabNavigator<RootStackParams>();
