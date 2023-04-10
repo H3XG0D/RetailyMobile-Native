@@ -6,11 +6,7 @@ import * as variables from './../../constants';
 
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyRootStackParams,
-  RetailyStackParams,
-  RootStackParams,
-} from '../../src/config/routes';
+import {RetailyRootStackParams} from '../../src/config/routes';
 
 const LoadingScreen = () => {
   const navigation =
@@ -29,6 +25,7 @@ const LoadingScreen = () => {
     if (login !== null && password !== null) {
       navigation.navigate('Market');
     } else {
+      navigation.navigate('Login');
       setLoading(false);
     }
   };

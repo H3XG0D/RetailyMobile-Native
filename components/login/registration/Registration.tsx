@@ -11,11 +11,7 @@ import * as variables from '../../../constants';
 import {getSMS, loginCheck} from '../../../api/api';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyRootStackParams,
-  RetailyStackParams,
-  RootStackParams,
-} from '../../../src/config/routes';
+import {RetailyRootStackParams} from '../../../src/config/routes';
 import {useNavigation} from '@react-navigation/native';
 
 const Registration = () => {

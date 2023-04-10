@@ -20,11 +20,7 @@ import axios from 'axios';
 import {getPhoneVerify, getSMS} from '../../../api/api';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyRootStackParams,
-  RetailyStackParams,
-  RootStackParams,
-} from '../../../src/config/routes';
+import {RetailyRootStackParams} from '../../../src/config/routes';
 
 interface Ioktmo {
   name: string;

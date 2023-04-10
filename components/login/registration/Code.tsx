@@ -8,11 +8,7 @@ import * as variables from '../../../constants';
 
 import {getPhoneVerify, getSMS} from '../../../api/api';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  RetailyRootStackParams,
-  RetailyStackParams,
-  RootStackParams,
-} from '../../../src/config/routes';
+import {RetailyRootStackParams} from '../../../src/config/routes';
 
 const Code = () => {
   const navigation =
