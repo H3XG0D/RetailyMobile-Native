@@ -16,6 +16,8 @@ import * as variables from '../constants';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
+import {Provider} from 'react-redux';
+
 import LoginPage from '../components/Login/Login';
 import Market from '../components/Market/Screens/Main/Market';
 import MyRequest from '../components/Market/Screens/Main/MyRequest';

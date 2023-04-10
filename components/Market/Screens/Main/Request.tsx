@@ -7,12 +7,11 @@ import * as variables from '../../../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RetailyStackParams} from '../../../../src/config/routes';
 
 const Request = () => {
-  const [products, setProducts] = React.useState<any>(undefined);
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RetailyStackParams>>();
 
