@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
+import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleton';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
@@ -10,7 +11,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
-import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleton';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
@@ -114,7 +114,9 @@ const Products = () => {
     try {
       const savedProductData = JSON.stringify({
         productCode: item.code,
+        productName: item.name,
         productQuantum: item.quantum,
+        productPrice: (item.price * item.quantum).toFixed(2),
       });
       await AsyncStorage.setItem('savedProductData', savedProductData);
       // console.log('data saved');

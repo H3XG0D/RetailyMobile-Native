@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import {Product, ShoppingItem} from '../types/index';
+import {Product} from '../types/index';
 
 export interface AddProduct {
   type: actionTypes.ADD_PRODUCT;
