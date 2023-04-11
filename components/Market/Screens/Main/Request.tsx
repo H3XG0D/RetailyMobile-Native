@@ -11,8 +11,13 @@ import {useFocusEffect} from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FlatList} from 'react-native-gesture-handler';
+import {IQuantity} from '../../../../redux/types/types';
 
-const Request = () => {
+interface Props {
+  quantity: IQuantity | undefined;
+}
+
+const Request = (props: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RetailyStackParams>>();
 
@@ -39,44 +44,45 @@ const Request = () => {
   //   }
   // };
 
-  const readData = async () => {
-    const productCode = await AsyncStorage.getItem('ProductCode');
-    const productName = await AsyncStorage.getItem('ProductName');
-    const productQuantum = await AsyncStorage.getItem('ProductQuantum');
-    const productImage = await AsyncStorage.getItem('ProductImages');
-    const productPrice = await AsyncStorage.getItem('ProductPrice');
-    const productWeight = await AsyncStorage.getItem('ProductWeight');
-    const productFinalCost = await AsyncStorage.getItem('ProductFinalCost');
+  // const readData = async () => {
+  //   const productCode = await AsyncStorage.getItem('ProductCode');
+  //   const productName = await AsyncStorage.getItem('ProductName');
+  //   const productQuantum = await AsyncStorage.getItem('ProductQuantum');
+  //   const productImage = await AsyncStorage.getItem('ProductImages');
+  //   const productPrice = await AsyncStorage.getItem('ProductPrice');
+  //   const productWeight = await AsyncStorage.getItem('ProductWeight');
+  //   const productFinalCost = await AsyncStorage.getItem('ProductFinalCost');
 
-    const productDetail = [
-      {
-        name: productName,
-        code: productCode,
-        quantum: productQuantum,
-        image: productImage,
-        price: productPrice,
-        weight: productWeight,
-        final: productFinalCost,
-      },
-    ];
-    setProducts(productDetail);
+  //   const productDetail = [
+  //     {
+  //       name: productName,
+  //       code: productCode,
+  //       quantum: productQuantum,
+  //       image: productImage,
+  //       price: productPrice,
+  //       weight: productWeight,
+  //       final: productFinalCost,
+  //     },
+  //   ];
+  //   setProducts(productDetail);
 
-    const image = productImage?.replace(/"/g, '');
-    setImages(image);
-  };
+  //   const image = productImage?.replace(/"/g, '');
+  //   setImages(image);
+  // };
 
-  React.useEffect(() => {
-    readData();
-  }, []);
+  // React.useEffect(() => {
+  //   readData();
+  // }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      readData();
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     readData();
+  //   }, []),
+  // );
 
   return (
-    <View style={{flex: 1}}>
+    <View>
+      <Text>{props.quantity?.count}</Text>
       {/* <RequestMain style={{elevation: 1}}>
         <Text>Корзина для покупок</Text>
       </RequestMain>
@@ -98,7 +104,7 @@ const Request = () => {
           );
         }}></FlatList> */}
 
-      {products && products.length > 0
+      {/* {products && products.length > 0
         ? products.map((res: any) => {
             return (
               <RequestMain>
@@ -208,7 +214,7 @@ const Request = () => {
               </RequestMain>
             );
           })
-        : null}
+        : null} */}
     </View>
   );
 };

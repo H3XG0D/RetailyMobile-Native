@@ -59,7 +59,7 @@ const Categories = () => {
                     return (
                       <TouchableOpacity
                         onPress={() =>
-                          navigation.navigate('Products', {
+                          navigation.navigate('ProductsContainer', {
                             content,
                             selectShop,
                             category,

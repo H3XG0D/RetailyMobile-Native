@@ -23,7 +23,6 @@ import Market from '../components/Market/Screens/Main/Market';
 import MyRequest from '../components/Market/Screens/Main/MyRequest';
 import Request from '../components/Market/Screens/Main/Request';
 import UserProfile from '../components/Market/Screens/Main/UserProfile';
-import Products from '../components/Market/Screens/Suppliers/Categories/Products/Products';
 import Categories from '../components/Market/Screens/Suppliers/Categories/Categories';
 import ParentMeat from '../components/Market/Screens/Suppliers/ParentMeat';
 import Supplier from '../components/Market/Screens/Suppliers/Supplier';
@@ -35,6 +34,9 @@ import Details from '../components/Login/registration/Details';
 import Next from '../components/Login/registration/Next';
 import Registration from '../components/Login/registration/Registration';
 import LoadingScreen from '../components/Login/LoadingScreen';
+import ProductsContainer from '../components/Market/Screens/Suppliers/Categories/Products/ProductsContainer';
+import store from '../redux/reducer/store';
+import RequestContainer from '../components/Market/Screens/Main/RequestContainer';
 
 const RetailyRootStack = createNativeStackNavigator<RetailyRootStackParams>();
 const RootStack = createBottomTabNavigator<RootStackParams>();
@@ -42,113 +44,117 @@ const RetailyStack = createNativeStackNavigator<RetailyStackParams>();
 
 const RetailyBottomScreen = () => {
   return (
-    <RetailyStack.Navigator initialRouteName="Market">
-      <RetailyStack.Screen
-        name="Market"
-        component={Market}></RetailyStack.Screen>
+    <Provider store={store}>
+      <RetailyStack.Navigator initialRouteName="Market">
+        <RetailyStack.Screen
+          name="Market"
+          component={Market}></RetailyStack.Screen>
 
-      <RetailyStack.Screen
-        name="Products"
-        component={Products}></RetailyStack.Screen>
+        <RetailyStack.Screen
+          name="ProductsContainer"
+          component={ProductsContainer}></RetailyStack.Screen>
 
-      <RetailyStack.Screen
-        name="Categories"
-        component={Categories}></RetailyStack.Screen>
+        <RetailyStack.Screen
+          name="Categories"
+          component={Categories}></RetailyStack.Screen>
 
-      <RetailyStack.Screen
-        name="ParentMeat"
-        component={ParentMeat}></RetailyStack.Screen>
+        <RetailyStack.Screen
+          name="ParentMeat"
+          component={ParentMeat}></RetailyStack.Screen>
 
-      <RetailyStack.Screen
-        name="Supplier"
-        component={Supplier}></RetailyStack.Screen>
-    </RetailyStack.Navigator>
+        <RetailyStack.Screen
+          name="Supplier"
+          component={Supplier}></RetailyStack.Screen>
+      </RetailyStack.Navigator>
+    </Provider>
   );
 };
 
 const NavigationRoute = () => {
   return (
-    <SafeAreaProvider>
-      <RootStack.Navigator initialRouteName={'MarketStack'}>
-        <RootStack.Screen
-          name="MarketStack"
-          component={RetailyBottomScreen}
-          options={{
-            headerShown: false,
-            tabBarLabel: 'Главная',
-            tabBarActiveTintColor: variables.COLORS.primary,
-            tabBarIcon: tabinfo => {
-              return (
-                <Ionicons
-                  name="md-home"
-                  size={24}
-                  color={
-                    tabinfo.focused
-                      ? variables.COLORS.primary
-                      : variables.COLORS.gray
-                  }></Ionicons>
-              );
-            },
-          }}></RootStack.Screen>
-        <RootStack.Screen
-          name="Request"
-          component={Request}
-          options={{
-            tabBarLabel: 'Корзина',
-            tabBarActiveTintColor: variables.COLORS.primary,
-            tabBarIcon: tabinfo => {
-              return (
-                <Ionicons
-                  name="md-basket"
-                  size={30}
-                  color={
-                    tabinfo.focused
-                      ? variables.COLORS.primary
-                      : variables.COLORS.gray
-                  }></Ionicons>
-              );
-            },
-          }}></RootStack.Screen>
-        <RootStack.Screen
-          name="MyRequest"
-          component={MyRequest}
-          options={{
-            tabBarLabel: 'Мои заявки',
-            tabBarActiveTintColor: variables.COLORS.primary,
-            tabBarIcon: tabinfo => {
-              return (
-                <Ionicons
-                  name="md-list"
-                  size={30}
-                  color={
-                    tabinfo.focused
-                      ? variables.COLORS.primary
-                      : variables.COLORS.gray
-                  }></Ionicons>
-              );
-            },
-          }}></RootStack.Screen>
-        <RootStack.Screen
-          name="UserProfile"
-          component={UserProfile}
-          options={{
-            tabBarLabel: 'Профиль',
-            tabBarActiveTintColor: variables.COLORS.primary,
-            tabBarIcon: tabinfo => {
-              return (
-                <Ionicons
-                  name="md-person"
-                  size={26}
-                  color={
-                    tabinfo.focused
-                      ? variables.COLORS.primary
-                      : variables.COLORS.gray
-                  }></Ionicons>
-              );
-            },
-          }}></RootStack.Screen>
-      </RootStack.Navigator>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <RootStack.Navigator initialRouteName={'MarketStack'}>
+          <RootStack.Screen
+            name="MarketStack"
+            component={RetailyBottomScreen}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Главная',
+              tabBarActiveTintColor: variables.COLORS.primary,
+              tabBarIcon: tabinfo => {
+                return (
+                  <Ionicons
+                    name="md-home"
+                    size={24}
+                    color={
+                      tabinfo.focused
+                        ? variables.COLORS.primary
+                        : variables.COLORS.gray
+                    }></Ionicons>
+                );
+              },
+            }}></RootStack.Screen>
+          <RootStack.Screen
+            name="RequestContainer"
+            component={RequestContainer}
+            options={{
+              tabBarLabel: 'Корзина',
+              tabBarActiveTintColor: variables.COLORS.primary,
+              tabBarIcon: tabinfo => {
+                return (
+                  <Ionicons
+                    name="md-basket"
+                    size={30}
+                    color={
+                      tabinfo.focused
+                        ? variables.COLORS.primary
+                        : variables.COLORS.gray
+                    }></Ionicons>
+                );
+              },
+            }}></RootStack.Screen>
+          <RootStack.Screen
+            name="MyRequest"
+            component={MyRequest}
+            options={{
+              tabBarLabel: 'Мои заявки',
+              tabBarActiveTintColor: variables.COLORS.primary,
+              tabBarIcon: tabinfo => {
+                return (
+                  <Ionicons
+                    name="md-list"
+                    size={30}
+                    color={
+                      tabinfo.focused
+                        ? variables.COLORS.primary
+                        : variables.COLORS.gray
+                    }></Ionicons>
+                );
+              },
+            }}></RootStack.Screen>
+          <RootStack.Screen
+            name="UserProfile"
+            component={UserProfile}
+            options={{
+              tabBarLabel: 'Профиль',
+              tabBarActiveTintColor: variables.COLORS.primary,
+              tabBarIcon: tabinfo => {
+                return (
+                  <Ionicons
+                    name="md-person"
+                    size={26}
+                    color={
+                      tabinfo.focused
+                        ? variables.COLORS.primary
+                        : variables.COLORS.gray
+                    }></Ionicons>
+                );
+              },
+            }}></RootStack.Screen>
+        </RootStack.Navigator>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 

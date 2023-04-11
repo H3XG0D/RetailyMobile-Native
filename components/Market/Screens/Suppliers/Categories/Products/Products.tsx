@@ -5,6 +5,8 @@ import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleto
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
+import {IOrder, IQuantity} from '../../../../../../redux/types/types';
+
 import {getProductsInfo} from '../../../../../../api/api';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -14,32 +16,34 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
-import {useFocusEffect} from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as variables from '../../../../../../constants';
 
-const Products = () => {
+interface Props {
+  content: any;
+  category: any;
+  selectShop: any;
+  quantity: IQuantity | undefined;
+  orders: IOrder | undefined;
+  setQuantity: (quantity: IQuantity | undefined) => void;
+  setOrders: (order: IOrder | undefined) => void;
+}
+
+const Products = (props: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: category.name,
+      headerTitle: props.category.name,
       headerTitleStyle: {fontSize: 20},
       animation: 'fade',
     });
   }, [navigation]);
 
-  const route = useRoute();
-
-  const {content}: any = route.params;
-  const {selectShop}: any = route.params; // Shop
-  const {category}: any = route.params; // Bread
-
   const [products, setProducts] = React.useState<any>(undefined);
-  const [saveProduct, setSaveProduct] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
   const [cost, setCost] = React.useState<any>(undefined);
 
@@ -54,9 +58,9 @@ const Products = () => {
     setLoadSkeleton(true);
     const products = await getProductsInfo(
       'getProducts',
-      category.code,
-      selectShop,
-      content.code,
+      props.category.code,
+      props.selectShop,
+      props.content.code,
     );
 
     setProducts(products);
@@ -74,6 +78,10 @@ const Products = () => {
     let obj = {...info};
 
     obj.quantum = obj.step;
+
+    props.setQuantity({
+      count: obj.quantum,
+    });
     setInfo(obj);
   };
 
@@ -85,6 +93,12 @@ const Products = () => {
     let newArray = [...products];
     let newRow = newArray.find((a: any) => a.code === obj.code);
     newRow.quantum = obj.quantum;
+
+    // let orders = [...props.orders]
+
+    props.setQuantity({
+      count: obj.quantum,
+    });
 
     setProducts(newArray);
     setInfo(obj);
@@ -98,6 +112,10 @@ const Products = () => {
     let newArray = [...products];
     let newRow = newArray.find((a: any) => a.code === obj.code);
     newRow.quantum = obj.quantum;
+
+    props.setQuantity({
+      count: obj.quantum,
+    });
 
     setProducts(newArray);
     setInfo(obj);
@@ -238,6 +256,7 @@ const Products = () => {
                                 </>
                               ) : null}
 
+                              {/* props.orders.some((f: any) => f.supplier === код поставщика && f.shop === код магазина && f.products.some((p: any) => p.product === product.code)) */}
                               {choosed == product.code &&
                               product?.quantum > 0 ? (
                                 <ProductsContentBoxSubText>
@@ -288,7 +307,7 @@ const Products = () => {
                                           style={{
                                             fontSize: variables.SIZES.h8,
                                           }}>
-                                          {product?.quantum}
+                                          {props.quantity?.count}
                                         </Text>
                                         <TouchableOpacity
                                           onPress={() => {

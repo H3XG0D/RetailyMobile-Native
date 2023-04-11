@@ -2,10 +2,10 @@ export type RootStackParams = {
   // Market Folder:
   MarketStack: RetailyStackParams;
   MyRequest: any;
-  Request: any;
+  RequestContainer: any;
   UserProfile: any;
 
-  Products: any;
+  ProductsContainer: any;
   Categories: any;
   ParentMeat: any;
   Supplier: any;
@@ -18,7 +18,7 @@ export type RetailyStackParams = {
   Request: any;
   UserProfile: any;
 
-  Products: any;
+  ProductsContainer: any;
   Categories: any;
   ParentMeat: any;
   Supplier: any;
