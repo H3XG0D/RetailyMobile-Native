@@ -119,26 +119,48 @@ const Products = () => {
         productPrice: (item.price * item.quantum).toFixed(2),
       });
       await AsyncStorage.setItem('savedProductData', savedProductData);
-      // console.log('data saved');
+      console.log('data saved');
     } catch (e: any) {
       console.log('error data save');
     }
   };
 
-  const getDataProduct = async () => {
-    const getProductData = await AsyncStorage.getItem('savedProductData');
-    console.log(getProductData);
-    setSaveProduct(getProductData);
+  const getProduct = async (product: any) => {
+    try {
+      const ProductName = await AsyncStorage.setItem(
+        'ProductName',
+        JSON.stringify(product.name),
+      );
+      const ProductQuantum = await AsyncStorage.setItem(
+        'ProductQuantum',
+        JSON.stringify(product.quantum),
+      );
+      const ProductCode = await AsyncStorage.setItem(
+        'ProductCode',
+        JSON.stringify(product.code),
+      );
+      const ProductImage = await AsyncStorage.setItem(
+        'ProductImages',
+        JSON.stringify(
+          product && product.images && product.images.length > 0
+            ? variables.siteUrl + '/api/repo/' + product.images[0]
+            : undefined,
+        ),
+      );
+      const ProductPrice = await AsyncStorage.setItem(
+        'ProductPrice',
+        JSON.stringify(product.price),
+      );
+      return ProductName;
+    } catch (e: any) {
+      console.log(e);
+    }
   };
 
   const discount = (info?.price * info?.quantum).toFixed(2);
 
   React.useEffect(() => {
     getProducts();
-  }, []);
-
-  React.useEffect(() => {
-    getDataProduct();
   }, []);
 
   return (
@@ -225,6 +247,7 @@ const Products = () => {
                                 onPress={() => {
                                   storeData(product);
                                   GetProductCost(product);
+                                  getProduct(product);
                                 }}
                                 onPressIn={() => {
                                   setChoosed(product?.code);
