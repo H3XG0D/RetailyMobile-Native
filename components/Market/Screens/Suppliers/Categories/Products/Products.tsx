@@ -14,6 +14,7 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
+import {useFocusEffect} from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -119,7 +120,6 @@ const Products = () => {
         productPrice: (item.price * item.quantum).toFixed(2),
       });
       await AsyncStorage.setItem('savedProductData', savedProductData);
-      console.log('data saved');
     } catch (e: any) {
       console.log('error data save');
     }
@@ -151,7 +151,14 @@ const Products = () => {
         'ProductPrice',
         JSON.stringify(product.price),
       );
-      return ProductName;
+      const ProductWeight = await AsyncStorage.setItem(
+        'ProductWeight',
+        JSON.stringify(product.description_short),
+      );
+      const ProductFinalCost = await AsyncStorage.setItem(
+        'ProductFinalCost',
+        JSON.stringify((product.price * product.quantum).toFixed(2)),
+      );
     } catch (e: any) {
       console.log(e);
     }
@@ -388,7 +395,11 @@ const Products = () => {
               </ProductsModalHeader>
 
               {active == true ? (
-                <TouchableOpacity onPress={() => AddProduct(info)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    getProduct(info);
+                    AddProduct(info);
+                  }}>
                   <ProductsModalBtn>
                     <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
                   </ProductsModalBtn>
@@ -396,7 +407,11 @@ const Products = () => {
               ) : (
                 <>
                   {info?.quantum <= 0 ? (
-                    <TouchableOpacity onPress={() => AddProduct(info)}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        AddProduct(info);
+                        getProduct(info);
+                      }}>
                       <ProductsModalBtn>
                         <ProductsModalBtnText>
                           {info?.price} ₽
@@ -413,7 +428,11 @@ const Products = () => {
                       <ProductsModalCountInput>
                         <Text>{info?.quantum}</Text>
                       </ProductsModalCountInput>
-                      <TouchableOpacity onPress={() => incrementCounter(info)}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          incrementCounter(info);
+                          getProduct(info);
+                        }}>
                         <ProductsModalPlusBtn>
                           <ProductsModalPlusText>+</ProductsModalPlusText>
                         </ProductsModalPlusBtn>

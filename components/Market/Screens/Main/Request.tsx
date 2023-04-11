@@ -45,6 +45,8 @@ const Request = () => {
     const productQuantum = await AsyncStorage.getItem('ProductQuantum');
     const productImage = await AsyncStorage.getItem('ProductImages');
     const productPrice = await AsyncStorage.getItem('ProductPrice');
+    const productWeight = await AsyncStorage.getItem('ProductWeight');
+    const productFinalCost = await AsyncStorage.getItem('ProductFinalCost');
 
     const productDetail = [
       {
@@ -53,6 +55,8 @@ const Request = () => {
         quantum: productQuantum,
         image: productImage,
         price: productPrice,
+        weight: productWeight,
+        final: productFinalCost,
       },
     ];
     setProducts(productDetail);
@@ -97,46 +101,111 @@ const Request = () => {
       {products && products.length > 0
         ? products.map((res: any) => {
             return (
-              <View
-                style={{
-                  width: '93%',
-                  alignItems: 'center',
-                  height: 120,
-                  backgroundColor: '#FFF',
-                  marginTop: 10,
-                  borderRadius: 10,
-                  elevation: 1,
-                  flexDirection: 'row',
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  gap: 15,
-                }}>
+              <RequestMain>
                 <View
                   style={{
-                    width: 80,
-                    height: 80,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
+                    width: '93%',
                     alignItems: 'center',
-                    gap: 40,
+                    height: 120,
+                    backgroundColor: '#FFF',
+                    marginTop: 10,
+                    borderRadius: 10,
+                    elevation: 1,
+                    flexDirection: 'row',
+                    alignSelf: 'center',
                   }}>
-                  <Image
-                    source={{uri: images}}
+                  <View
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'contain',
-                    }}></Image>
-                  <View>
-                    <Text>{JSON.stringify(res.name).replace(/\\|"/g, '')}</Text>
+                      width: 110,
+                      height: 80,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderRadius: 10,
+                      gap: 20,
+                      marginLeft: 20,
+
+                      borderTopWidth: 1,
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderBottomWidth: 1,
+
+                      borderColor: variables.COLORS.brightgray,
+                    }}>
+                    <Image
+                      source={{uri: images}}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        resizeMode: 'contain',
+                        borderRadius: 10,
+                        padding: 5,
+                      }}></Image>
+                    <View>
+                      <Text
+                        numberOfLines={3}
+                        style={{fontSize: variables.SIZES.h8}}>
+                        {JSON.stringify(res.name).replace(/\\|"/g, '')}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: variables.SIZES.h9,
+                          color: variables.COLORS.gray,
+                          marginTop: 3,
+                        }}>
+                        {JSON.stringify(res.weight).replace(/\\|"/g, '')}{' '}
+                        <Text style={{color: variables.COLORS.primary}}>
+                          • {JSON.stringify(res.price).replace(/\\|"/g, '')} ₽
+                        </Text>
+                      </Text>
+                    </View>
                   </View>
-                  <View>
-                    <Text style={{color: variables.COLORS.primary}}>
-                      {JSON.stringify(res.price).replace(/\\|"/g, '')} ₽
-                    </Text>
+                  <View
+                    style={{
+                      marginLeft: 'auto',
+                      marginBottom: 'auto',
+                      marginRight: 5,
+                      marginTop: 20,
+                    }}>
+                    <View>
+                      <Text
+                        style={{
+                          color: variables.COLORS.primary,
+                          fontSize: variables.SIZES.h9,
+                          fontWeight: '600',
+                          marginLeft: 'auto',
+                        }}>
+                        {JSON.stringify(res.final).replace(/\\|"/g, '')} ₽
+                      </Text>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          marginTop: 15,
+                          gap: 10,
+                          flexDirection: 'row',
+                        }}>
+                        <TouchableOpacity>
+                          <MiniBtnView>
+                            <MiniBtnText>-</MiniBtnText>
+                          </MiniBtnView>
+                        </TouchableOpacity>
+                        <Text>
+                          {JSON.stringify(res.quantum).replace(/\\|"/g, '')}
+                        </Text>
+                        <TouchableOpacity>
+                          <MiniBtnView>
+                            <MiniBtnText>+</MiniBtnText>
+                          </MiniBtnView>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
                 </View>
-              </View>
+                <TouchableOpacity>
+                  <PaymentButtonView>
+                    <PaymentButtonText>Оформить заявку</PaymentButtonText>
+                  </PaymentButtonView>
+                </TouchableOpacity>
+              </RequestMain>
             );
           })
         : null}
@@ -148,9 +217,35 @@ export default Request;
 
 const RequestMain = styled.View`
   width: 100%;
-  height: 60px;
-  flex-direction: row;
+  background-color: ${variables.COLORS.white};
+`;
+
+const MiniBtnView = styled.View`
+  background-color: ${variables.COLORS.brightgray};
+  border-radius: ${variables.SIZES.radius};
   align-items: center;
-  padding-left: 20px;
-  background-color: '#FFF';
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+`;
+
+const MiniBtnText = styled.Text`
+  font-weight: bold;
+`;
+
+const PaymentButtonView = styled.View`
+  background-color: ${variables.COLORS.tertiary};
+  border-radius: ${variables.SIZES.radius};
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const PaymentButtonText = styled.Text`
+  color: ${variables.COLORS.white};
+  font-size: ${variables.SIZES.h7};
+  font-weight: ${variables.SIZES.bold};
 `;
