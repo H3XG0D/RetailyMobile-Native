@@ -50,11 +50,10 @@ const Products = (props: Props) => {
     });
   }, [navigation]);
 
-  const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
 
-  const [activeButton, setActiveButton] = React.useState<boolean>(false);
+  const [order, setOrder] = React.useState<any>();
 
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -135,6 +134,7 @@ const Products = (props: Props) => {
     }
 
     props.setOrders(orders);
+    setOrder(orders);
     setInfo(obj);
   };
 
@@ -221,7 +221,15 @@ const Products = (props: Props) => {
                               {product.name}
                             </ProductsContentBoxText>
 
-                            {choosed == product.code ? (
+                            {props.orders?.some(
+                              (f: IOrder) =>
+                                f.supplier === props.content.code &&
+                                f.shop === props.choosedShop.code &&
+                                f.products.some(
+                                  (p: IOrderProduct) =>
+                                    p.product === product.code,
+                                ),
+                            ) ? (
                               <>
                                 {buy ? (
                                   <Text
@@ -254,8 +262,15 @@ const Products = (props: Props) => {
                               </>
                             ) : null}
 
-                            {/* props.orders.some((f: any) => f.supplier === код поставщика && f.shop === код магазина && f.products.some((p: any) => p.product === product.code)) */}
-                            {choosed == product.code && product?.quantum > 0 ? (
+                            {props.orders?.some(
+                              (f: IOrder) =>
+                                f.supplier === props.content.code &&
+                                f.shop === props.choosedShop.code &&
+                                f.products.some(
+                                  (p: IOrderProduct) =>
+                                    p.product === product.code,
+                                ),
+                            ) && product?.quantum > 0 ? (
                               <ProductsContentBoxSubText>
                                 {product.description_short} • {product.price} ₽
                               </ProductsContentBoxSubText>
@@ -270,14 +285,16 @@ const Products = (props: Props) => {
                                 AddProduct(product);
                                 setInfo(product);
                                 setActive(true);
-                              }}
-                              disabled={
-                                active && choosed == product.code ? true : false
-                              }
-                              onPressIn={() => {
-                                setChoosed(product?.code);
                               }}>
-                              {choosed == product.code ? (
+                              {props.orders?.some(
+                                (f: IOrder) =>
+                                  f.supplier === props.content.code &&
+                                  f.shop === props.choosedShop.code &&
+                                  f.products.some(
+                                    (p: IOrderProduct) =>
+                                      p.product === product.code,
+                                  ),
+                              ) ? (
                                 <>
                                   {product?.quantum <= 0 ? (
                                     <TouchableOpacity
@@ -383,11 +400,14 @@ const Products = (props: Props) => {
               <ProductsModalHeader>
                 <ProductsModalTitle>{info?.name}</ProductsModalTitle>
                 <View style={{alignItems: 'center'}}>
-                  {choosed != info?.code ? (
-                    <ProductsModalCost style={{color: variables.COLORS.black}}>
-                      {info?.price} ₽
-                    </ProductsModalCost>
-                  ) : (
+                  {props.orders?.some(
+                    (f: IOrder) =>
+                      f.supplier === props.content.code &&
+                      f.shop === props.choosedShop.code &&
+                      f.products.some(
+                        (p: IOrderProduct) => p.product === info?.code,
+                      ),
+                  ) ? (
                     <>
                       {info?.quantum <= 0 ? (
                         <ProductsModalCost
@@ -398,8 +418,20 @@ const Products = (props: Props) => {
                         <ProductsModalCost>{discount} ₽</ProductsModalCost>
                       )}
                     </>
+                  ) : (
+                    <ProductsModalCost style={{color: variables.COLORS.black}}>
+                      {info?.price} ₽
+                    </ProductsModalCost>
                   )}
-                  {choosed != info?.code ? null : (
+                  {/* props.orders.some((f: any) => f.supplier === код поставщика && f.shop === код магазина && f.products.some((p: any) => p.product === product.code)) */}
+                  {props.orders?.some(
+                    (f: IOrder) =>
+                      f.supplier === props.content.code &&
+                      f.shop === props.choosedShop.code &&
+                      f.products.some(
+                        (p: IOrderProduct) => p.product === info?.code,
+                      ),
+                  ) ? (
                     <>
                       {info?.quantum <= 0 ? null : (
                         <ProductsModalSubtitleCost>
@@ -407,27 +439,23 @@ const Products = (props: Props) => {
                         </ProductsModalSubtitleCost>
                       )}
                     </>
-                  )}
+                  ) : null}
                 </View>
               </ProductsModalHeader>
 
-              {choosed != info?.code ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    AddProduct(info);
-                    setChoosed(info?.code);
-                  }}>
-                  <ProductsModalBtn>
-                    <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
-                  </ProductsModalBtn>
-                </TouchableOpacity>
-              ) : (
+              {props.orders?.some(
+                (f: IOrder) =>
+                  f.supplier === props.content.code &&
+                  f.shop === props.choosedShop.code &&
+                  f.products.some(
+                    (p: IOrderProduct) => p.product === info?.code,
+                  ),
+              ) ? (
                 <>
                   {info?.quantum <= 0 ? (
                     <TouchableOpacity
                       onPress={() => {
                         decrementCounter(info);
-                        setChoosed(info?.code);
                       }}>
                       <ProductsModalBtn>
                         <ProductsModalBtnText>
@@ -456,6 +484,15 @@ const Products = (props: Props) => {
                     </ProductsModalCountView>
                   )}
                 </>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    AddProduct(info);
+                  }}>
+                  <ProductsModalBtn>
+                    <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
+                  </ProductsModalBtn>
+                </TouchableOpacity>
               )}
 
               <ProductModalInfoContainer>
