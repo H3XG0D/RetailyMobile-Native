@@ -1,11 +1,10 @@
-import {IQuantity, ISupplier} from './../types/types';
-import {SET_ORDERS, SET_QUANTITY, SET_SUPPLIERS} from '../actions/actions';
+import {IQuantity} from './../types/types';
+import {SET_ORDERS, SET_QUANTITY} from '../actions/actions';
 import {IOrder} from '../types/types';
 
 interface IInitialState {
   orders: IOrder[] | undefined;
   quantity: IQuantity;
-  suppliers: ISupplier[] | undefined;
 }
 
 let initialState: IInitialState = {
@@ -13,7 +12,6 @@ let initialState: IInitialState = {
   quantity: {
     count: 0,
   },
-  suppliers: [],
 };
 
 const mainReducer = (state = initialState, action: any): IInitialState => {
@@ -22,8 +20,6 @@ const mainReducer = (state = initialState, action: any): IInitialState => {
       return {...state, orders: action.orders};
     case SET_QUANTITY:
       return {...state, quantity: action.quantity};
-    case SET_SUPPLIERS:
-      return {...state, suppliers: action.suppliers};
     default:
       return state;
   }

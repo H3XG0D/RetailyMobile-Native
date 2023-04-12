@@ -5,7 +5,6 @@ import {IOrder} from '../types/types';
 
 export const SET_ORDERS = 'SET_ORDERS';
 export const SET_QUANTITY = 'SET_QUANTITY';
-export const SET_SUPPLIERS = 'SET_SUPPLIERS';
 export const SET_SHOP = 'SET_SHOP';
 
 type ActionTypes = InferActionsTypes<typeof mainActions>;
@@ -16,9 +15,5 @@ export const mainActions = {
   setQuantity: (quantity: any) => ({
     type: SET_QUANTITY,
     quantity,
-  }),
-  setSuppliers: (suppliers: ISupplier[] | undefined) => ({
-    type: SET_SUPPLIERS,
-    suppliers,
   }),
 };

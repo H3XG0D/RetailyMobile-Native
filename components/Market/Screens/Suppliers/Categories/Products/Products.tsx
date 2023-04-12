@@ -5,12 +5,7 @@ import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleto
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
-import {
-  IOrder,
-  IOrderProduct,
-  IQuantity,
-  ISupplier,
-} from '../../../../../../redux/types/types';
+import {IOrder, IOrderProduct} from '../../../../../../redux/types/types';
 
 import {getProductsInfo} from '../../../../../../api/api';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -31,11 +26,9 @@ interface Props {
   choosedShop: any;
   quantity: any;
   orders: IOrder[] | undefined;
-  suppliers: ISupplier[] | undefined;
 
   setQuantity: (quantity: any) => void;
   setOrders: (orders: IOrder[] | undefined) => void;
-  setSuppliers: (suppliers: ISupplier[] | undefined) => void;
 }
 
 const Products = (props: Props) => {
