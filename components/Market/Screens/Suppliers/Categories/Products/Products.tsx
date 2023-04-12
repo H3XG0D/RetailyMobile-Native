@@ -54,14 +54,8 @@ const Products = (props: Props) => {
 
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
-  const [cost, setCost] = React.useState<any>(undefined);
-
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
-
-  const [getProductInfo, setGetProductInfo] = React.useState<any>();
-
-  const [active, setActive] = React.useState<boolean>(false);
   const [buy, setBuy] = React.useState<boolean>(false);
   const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
 
@@ -81,13 +75,11 @@ const Products = (props: Props) => {
 
   const showModal = () => {
     setModalVisible(!isModalVisible);
-    setActive(true);
   };
 
-  const AddProduct = (info: any) => {
-    setActive(false);
+  const AddProduct = (productInfo: any) => {
     setBuy(false);
-    let obj = {...info};
+    let obj = {...productInfo};
 
     obj.quantum = obj.step;
 
@@ -106,19 +98,23 @@ const Products = (props: Props) => {
           f.supplier === props.content.code && f.shop === props.selectShop,
       )
     ) {
-      let products: IOrderProduct[] = orders.find(
+      let mainProducts: IOrderProduct[] = orders.find(
         (f: IOrder) =>
           f.supplier === props.content.code && f.shop === props.selectShop,
       )!.products;
-      if (products?.some((p: IOrderProduct) => p.product === 'code product'))
-        products.find(
-          (p: IOrderProduct) => p.product === 'code product',
+      if (
+        mainProducts?.some(
+          (p: IOrderProduct) => p.product === productInfo?.code,
+        )
+      )
+        mainProducts.find(
+          (p: IOrderProduct) => p.product === productInfo?.code,
         )!.quantity = obj.quantum;
       else {
-        products.push({
-          product: 'code product',
-          quantity: obj.quantum,
-          price: 123,
+        mainProducts.push({
+          product: productInfo?.code,
+          price: productInfo?.price,
+          quantity: obj?.quantum,
         });
       }
     } else {
@@ -127,9 +123,9 @@ const Products = (props: Props) => {
         shop: props.selectShop,
         products: [
           {
-            product: 'code product',
-            quantity: obj.quantum,
-            price: 123,
+            product: productInfo?.code,
+            price: productInfo?.price,
+            quantity: obj?.quantum,
           },
         ],
       });
@@ -139,8 +135,8 @@ const Products = (props: Props) => {
     setInfo(obj);
   };
 
-  const incrementCounter = (info: any) => {
-    let obj = {...info};
+  const incrementCounter = (productInfo: any) => {
+    let obj = {...productInfo};
 
     obj.quantum = obj.quantum + obj.step;
 
@@ -151,15 +147,15 @@ const Products = (props: Props) => {
     // let orders = [...props.orders]
 
     props.setQuantity({
-      count: obj.quantum,
+      count: obj?.quantum,
     });
 
     setProducts(newArray);
     setInfo(obj);
   };
 
-  const decrementCounter = (info: any) => {
-    let obj = {...info};
+  const decrementCounter = (productInfo: any) => {
+    let obj = {...productInfo};
 
     obj.quantum = obj.quantum - obj.step;
 
@@ -179,62 +175,58 @@ const Products = (props: Props) => {
     setInfo(product);
   };
 
-  const GetProductCost = (product: any) => {
-    setCost(product);
-  };
+  // const storeData = async (item: any) => {
+  //   try {
+  //     const savedProductData = JSON.stringify({
+  //       productCode: item.code,
+  //       productName: item.name,
+  //       productQuantum: item.quantum,
+  //       productPrice: (item.price * item.quantum).toFixed(2),
+  //     });
+  //     await AsyncStorage.setItem('savedProductData', savedProductData);
+  //   } catch (e: any) {
+  //     console.log('error data save');
+  //   }
+  // };
 
-  const storeData = async (item: any) => {
-    try {
-      const savedProductData = JSON.stringify({
-        productCode: item.code,
-        productName: item.name,
-        productQuantum: item.quantum,
-        productPrice: (item.price * item.quantum).toFixed(2),
-      });
-      await AsyncStorage.setItem('savedProductData', savedProductData);
-    } catch (e: any) {
-      console.log('error data save');
-    }
-  };
-
-  const getProduct = async (product: any) => {
-    try {
-      const ProductName = await AsyncStorage.setItem(
-        'ProductName',
-        JSON.stringify(product.name),
-      );
-      const ProductQuantum = await AsyncStorage.setItem(
-        'ProductQuantum',
-        JSON.stringify(product.quantum),
-      );
-      const ProductCode = await AsyncStorage.setItem(
-        'ProductCode',
-        JSON.stringify(product.code),
-      );
-      const ProductImage = await AsyncStorage.setItem(
-        'ProductImages',
-        JSON.stringify(
-          product && product.images && product.images.length > 0
-            ? variables.siteUrl + '/api/repo/' + product.images[0]
-            : undefined,
-        ),
-      );
-      const ProductPrice = await AsyncStorage.setItem(
-        'ProductPrice',
-        JSON.stringify(product.price),
-      );
-      const ProductWeight = await AsyncStorage.setItem(
-        'ProductWeight',
-        JSON.stringify(product.description_short),
-      );
-      const ProductFinalCost = await AsyncStorage.setItem(
-        'ProductFinalCost',
-        JSON.stringify((product.price * product.quantum).toFixed(2)),
-      );
-    } catch (e: any) {
-      console.log(e);
-    }
-  };
+  // const getProduct = async (product: any) => {
+  //   try {
+  //     const ProductName = await AsyncStorage.setItem(
+  //       'ProductName',
+  //       JSON.stringify(product.name),
+  //     );
+  //     const ProductQuantum = await AsyncStorage.setItem(
+  //       'ProductQuantum',
+  //       JSON.stringify(product.quantum),
+  //     );
+  //     const ProductCode = await AsyncStorage.setItem(
+  //       'ProductCode',
+  //       JSON.stringify(product.code),
+  //     );
+  //     const ProductImage = await AsyncStorage.setItem(
+  //       'ProductImages',
+  //       JSON.stringify(
+  //         product && product.images && product.images.length > 0
+  //           ? variables.siteUrl + '/api/repo/' + product.images[0]
+  //           : undefined,
+  //       ),
+  //     );
+  //     const ProductPrice = await AsyncStorage.setItem(
+  //       'ProductPrice',
+  //       JSON.stringify(product.price),
+  //     );
+  //     const ProductWeight = await AsyncStorage.setItem(
+  //       'ProductWeight',
+  //       JSON.stringify(product.description_short),
+  //     );
+  //     const ProductFinalCost = await AsyncStorage.setItem(
+  //       'ProductFinalCost',
+  //       JSON.stringify((product.price * product.quantum).toFixed(2)),
+  //     );
+  //   } catch (e: any) {
+  //     console.log(e);
+  //   }
+  // };
 
   const discount = (info?.price * info?.quantum).toFixed(2);
 
@@ -256,8 +248,8 @@ const Products = (props: Props) => {
                       <TouchableOpacity
                         onPress={() => {
                           showModal();
-                        }}
-                        onPressIn={() => HandleButton(product)}>
+                          HandleButton(product);
+                        }}>
                         <ProductsContentBoxTextContainer>
                           <ProductsContentOutsideBox>
                             <ProductsContentBox>
@@ -325,10 +317,8 @@ const Products = (props: Props) => {
 
                               <TouchableOpacity
                                 onPress={() => {
-                                  storeData(product);
-                                  GetProductCost(product);
-                                  getProduct(product);
-                                  setGetProductInfo(product);
+                                  AddProduct(product);
+                                  setInfo(product);
                                 }}
                                 onPressIn={() => {
                                   setChoosed(product?.code);
@@ -338,7 +328,7 @@ const Products = (props: Props) => {
                                     {product?.quantum <= 0 ? (
                                       <TouchableOpacity
                                         onPress={() => {
-                                          incrementCounter(product);
+                                          incrementCounter(info);
                                         }}>
                                         <ProductsContentBoxPriceContainer>
                                           <ProductsContentBoxPriceText>
@@ -350,7 +340,7 @@ const Products = (props: Props) => {
                                       <ProductsContentBoxMiniPrice>
                                         <TouchableOpacity
                                           onPress={() => {
-                                            decrementCounter(product);
+                                            decrementCounter(info);
                                           }}>
                                           <ProductsMiniMinusBtn>
                                             <ProductsModalMinusText>
@@ -366,7 +356,7 @@ const Products = (props: Props) => {
                                         </Text>
                                         <TouchableOpacity
                                           onPress={() => {
-                                            incrementCounter(product);
+                                            incrementCounter(info);
                                           }}>
                                           <ProductsMiniMinusBtn>
                                             <ProductsModalPlusText>
@@ -440,7 +430,7 @@ const Products = (props: Props) => {
               <ProductsModalHeader>
                 <ProductsModalTitle>{info?.name}</ProductsModalTitle>
                 <View style={{alignItems: 'center'}}>
-                  {active == true ? (
+                  {choosed != info?.code ? (
                     <ProductsModalCost style={{color: variables.COLORS.black}}>
                       {info?.price} ₽
                     </ProductsModalCost>
@@ -456,7 +446,7 @@ const Products = (props: Props) => {
                       )}
                     </>
                   )}
-                  {active == true ? null : (
+                  {choosed != info?.code ? null : (
                     <>
                       {info?.quantum <= 0 ? null : (
                         <ProductsModalSubtitleCost>
@@ -468,11 +458,11 @@ const Products = (props: Props) => {
                 </View>
               </ProductsModalHeader>
 
-              {active == true ? (
+              {choosed != info?.code ? (
                 <TouchableOpacity
                   onPress={() => {
-                    getProduct(info);
                     AddProduct(info);
+                    setChoosed(info?.code);
                   }}>
                   <ProductsModalBtn>
                     <ProductsModalBtnText>{info?.price} ₽</ProductsModalBtnText>
@@ -483,8 +473,8 @@ const Products = (props: Props) => {
                   {info?.quantum <= 0 ? (
                     <TouchableOpacity
                       onPress={() => {
-                        AddProduct(info);
-                        getProduct(info);
+                        decrementCounter(info);
+                        setChoosed(info?.code);
                       }}>
                       <ProductsModalBtn>
                         <ProductsModalBtnText>
@@ -500,12 +490,11 @@ const Products = (props: Props) => {
                         </ProductsModalMinusBtn>
                       </TouchableOpacity>
                       <ProductsModalCountInput>
-                        <Text>{info?.quantum}</Text>
+                        <Text>{props.quantity?.count}</Text>
                       </ProductsModalCountInput>
                       <TouchableOpacity
                         onPress={() => {
                           incrementCounter(info);
-                          getProduct(info);
                         }}>
                         <ProductsModalPlusBtn>
                           <ProductsModalPlusText>+</ProductsModalPlusText>
