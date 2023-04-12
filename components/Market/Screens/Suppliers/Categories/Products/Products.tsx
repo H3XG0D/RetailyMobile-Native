@@ -3,7 +3,6 @@ import {Text, TouchableOpacity, View} from 'react-native';
 
 import ProductsSkeleton from '../../../Skeletons/ProductSkeleton/ProductsSkeleton';
 import Modal from 'react-native-modal';
-import styled from 'styled-components/native';
 
 import {IOrder, IOrderProduct} from '../../../../../../redux/types/types';
 
@@ -17,6 +16,7 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
 
+import styled from 'styled-components/native';
 import * as variables from '../../../../../../constants';
 
 interface Props {

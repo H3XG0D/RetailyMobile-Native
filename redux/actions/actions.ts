@@ -1,4 +1,3 @@
-import {IOrderProduct, IQuantity, ISupplier} from './../types/types';
 import {InferActionsTypes, AppStateType} from '../reducer/store';
 import {ThunkAction} from 'redux-thunk';
 import {IOrder} from '../types/types';

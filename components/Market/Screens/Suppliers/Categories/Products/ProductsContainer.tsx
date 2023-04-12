@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import React, {ReactElement} from 'react';
 import {AppStateType} from '../../../../../../redux/reducer/store';
 
