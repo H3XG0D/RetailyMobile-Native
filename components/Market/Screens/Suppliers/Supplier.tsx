@@ -31,6 +31,7 @@ const Supplier = () => {
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
   const [load, setLoad] = React.useState<boolean>(false);
   const [choosed, setChoosed] = React.useState<boolean>(false);
+  const [choosedShop, setChoosedShop] = React.useState<any>([]);
 
   const [shops, setShops] = React.useState<any>([]);
   const [selectShop, setSelectShop] = React.useState<string | undefined>(
@@ -89,7 +90,10 @@ const Supplier = () => {
                 {filterList(shops).map((item: any, index: any) => {
                   return (
                     <Pressable
-                      onPress={() => setSelectShop(item.code)}
+                      onPress={() => {
+                        setSelectShop(item.code);
+                        setChoosedShop(item);
+                      }}
                       onPressIn={() => ChooseHandler()}>
                       <SupplierItemContent>
                         {item.code === selectShop ? (
@@ -127,7 +131,11 @@ const Supplier = () => {
         <TouchableOpacity
           disabled={load || !choosed ? true : false}
           onPress={() =>
-            navigation.navigate('Categories', {selectShop, content})
+            navigation.navigate('Categories', {
+              selectShop,
+              content,
+              choosedShop,
+            })
           }>
           <SuppliersButton
             style={{

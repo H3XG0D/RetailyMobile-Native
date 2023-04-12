@@ -27,6 +27,7 @@ const Categories = () => {
 
   const {content}: any = route.params;
   const {selectShop}: any = route.params;
+  const {choosedShop}: any = route.params;
 
   const [categories, setCategories] = React.useState<any>(undefined);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
@@ -63,6 +64,7 @@ const Categories = () => {
                             content,
                             selectShop,
                             category,
+                            choosedShop,
                           })
                         }>
                         <CategoriesContentBox>

@@ -30,6 +30,9 @@ const ProductsContainer = (props: Props): ReactElement => {
   const {content}: any = route.params;
   const {selectShop}: any = route.params; // Shop
   const {category}: any = route.params;
+  const {choosedShop}: any = route.params;
+
+  console.log(content);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -48,6 +51,7 @@ const ProductsContainer = (props: Props): ReactElement => {
         content={content}
         selectShop={selectShop}
         category={category}
+        choosedShop={choosedShop}
         quantity={props.quantity}
         orders={props.orders}
         setQuantity={props.setQuantity}

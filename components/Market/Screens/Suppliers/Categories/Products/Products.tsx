@@ -25,10 +25,12 @@ interface Props {
   content: any;
   category: any;
   selectShop: any;
+  choosedShop: any;
   quantity: IQuantity | undefined;
-  orders: IOrder | undefined;
+  orders: IOrder[] | undefined;
+
   setQuantity: (quantity: IQuantity | undefined) => void;
-  setOrders: (order: IOrder | undefined) => void;
+  setOrders: (orders: IOrder[] | undefined) => void;
 }
 
 const Products = (props: Props) => {
@@ -50,12 +52,15 @@ const Products = (props: Props) => {
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
 
+  const [getProductInfo, setGetProductInfo] = React.useState<any>();
+
   const [active, setActive] = React.useState<boolean>(false);
   const [buy, setBuy] = React.useState<boolean>(false);
   const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
 
   const getProducts = async () => {
     setLoadSkeleton(true);
+
     const products = await getProductsInfo(
       'getProducts',
       props.category.code,
@@ -82,6 +87,7 @@ const Products = (props: Props) => {
     props.setQuantity({
       count: obj.quantum,
     });
+
     setInfo(obj);
   };
 
@@ -274,6 +280,7 @@ const Products = (props: Props) => {
                                   storeData(product);
                                   GetProductCost(product);
                                   getProduct(product);
+                                  setGetProductInfo(product);
                                 }}
                                 onPressIn={() => {
                                   setChoosed(product?.code);
