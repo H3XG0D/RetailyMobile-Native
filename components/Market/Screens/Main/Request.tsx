@@ -7,11 +7,6 @@ import * as variables from '../../../../constants';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RetailyStackParams} from '../../../../src/config/routes';
-import {useFocusEffect} from '@react-navigation/native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {FlatList} from 'react-native-gesture-handler';
-import {IQuantity} from '../../../../redux/types/types';
 
 interface Props {
   quantity: any;
@@ -36,9 +31,11 @@ const Request = (props: Props) => {
       {props?.quantity && props.quantity.length > 0 ? (
         props.quantity
           .filter((f: any) => f.value != 0)
-          .map((i: any) => <Text>Count: {i.value}</Text>)
+          .map((i: any) => <Text>Product Count: {i.value}</Text>)
       ) : (
-        <Text>Добавтье товары в корзину</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Market')}>
+          <Text>Добавтье товары в корзину</Text>
+        </TouchableOpacity>
       )}
     </RequestMain>
   );

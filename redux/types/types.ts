@@ -18,10 +18,9 @@ export interface IOrderProduct {
   product: string;
   quantity: number;
   price: number;
-
-  // balance: number | undefined;
   quantum: number | undefined;
   step: number | undefined;
+  // balance: number | undefined;
   // ei: string | undefined;
   // properties: IApiOrderProductProperty[];
   // comment: string | undefined;
