@@ -53,13 +53,9 @@ const Products = (props: Props) => {
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
 
-  const [order, setOrder] = React.useState<any>();
-
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
   const [buy, setBuy] = React.useState<boolean>(false);
-
-  const [active, setActive] = React.useState<boolean>(false);
 
   const getProducts = async () => {
     setLoadSkeleton(true);
@@ -134,7 +130,6 @@ const Products = (props: Props) => {
     }
 
     props.setOrders(orders);
-    setOrder(orders);
     setInfo(obj);
   };
 
@@ -146,8 +141,6 @@ const Products = (props: Props) => {
     let newArray = [...products];
     let newRow = newArray.find((a: any) => a.code === obj.code);
     newRow.quantum = obj.quantum;
-
-    // let orders = [...props.orders]
 
     props.setQuantity({
       count: obj?.quantum,
@@ -284,8 +277,20 @@ const Products = (props: Props) => {
                               onPress={() => {
                                 AddProduct(product);
                                 setInfo(product);
-                                setActive(true);
-                              }}>
+                              }}
+                              disabled={
+                                props.orders?.some(
+                                  (f: IOrder) =>
+                                    f.supplier === props.content.code &&
+                                    f.shop === props.choosedShop.code &&
+                                    f.products.some(
+                                      (p: IOrderProduct) =>
+                                        p.product === product.code,
+                                    ),
+                                )
+                                  ? true
+                                  : false
+                              }>
                               {props.orders?.some(
                                 (f: IOrder) =>
                                   f.supplier === props.content.code &&
