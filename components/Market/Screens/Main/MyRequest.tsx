@@ -25,12 +25,7 @@ const MyRequest = () => {
 
   return (
     <MyRequestMain>
-      <Text
-        style={{
-          textAlign: 'center',
-        }}>
-        Мои заявки
-      </Text>
+      <Text>Мои заявки</Text>
     </MyRequestMain>
   );
 };
@@ -40,5 +35,9 @@ export default MyRequest;
 const MyRequestMain = styled.View`
   width: 100%;
   height: 100%;
+
+  align-items: center;
+  justify-content: center;
+
   background-color: ${variables.COLORS.white};
 `;
