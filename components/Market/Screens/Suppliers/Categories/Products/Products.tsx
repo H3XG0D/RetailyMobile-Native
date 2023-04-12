@@ -50,12 +50,15 @@ const Products = (props: Props) => {
     });
   }, [navigation]);
 
+  const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
+
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
   const [buy, setBuy] = React.useState<boolean>(false);
-  const [choosed, setChoosed] = React.useState<string | undefined>(undefined);
+
+  const [active, setActive] = React.useState<boolean>(false);
 
   const getProducts = async () => {
     setLoadSkeleton(true);
@@ -190,14 +193,14 @@ const Products = (props: Props) => {
               {products && products.length > 0
                 ? products.map((product: any) => {
                     return (
-                      <TouchableOpacity
-                        onPress={() => {
-                          showModal();
-                          HandleButton(product);
-                        }}>
-                        <ProductsContentBoxTextContainer>
-                          <ProductsContentOutsideBox>
-                            <ProductsContentBox>
+                      <ProductsContentBoxTextContainer>
+                        <ProductsContentOutsideBox>
+                          <ProductsContentBox>
+                            <TouchableOpacity
+                              onPress={() => {
+                                showModal();
+                                HandleButton(product);
+                              }}>
                               <ProductsContentImages
                                 source={{
                                   uri:
@@ -210,120 +213,123 @@ const Products = (props: Props) => {
                                       : undefined,
                                 }}
                               />
-                              <ProductsContentBoxText numberOfLines={3}>
-                                {product.name}
-                              </ProductsContentBoxText>
+                            </TouchableOpacity>
 
+                            <ProductsContentBoxText numberOfLines={3}>
+                              {product.name}
+                            </ProductsContentBoxText>
+
+                            {choosed == product.code ? (
+                              <>
+                                {buy ? (
+                                  <Text
+                                    style={{
+                                      fontSize: variables.SIZES.h9,
+                                      marginLeft: 10,
+                                      marginBottom: 2,
+                                      color: variables.COLORS.primary,
+                                    }}>
+                                    {product?.price}
+                                  </Text>
+                                ) : (
+                                  <>
+                                    {product?.quantum <= 0 ? null : (
+                                      <Text
+                                        style={{
+                                          fontSize: variables.SIZES.h9,
+                                          marginLeft: 10,
+                                          marginBottom: 2,
+                                          color: variables.COLORS.primary,
+                                        }}>
+                                        {(
+                                          product?.price * product?.quantum
+                                        ).toFixed(2)}{' '}
+                                        ₽
+                                      </Text>
+                                    )}
+                                  </>
+                                )}
+                              </>
+                            ) : null}
+
+                            {/* props.orders.some((f: any) => f.supplier === код поставщика && f.shop === код магазина && f.products.some((p: any) => p.product === product.code)) */}
+                            {choosed == product.code && product?.quantum > 0 ? (
+                              <ProductsContentBoxSubText>
+                                {product.description_short} • {product.price} ₽
+                              </ProductsContentBoxSubText>
+                            ) : (
+                              <ProductsContentBoxSubText>
+                                {product.description_short}
+                              </ProductsContentBoxSubText>
+                            )}
+
+                            <TouchableOpacity
+                              onPress={() => {
+                                AddProduct(product);
+                                setInfo(product);
+                                setActive(true);
+                              }}
+                              disabled={
+                                active && choosed == product.code ? true : false
+                              }
+                              onPressIn={() => {
+                                setChoosed(product?.code);
+                              }}>
                               {choosed == product.code ? (
                                 <>
-                                  {buy ? (
-                                    <Text
-                                      style={{
-                                        fontSize: variables.SIZES.h9,
-                                        marginLeft: 10,
-                                        marginBottom: 2,
-                                        color: variables.COLORS.primary,
+                                  {product?.quantum <= 0 ? (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        incrementCounter(info);
                                       }}>
-                                      {product?.price}
-                                    </Text>
+                                      <ProductsContentBoxPriceContainer>
+                                        <ProductsContentBoxPriceText>
+                                          {product.price} ₽
+                                        </ProductsContentBoxPriceText>
+                                      </ProductsContentBoxPriceContainer>
+                                    </TouchableOpacity>
                                   ) : (
-                                    <>
-                                      {product?.quantum <= 0 ? null : (
-                                        <Text
-                                          style={{
-                                            fontSize: variables.SIZES.h9,
-                                            marginLeft: 10,
-                                            marginBottom: 2,
-                                            color: variables.COLORS.primary,
-                                          }}>
-                                          {(
-                                            product?.price * product?.quantum
-                                          ).toFixed(2)}{' '}
-                                          ₽
-                                        </Text>
-                                      )}
-                                    </>
-                                  )}
-                                </>
-                              ) : null}
-
-                              {/* props.orders.some((f: any) => f.supplier === код поставщика && f.shop === код магазина && f.products.some((p: any) => p.product === product.code)) */}
-                              {choosed == product.code &&
-                              product?.quantum > 0 ? (
-                                <ProductsContentBoxSubText>
-                                  {product.description_short} • {product.price}{' '}
-                                  ₽
-                                </ProductsContentBoxSubText>
-                              ) : (
-                                <ProductsContentBoxSubText>
-                                  {product.description_short}
-                                </ProductsContentBoxSubText>
-                              )}
-
-                              <TouchableOpacity
-                                onPress={() => {
-                                  AddProduct(product);
-                                  setInfo(product);
-                                }}
-                                onPressIn={() => {
-                                  setChoosed(product?.code);
-                                }}>
-                                {choosed == product.code ? (
-                                  <>
-                                    {product?.quantum <= 0 ? (
+                                    <ProductsContentBoxMiniPrice>
+                                      <TouchableOpacity
+                                        onPress={() => {
+                                          decrementCounter(info);
+                                        }}>
+                                        <ProductsMiniMinusBtn>
+                                          <ProductsModalMinusText>
+                                            -
+                                          </ProductsModalMinusText>
+                                        </ProductsMiniMinusBtn>
+                                      </TouchableOpacity>
+                                      <Text
+                                        style={{
+                                          fontSize: variables.SIZES.h8,
+                                        }}>
+                                        {props.quantity?.count}
+                                      </Text>
                                       <TouchableOpacity
                                         onPress={() => {
                                           incrementCounter(info);
                                         }}>
-                                        <ProductsContentBoxPriceContainer>
-                                          <ProductsContentBoxPriceText>
-                                            {product.price} ₽
-                                          </ProductsContentBoxPriceText>
-                                        </ProductsContentBoxPriceContainer>
+                                        <ProductsMiniMinusBtn>
+                                          <ProductsModalPlusText>
+                                            +
+                                          </ProductsModalPlusText>
+                                        </ProductsMiniMinusBtn>
                                       </TouchableOpacity>
-                                    ) : (
-                                      <ProductsContentBoxMiniPrice>
-                                        <TouchableOpacity
-                                          onPress={() => {
-                                            decrementCounter(info);
-                                          }}>
-                                          <ProductsMiniMinusBtn>
-                                            <ProductsModalMinusText>
-                                              -
-                                            </ProductsModalMinusText>
-                                          </ProductsMiniMinusBtn>
-                                        </TouchableOpacity>
-                                        <Text
-                                          style={{
-                                            fontSize: variables.SIZES.h8,
-                                          }}>
-                                          {props.quantity?.count}
-                                        </Text>
-                                        <TouchableOpacity
-                                          onPress={() => {
-                                            incrementCounter(info);
-                                          }}>
-                                          <ProductsMiniMinusBtn>
-                                            <ProductsModalPlusText>
-                                              +
-                                            </ProductsModalPlusText>
-                                          </ProductsMiniMinusBtn>
-                                        </TouchableOpacity>
-                                      </ProductsContentBoxMiniPrice>
-                                    )}
-                                  </>
-                                ) : (
-                                  <ProductsContentBoxPriceContainer>
-                                    <ProductsContentBoxPriceText>
-                                      {product.price} ₽
-                                    </ProductsContentBoxPriceText>
-                                  </ProductsContentBoxPriceContainer>
-                                )}
-                              </TouchableOpacity>
-                            </ProductsContentBox>
-                          </ProductsContentOutsideBox>
-                        </ProductsContentBoxTextContainer>
-                      </TouchableOpacity>
+                                    </ProductsContentBoxMiniPrice>
+                                  )}
+                                </>
+                              ) : (
+                                <ProductsContentBoxPriceContainer>
+                                  <ProductsContentBoxPriceText>
+                                    {product.price} ₽
+                                  </ProductsContentBoxPriceText>
+                                </ProductsContentBoxPriceContainer>
+                              )}
+                            </TouchableOpacity>
+                          </ProductsContentBox>
+                        </ProductsContentOutsideBox>
+                      </ProductsContentBoxTextContainer>
                     );
                   })
                 : undefined}
