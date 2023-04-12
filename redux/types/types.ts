@@ -15,15 +15,15 @@ export interface IShop {
 }
 
 export interface IOrderProduct {
-  product: IProduct;
+  product: string;
   quantity: number;
-  price: number | undefined;
-  balance: number | undefined;
-  quantum: number | undefined;
-  step: number | undefined;
-  ei: string | undefined;
-  properties: IApiOrderProductProperty[];
-  comment: string | undefined;
+  price: number;
+  // balance: number | undefined;
+  // quantum: number | undefined;
+  // step: number | undefined;
+  // ei: string | undefined;
+  // properties: IApiOrderProductProperty[];
+  // comment: string | undefined;
 }
 
 export interface IQuantity {
@@ -51,8 +51,8 @@ export interface ISupplier {
 }
 
 export interface IOrder {
-  supplier: ISupplier;
-  shop: IShop | null;
+  supplier: string;
+  shop: string;
   products: IOrderProduct[];
 }
 

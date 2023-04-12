@@ -7,6 +7,7 @@ import styled from 'styled-components/native';
 
 import {
   IOrder,
+  IOrderProduct,
   IQuantity,
   ISupplier,
 } from '../../../../../../redux/types/types';
@@ -94,6 +95,47 @@ const Products = (props: Props) => {
       count: obj.quantum,
     });
 
+    let orders: IOrder[] | undefined = [];
+    if (props.orders) {
+      orders = [...props.orders];
+    }
+
+    if (
+      orders.some(
+        (f: IOrder) =>
+          f.supplier === props.content.code && f.shop === props.selectShop,
+      )
+    ) {
+      let products: IOrderProduct[] = orders.find(
+        (f: IOrder) =>
+          f.supplier === props.content.code && f.shop === props.selectShop,
+      )!.products;
+      if (products?.some((p: IOrderProduct) => p.product === 'code product'))
+        products.find(
+          (p: IOrderProduct) => p.product === 'code product',
+        )!.quantity = obj.quantum;
+      else {
+        products.push({
+          product: 'code product',
+          quantity: obj.quantum,
+          price: 123,
+        });
+      }
+    } else {
+      orders.push({
+        supplier: props.content.code,
+        shop: props.selectShop,
+        products: [
+          {
+            product: 'code product',
+            quantity: obj.quantum,
+            price: 123,
+          },
+        ],
+      });
+    }
+
+    props.setOrders(orders);
     setInfo(obj);
   };
 

@@ -38,8 +38,6 @@ const ProductsContainer = (props: Props): ReactElement => {
   const {category}: any = route.params;
   const {choosedShop}: any = route.params;
 
-  console.log(content);
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

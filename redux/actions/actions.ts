@@ -6,6 +6,7 @@ import {IOrder} from '../types/types';
 export const SET_ORDERS = 'SET_ORDERS';
 export const SET_QUANTITY = 'SET_QUANTITY';
 export const SET_SUPPLIERS = 'SET_SUPPLIERS';
+export const SET_SHOP = 'SET_SHOP';
 
 type ActionTypes = InferActionsTypes<typeof mainActions>;
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>;
