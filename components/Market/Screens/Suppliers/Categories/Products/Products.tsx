@@ -29,11 +29,11 @@ interface Props {
   category: any;
   selectShop: any;
   choosedShop: any;
-  quantity: IQuantity | undefined;
+  quantity: any;
   orders: IOrder[] | undefined;
   suppliers: ISupplier[] | undefined;
 
-  setQuantity: (quantity: IQuantity | undefined) => void;
+  setQuantity: (quantity: any) => void;
   setOrders: (orders: IOrder[] | undefined) => void;
   setSuppliers: (suppliers: ISupplier[] | undefined) => void;
 }
@@ -53,6 +53,8 @@ const Products = (props: Props) => {
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
 
+  const [math, setMath] = React.useState<any>();
+
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
   const [buy, setBuy] = React.useState<boolean>(false);
@@ -67,6 +69,20 @@ const Products = (props: Props) => {
       props.content.code,
     );
 
+    let quantumArray: any = [];
+
+    if (products) {
+      products.forEach((i: any) => {
+        quantumArray.push({
+          step: i.step,
+          quantum: i.quantum,
+          code: i.code,
+          value: 0,
+        });
+      });
+    }
+
+    props.setQuantity(quantumArray);
     setProducts(products);
     setLoadSkeleton(false);
   };
@@ -78,7 +94,6 @@ const Products = (props: Props) => {
   const AddProduct = (productInfo: any) => {
     setBuy(false);
     let obj = {...productInfo};
-
     obj.quantum = obj.step;
 
     props.setQuantity({
@@ -107,12 +122,14 @@ const Products = (props: Props) => {
       )
         mainProducts.find(
           (p: IOrderProduct) => p.product === productInfo?.code,
-        )!.quantity = obj.quantum;
+        )!.quantity = productInfo.quantum;
       else {
         mainProducts.push({
           product: productInfo?.code,
           price: productInfo?.price,
-          quantity: obj?.quantum,
+          quantity: productInfo?.quantum,
+          quantum: productInfo?.quantum,
+          step: productInfo?.step,
         });
       }
     } else {
@@ -123,7 +140,71 @@ const Products = (props: Props) => {
           {
             product: productInfo?.code,
             price: productInfo?.price,
-            quantity: obj?.quantum,
+            quantity: productInfo?.quantum,
+            quantum: productInfo?.quantum,
+            step: productInfo?.step,
+          },
+        ],
+      });
+    }
+
+    props.setOrders(orders);
+    setInfo(obj);
+  };
+
+  const NewAddProduct = (productInfo: any) => {
+    let arrayQuantity = [...props.quantity];
+    arrayQuantity!.find((i: any) => i.code === productInfo.code).value =
+      productInfo.quantum;
+
+    props.setQuantity(arrayQuantity);
+
+    let obj = {...productInfo};
+    obj.quantum = obj.step;
+
+    let orders: IOrder[] | undefined = [];
+    if (props.orders) {
+      orders = [...props.orders];
+    }
+
+    if (
+      orders.some(
+        (f: IOrder) =>
+          f.supplier === props.content.code && f.shop === props.selectShop,
+      )
+    ) {
+      let mainProducts: IOrderProduct[] = orders.find(
+        (f: IOrder) =>
+          f.supplier === props.content.code && f.shop === props.selectShop,
+      )!.products;
+      if (
+        mainProducts?.some(
+          (p: IOrderProduct) => p.product === productInfo?.code,
+        )
+      )
+        mainProducts.find(
+          (p: IOrderProduct) => p.product === productInfo?.code,
+        )!.quantity = obj.quantum;
+      else {
+        mainProducts.push({
+          product: productInfo?.code,
+          price: productInfo?.price,
+          quantity: productInfo?.quantum,
+          quantum: productInfo?.quantum,
+          step: productInfo?.step,
+        });
+      }
+    } else {
+      orders.push({
+        supplier: props.content.code,
+        shop: props.selectShop,
+        products: [
+          {
+            product: productInfo?.code,
+            price: productInfo?.price,
+            quantity: productInfo?.quantum,
+            quantum: productInfo?.quantum,
+            step: productInfo?.step,
           },
         ],
       });
@@ -134,44 +215,60 @@ const Products = (props: Props) => {
   };
 
   const incrementCounter = (productInfo: any) => {
-    let obj = {...productInfo};
+    let arrayQuantity = [...props.quantity];
+    arrayQuantity!.find((i: any) => i.code === productInfo.code).value +=
+      arrayQuantity!.find((i: any) => i.code === productInfo.code).step;
 
-    obj.quantum = obj.quantum + obj.step;
+    props.setQuantity(arrayQuantity);
+    // let obj = {...productInfo};
+    // obj.quantum = obj.quantum + obj.step;
 
-    let newArray = [...products];
-    let newRow = newArray.find((a: any) => a.code === obj.code);
-    newRow.quantum = obj.quantum;
+    // let newArray = [...products];
+    // let newRow = newArray.find((a: any) => a.code === obj.code);
+    // newRow.quantum = obj.quantum;
 
-    props.setQuantity({
-      count: obj?.quantum,
-    });
+    // props.setQuantity({
+    //   count: obj?.quantum,
+    // });
 
-    setProducts(newArray);
-    setInfo(obj);
+    // setProducts(newArray);
+    // setInfo(obj);
   };
 
   const decrementCounter = (productInfo: any) => {
-    let obj = {...productInfo};
+    let arrayQuantity = [...props.quantity];
+    arrayQuantity!.find((i: any) => i.code === productInfo.code).value -=
+      arrayQuantity!.find((i: any) => i.code === productInfo.code).step;
 
-    obj.quantum = obj.quantum - obj.step;
+    props.setQuantity(arrayQuantity);
+    // let obj = {...productInfo};
 
-    let newArray = [...products];
-    let newRow = newArray.find((a: any) => a.code === obj.code);
-    newRow.quantum = obj.quantum;
+    // obj.quantum = obj.quantum - obj.step;
 
-    props.setQuantity({
-      count: obj.quantum,
-    });
+    // let newArray = [...products];
+    // let newRow = newArray.find((a: any) => a.code === obj.code);
+    // newRow.quantum = obj.quantum;
 
-    setProducts(newArray);
-    setInfo(obj);
+    // props.setQuantity({
+    //   count: obj.quantum,
+    // });
+
+    // setProducts(newArray);
+    // setInfo(obj);
   };
 
   const HandleButton = (product: any) => {
     setInfo(product);
   };
 
-  const discount = (info?.price * info?.quantum).toFixed(2);
+  const discount = () => {
+    const quantity = props.quantity.find(
+      (f: any) => f.code === info.code,
+    ).value;
+
+    const result = (info?.price * quantity).toFixed(2);
+    setMath(result);
+  };
 
   React.useEffect(() => {
     getProducts();
@@ -275,7 +372,7 @@ const Products = (props: Props) => {
 
                             <TouchableOpacity
                               onPress={() => {
-                                AddProduct(product);
+                                NewAddProduct(product);
                                 setInfo(product);
                               }}
                               disabled={
@@ -304,7 +401,7 @@ const Products = (props: Props) => {
                                   {product?.quantum <= 0 ? (
                                     <TouchableOpacity
                                       onPress={() => {
-                                        incrementCounter(info);
+                                        incrementCounter(product);
                                       }}>
                                       <ProductsContentBoxPriceContainer>
                                         <ProductsContentBoxPriceText>
@@ -316,7 +413,7 @@ const Products = (props: Props) => {
                                     <ProductsContentBoxMiniPrice>
                                       <TouchableOpacity
                                         onPress={() => {
-                                          decrementCounter(info);
+                                          decrementCounter(product);
                                         }}>
                                         <ProductsMiniMinusBtn>
                                           <ProductsModalMinusText>
@@ -328,11 +425,16 @@ const Products = (props: Props) => {
                                         style={{
                                           fontSize: variables.SIZES.h8,
                                         }}>
-                                        {props.quantity?.count}
+                                        {
+                                          props.quantity.find(
+                                            (f: any) => f.code === product.code,
+                                          ).value
+                                        }
                                       </Text>
                                       <TouchableOpacity
                                         onPress={() => {
-                                          incrementCounter(info);
+                                          // discount();
+                                          incrementCounter(product);
                                         }}>
                                         <ProductsMiniMinusBtn>
                                           <ProductsModalPlusText>
@@ -420,7 +522,7 @@ const Products = (props: Props) => {
                           {info?.price} ₽
                         </ProductsModalCost>
                       ) : (
-                        <ProductsModalCost>{discount} ₽</ProductsModalCost>
+                        <ProductsModalCost>{math} ₽</ProductsModalCost>
                       )}
                     </>
                   ) : (

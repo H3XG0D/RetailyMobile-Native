@@ -13,7 +13,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>;
 
 export const mainActions = {
   setOrders: (orders: IOrder[] | undefined) => ({type: SET_ORDERS, orders}),
-  setQuantity: (quantity: IQuantity | undefined) => ({
+  setQuantity: (quantity: any) => ({
     type: SET_QUANTITY,
     quantity,
   }),

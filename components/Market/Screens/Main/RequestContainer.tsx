@@ -13,12 +13,12 @@ import Request from './Request';
 
 interface MapStateToProps {
   orders: IOrder[] | undefined;
-  quantity: IQuantity | undefined;
+  quantity: any;
 }
 
 interface MapDispatchProps {
   setOrders: (orders: IOrder[] | undefined) => void;
-  setQuantity: (quantity: IQuantity | undefined) => void;
+  setQuantity: (quantity: any) => void;
 }
 
 interface OwnProps {}

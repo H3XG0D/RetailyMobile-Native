@@ -14,15 +14,12 @@ import {FlatList} from 'react-native-gesture-handler';
 import {IQuantity} from '../../../../redux/types/types';
 
 interface Props {
-  quantity: IQuantity | undefined;
+  quantity: any;
 }
 
 const Request = (props: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RetailyStackParams>>();
-
-  const [products, setProducts] = React.useState<any>();
-  const [images, setImages] = React.useState<any>();
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -36,9 +33,13 @@ const Request = (props: Props) => {
 
   return (
     <RequestMain>
-      <Text style={{textAlign: 'center'}}>
-        Quantity of products: {props.quantity?.count}
-      </Text>
+      {props?.quantity && props.quantity.length > 0 ? (
+        props.quantity
+          .filter((f: any) => f.value != 0)
+          .map((i: any) => <Text>Count: {i.value}</Text>)
+      ) : (
+        <Text>Добавтье товары в корзину</Text>
+      )}
     </RequestMain>
   );
 };
