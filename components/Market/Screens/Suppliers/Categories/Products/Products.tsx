@@ -54,6 +54,8 @@ const Products = (props: Props) => {
   const [products, setProducts] = React.useState<any>(undefined);
   const [info, setInfo] = React.useState<any>(undefined);
 
+  const [activeButton, setActiveButton] = React.useState<boolean>(false);
+
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [loadSkeleton, setLoadSkeleton] = React.useState<boolean>(true);
   const [buy, setBuy] = React.useState<boolean>(false);
