@@ -22,8 +22,6 @@ import {faClose} from '@fortawesome/free-solid-svg-icons/faClose';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../../../../src/config/routes';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import * as variables from '../../../../../../constants';
 
 interface Props {
@@ -174,59 +172,6 @@ const Products = (props: Props) => {
   const HandleButton = (product: any) => {
     setInfo(product);
   };
-
-  // const storeData = async (item: any) => {
-  //   try {
-  //     const savedProductData = JSON.stringify({
-  //       productCode: item.code,
-  //       productName: item.name,
-  //       productQuantum: item.quantum,
-  //       productPrice: (item.price * item.quantum).toFixed(2),
-  //     });
-  //     await AsyncStorage.setItem('savedProductData', savedProductData);
-  //   } catch (e: any) {
-  //     console.log('error data save');
-  //   }
-  // };
-
-  // const getProduct = async (product: any) => {
-  //   try {
-  //     const ProductName = await AsyncStorage.setItem(
-  //       'ProductName',
-  //       JSON.stringify(product.name),
-  //     );
-  //     const ProductQuantum = await AsyncStorage.setItem(
-  //       'ProductQuantum',
-  //       JSON.stringify(product.quantum),
-  //     );
-  //     const ProductCode = await AsyncStorage.setItem(
-  //       'ProductCode',
-  //       JSON.stringify(product.code),
-  //     );
-  //     const ProductImage = await AsyncStorage.setItem(
-  //       'ProductImages',
-  //       JSON.stringify(
-  //         product && product.images && product.images.length > 0
-  //           ? variables.siteUrl + '/api/repo/' + product.images[0]
-  //           : undefined,
-  //       ),
-  //     );
-  //     const ProductPrice = await AsyncStorage.setItem(
-  //       'ProductPrice',
-  //       JSON.stringify(product.price),
-  //     );
-  //     const ProductWeight = await AsyncStorage.setItem(
-  //       'ProductWeight',
-  //       JSON.stringify(product.description_short),
-  //     );
-  //     const ProductFinalCost = await AsyncStorage.setItem(
-  //       'ProductFinalCost',
-  //       JSON.stringify((product.price * product.quantum).toFixed(2)),
-  //     );
-  //   } catch (e: any) {
-  //     console.log(e);
-  //   }
-  // };
 
   const discount = (info?.price * info?.quantum).toFixed(2);
 
